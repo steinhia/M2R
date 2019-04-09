@@ -1,0 +1,205 @@
+###############################"""
+
+Long-Term knowledge effect on serial recall on nonwords are not exclusively lexical
+
+############################################"
+Resume : effet du lexical neighboring et des fréquences des biphones sur rappel
+
+###################################""
+> recall with large neighborhood when biphone freq is controlled
+= recall with high/low freq when neighborhood is controlled
+-> long term knowledge effects on nonword recall are lexically based
+crucial role of STM in acquisition of new words
+familiarity influences its memorability :
+- mesure subjective : wordlikeness
+- mesures stat phonemes combinaisons
+source de familiarité ?
+- régularité phonotactique ? (biphones fréquents > X)
+- knowledge of lexical items ? (lexical property of a stimulus) -> neighborhood size
+Mais correlation freq biphones/neighborhood
+
+recall of CVC Nonwords
+freq biphones = count CV/VC
+si lexical neighbor = nb mots qui diffèrent par un phoneme
+3 types de voisins : CV_ _VC C_C
+mesure des biphone freq basé sur CV/VC -> mesure des voisins CV_ et _VC corrélé fréq des syll
+si controle CV VC -> voisins CV_ et _VC seront comparables
+-> trouve pas effet biphones car variable confondue avec C_C voisins?
+2/ pour manipuler neighborhood mais match biphone frequency, voisinage grand doit avoir + de C_C
+1/ pour controler neighbSize et manipuler biphone freq, lowF doit avoir - de CV_/_VC que highF
+
+CCL : biphone freq and lexical neighborhood size have an independant effect
+-> pas exclusivement lexical influence, aussi régularités phonotactiques
+- reconstruction of degraded-word -> redintegration, peut s'étendre aux non-mots
+-> benefit of  biphone freq (proba pour faciliter reconstruction de mots) / 
+               lexical (représ lexicale des mots)
+Long term knowledge  contribution to recall of non-word not exclusively due to influence of lexical items -> knowledge of lexical properties and phonotactic
+
+#######################################"
+Generating Nonwords for vocabulary proficiency testing
+############################
+Resume
+
+##############################################
+Tests pour # vrai mots/PM
+2 steps : candidats / selection pour wordness
+- number of words with low edit distance -> good approximation for pba  confusion with real word
+- character language model : assign with freq bigramm etc pba to be part of language : MIEUX
+- position specific -> 3 parts : begin,middle,end -> 3 position-specific characterLM : OUIII
+
+############################"
+
+Phonotactic constraints in cognitive psychology
+
+############################
+Resume :
+only positive phonotactic constraints based on exemplars (neighborhood) or abstract categorical rules ?
+
+###################################
+Langage émergent de l'usage fréquent/ conceptual categories are embodied (depends on interaction)
+-> applicatble aux expe physiques/psycho et inclut langage
+langage fondamentalement symbolique
+Séparer en phonèmes = travail académique inspiré par l'écriture
+episodic tokens -> mental lexicon -> properties of sound (predictable/X)
+contrantes phonotactiques positives/négatives
+emerges from positive instances observed
+phonemes exist in LTM as components of the symbolic entities, knowledge of phoneme is metaling.
+pas de place pour contraintes négatives -> si connait positif, sait ce qui ne l'est pas
+-> gestalt like knowledge of a well-formed word in language (schématique, pas détaillé)
+-> + auditory mental lexicon 
+2 views :
+- based on exemplars -> more familiar (word freq, similarity with existing words)
+-abstract categorical rules
+procedural knowledge -> automatisme/routine
+###########################
+
+
+
+
+
+##########################################
+
+Calculate phonotactic probability for words and non-words
+
+####################
+2 measures to estimate phonotactic probability
+1/positional segment frequency -> log value better reflects distrib of occurrence
+    -> log()/log(tot)
+2/biphone frequency
++ Neighborhood density = nb words close
+sparse neighborhood (peu voisins) = mieux reconnu
+
+###########################
+
+
+
+
+############################################################
+
+WordGen : a tool for word selection and non-word generation in Dutch, English, German and French
+
+###################################################################
+
+Resume : génération d'items avec des contraintes spécifiques, et évaluation des contraintes
+    ou chgt d'une lettre d'1 mot -> trop ressemblant pour nous/effet plafond 
+    contraintes de lettres et pas phonèmes
+    utilisation base Lexique/ base Celex au deutsch -> word freq/phono info
+    log dans freq mots fait 5-2#105-102
+    neighborhood size = fct of word-length -> doit controler word-length
+#############################
+éviter facteurs confondus
+strict parameter combinations in huge databases -> Lexique utilisation :)
+génération orthographique (lettres) et pas en phonèmes, pas de schémas précis, même si beaucoup de contraintes, peut moins maîtriser les mots générés
+control of linguistic variables :
+- word frequency (processed faster/earlier/more accurately)
+- orthographic neighborhood size ->  améliore performance décision lexicale, surtout pour mots moins fréquents (Andrews, 1989;Grainger, 1990; McCann & Besner, 1987)
+-> indicator of wordlikeness ex nonpron. nonword hzva few neighboors
+- bigram freq : attention effets confondus
+- orthographic overlap between items
+trouve match si contraintes raisonnables : low freq and 14 neigh :/
+generate nonwords : randomly selected letters -> check constraints
+svt en psycholinguistique change une lettre -> trop proche base (effet plafond) et pas assez de variations (distance 2)
+contraintes :
+- nb letters
+- neighborhood size -> fct of word-length (graphique : y = nb de mots de n lettres à k voisins)
+- word frequency (lemma frequency) -> log corrige 5-3=105-103
+- summated bigram frequency -> fct of word length
+peut générer mêmes contraintes pour plusieurs langues
+
+#########################################################"
+
+
+#########################################################
+
+Determinants of Wordlikeness : Phonotactics or Lexical Neighborhood ? 
+
+#######################################################"
+Resume : independant contributions of phonotactic pba and lexicon, > influence from lexicon
+
+
+
+################################################
+Wordlikeness affects language acquisition, verbal short term memory
+= 1/ phonotactic knowledge of the possible probable sequences of sound within a language
+2/ derived directly from the mental lexicon -> similarity to known words
+-> comparaison des 2 mesures + new model of lexical neighborhood
+influence of lexical neighbor = inverted U-shaped fct of token freq
+phonotactic pba correlates with verbal STM (e.g., Gathercole, Hitch, Service,
+& Martin, 1997; see Gathercole & Martin, 1996,for a review)
+- phonotactic pba crucial for infants to segment continuous speech
+- overlap with known words -> neighb density : nb of real words in a fixed radius of the sequence
+peut être confondus : high-density neighborhood tends to have high pba phonotacticpatterns et inv
+-> examiner power of prediction of lexical and phonotactic measures, indiv and jointly
+-> independant effects of both
+- phonotactic : bigram pba (voire trigrammes) -> cooccurrences or transition pba
+- orthotactic pba
+- neighborhood density : nb of neighb -> no measure of similarity between phonemes (b,p,s)
+- the Neighborhood Activation Model of Luce (1986; Luce, Pisoni, & Goldinger, 1990). In Luce’s model of word recognition, neighbor similarity is based on experimentally derived phoneme confusability -> peut pas être appliqué en français car contrastes différents
+- Generalized Neighborhood Model (GNM) : generalization of GCM, spécifiquement pour mots
+- Generalized Context Model (GCM) : Si= Somme(j) exp(-D*dij) -> pas distinction Neigh/X
+continuous model -> bcp utilisé pour tâches linguistiques
+D=sensitivity parameter, determined by regression -> how quickly simil decreases with distance
+equation :  si=Σ(A*fj2+B*fj+C)exp(-D*dj)
+fj = log token freq of neighborhood word j
+requires measure of psychological distance between strings
+-> combination of standard edit distance and linguistic phoneme similarity
+    -> cost of substitution vary with phoneme similarity
+    -> natural class distance metric : counts number of natural classes shared by 2 phonems
+S : number of natural classes shared by 2 phonemes
+D1 : distinct from 2d,     D2 : distinct from D1
+-> natural class distance between 2 phonemes = (D1+D2)/(S+D1+D2) -> 0 pour ident, 1 no features in common
+-> relative cost of insertions/deletions compared to substitutions : 0.7
+-> insertion/deletion cost = sinon pas symétriques
+-> edit distance and syllable part mismatch (SPM)
+
+Task :
+wordlikeness judgement
+Given previous findings which relate wordlikeness ratings to recall from short term memory (Gathercole & Martin, 1996), in addition to Frisch et al.’s(2000) finding that predictors of wordlikeness ratings were also good predictors of recognition performance
+expe1 :compar phono/lex pr expliquer wordlikeness
+nonwords stimuli pour éviter attributs confondus de vrais mots
+
+#########################################################################
+
+Deriving natural classes in phonology
+##################################
+Resume :
+appear together rule after rule
+feature theory : natural class is a set of features that contains all the sounds which have the feature specifications (1 or mor features)
+any individual sound is a natural class
+
+##################################
+" certain sets of sounds pattern together in phonological processes. These sets are referred to as natural classes."
+langage = compétition de contraintes
+faithfulness constraint and markedness constraint (marquer suffixe)
+    ex: buses, viole faithfulness mais respecte markedness constraint
+For example, sounds can pattern together as a natural class if they violate markedness constraints in the same environment,so given constraints  XA and  XB, A and B can form a natural class -> natural classes dépend des contraintes, pas des features
+avantage on standard account where nat classes characterized only by features
+
+->Kenstowicz and Kisseberth (1977)  ‘sets like [p, t, k], [m, n, =, E], and [i, e, ä] are classes of sounds that appear together in rule after rule
+It has been observed that natural classes can generally be given simple phonetic characterizations
+
+rule-based frameword -> set of sounds that undergo the rule = natural class
+-> quelles classes naturelles ? feature theory
+-> class must contain all the sounds that have these feature specifications
+-> problematic but no time to look for the resolution of the problem
+-> features will become not so important.

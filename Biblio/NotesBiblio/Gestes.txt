@@ -1,0 +1,192 @@
+Biblio
+
+#############################################################"
+
+"Gesticulation and speech : Two aspects of the process of utterance"
+
+##################################################################"
+
+Résumé :
+# phases
+Gestes x pdt de la Pa, émergence simultanée ,
+geste en avance sur Parole
+
+#################################################################
+
+-geste = 2d output :
+Gest/Speech Y contrôlé par même partie dans cerveau + lien aphasie/apraxie
+relation structure geste/parole -> encodage de la parole dans le mouvement
+Mais pas de syntaxe (gestes)-> succession + représentations mentales (pas verbales)
+gestes bloqués -> diff/ perd intonation, stress et expressivité / diff sélection de mots, - mots # -> ang - gênés que it
+-> gestes plus simples, moins d'étapes
+spontanément moins de gestes quand non familier ?
+-> g-phrase organisée en avance? émerge simultanément, pas pdt de la Y de Pa -> same encoding ?
+
+- # niveaux d'organisation /pattern de mouvement #
+1 G-Unit = 1/plusieurs G-phrases (préparation, stroke, hold, return/recovery)
+stroke = effort peak
+préparation (rest position -> stroke position)
+-> diff car parfois 1/ 2 mains, gesticulations surtout main droite
+g-phrase = idea unit? ideas incoded into patterns ?
+
+-coordination avec speech rythm -> synchro à # niveaux
+parole : intonation tone units
+1 geste/pl. Tone units OU pl. G-phrases/1 Tone unit
+relation structure phrase/gestes : locution associée à un gesticulary unit
+svt speech commence moment du stroke
+g-stroke avant tone unit nucleus, ou juste à l'onset, plus rarement à la fin de l'accent tonique
+début g-phrase tjs avant l'accent tonique, svt avant tone unit -> cooccurrence ou précédence
+pauses Pa : gestes pas interrompus, Pa reprend après le stroke ->G plus lisible ? mots difficiles/prend temps?
+intonation : // dans les gestes lever/baisser la main
+
+#############################################################################
+
+
+
+
+
+
+###############################################################################
+
+"Movement Phases in Signs and Co-Speech Gestures, and their Transcription by human coders"
+
+##############################################################################
+
+Résumé :
+
+# phases gestes
+critères de segmentation
+
+############################################
+
+gestes = système sémiotique, pas linguistique
+niveaux hiérarchiques fonctionnellement distincts -> synchronisent avec différents niveaux prosodie
+
+
+-G-Unit (gesticular) commence quand bras s'éloigne du corps/ fin quand retourne à rest position
+G-phrase = preparation, (pre-stroke hold) stroke, hold, recovery = idea unit
+stroke = seul obligatoire -> mouvement accentué, pic d'effort
+quand pl. G-phrases, recovery raccourci/supprimé
+stroke-less hold existe -> expressive phase (sémiotiquement active) : stroke ou independ hold
+DepHold = coordination speech-gestures/2 hands (attend 2e) -> si overlap, pas tjs la même phase
+
+-distinction fonctionnelle entre pre- post-stroke hold :
+pre : + svt ac connecteurs (pronoms, adverbes..) / initial part -> G attend synchro stroke/contenu (co-expressive portion of speech)
+post : étendre le mvt pour synchr ac co-expressive portion of speech
+ou synchr stroke/syllabe accentuée de phrase intonative
+-> pour speech-gesture synchronisation
+
+- segmentation/identif par dynamique des mvts (x mean/fct)
+1/ mvt phase
+chgt phase si chgt dir + disC0 vitesse (juste avant/après)
+  ex pause + 2 phases profils vitesse #
+  1 phase quand :
+    chg dir sans disc0 profil vitesse -> multi-segments phase (<-> single-segment phase) ex mime qqch
+    aller-retour -> semi-multi-segment phase
+    répétition mvt sans hold phase -> repetitive phase 
+path-movement ou hand-internal mvt
+  HI change graduel + path-mvt pas pertinent pour segm phases
+  
+2/phase type
+stroke : + force(accél), multi-segm tjs stroke
+hold : hand still -> decision relative neighb., pas direction distingable
+mvts bras entre 2 strokes -> preparation OU partial retractation(augm relaxation, retourne vers rest) puis preparation
+
+(1) Gesture Unit = Gesture Phrases*
+Gesture Phrase = (Preparation) ⇒ Stroke ⇒ (Retraction)
+Preparation = Preparation ⇒ (Pre-stroke hold)
+Stroke = Stroke ⇒ (Post-stroke hold)
+Retraction is optional when another Gesture Phrase follows.
+
+preparation/retractation : focus reach position
+stroke : focus form
+
+OU
+
+(2) Movement Unit = Movement Phrase*
+Movement Phrase = (Preparation) ⇒ Expressive Phase ⇒ (Retraction)
+Expressive Phase = Independent Hold
+Expressive Phase = (Dependent Hold) ⇒ Stroke ⇒ (Dependent Hold)
+Preparation = (Liberating Movement) ⇒ Location Preparation >> Hand Internal (hand shape/orientation), LP et HI overlap
+Preparation
+Retraction (when followed by another movement phrase) = Partial Retraction
+
+#############################################################################
+
+##########################################################################
+
+"Classifying the form of iconic hand gestures from the linguistic
+categorization of co-occurring verbs"
+
+####################################################################
+
+Résumé :
+prédictions des gestes par ML ac contenu linguistique
+classification de gestes et références
+
+####################################################################
+
+Annotations : form features of gestures
+-Machine learning algorithms have also been applied to annotations of hand gestures and the co-occurring referring expressions in order to identify gestural features relevant for co-reference resolution (Eisenstein and Davis, 2006;Navarretta, 2011).
+fundamental parameters of gesture form description (Bressem, 2013)
+form attributes : ex mvt and direction, handedness
+DiaGest’s annotation of semiotic types
+
+Attribute    Value
+Viewpoint    Observer_Viewpoint,Character_Viewpoint,Dual_Viewpoint,
+Handshape    ASL_C, ASL_G, ASL_5,ASL_O, ASL_S, Complex Other
+Handedness   Right_Hand, Left_Hand, Symmetric_Hands, Non-symmetric_ Hands
+Iteration    Single, Repeated, Hold
+Movement     Straight, Arc, Circle, Complex, None
+Direction    Vertical, Horizontal, Multidirectional, None
+
+Handshape inventory (Tennant and Brown,2010), complexe = variable pdt stroke
+
+
+##################################################################
+
+GESTURE: A PSYCHOLINGUISTIC APPROACH, McNeil
+
+###########################################
+
+Résumé :
+
+############################################
+Language and gestures = a single system
+stroke/ co-expressive-speech synchrones 90% temps
+qd avant : hésitations, # petite
+communicaive -> made for the listener or for speech Y
+both universal and language-specific features
+gesticulations for same event -> similarities
+MAIS # selon S-type ou V-type -> Leonard Talmy's topology (2000)
+(see McNeill & Duncan 2000)
+
+##############
+Aparté : "The Typology of Motion Expressions Revisited"
+motion events -> # encodages
+verbe encode either manner or path
+S-Framed languages : manner=vb, path = complément -> allemand
+V-framed lg : path=vb, manner complément -> français
+##################################################
+Kendon
+emblèmes(convetionnel), pantonimes(narratif), signes
+obligatoire? accompagné par parole ?
+methods of gesture transcription and measurement (Quek et al. 1999)
+catégories sémiotiques : plutôt des dimensions (peut mixer)
+iconiques : img/ actions ou entités concrètes
+métaphorique : signification abstraite
+déictique / (beats)
+Etudes synchronie / binding :
+-même avec delayed auditory feedback, tjs GP synchronie
+-stuttering (bégaiement) : pdt un stroke? mains freezent
+  -> plus de gestes quand bégaiement/ résiste tentative séparation
+-aveugles ont gestes
+-info en gestes rappelée en parole (sait pas quel canal)-> échg info
+G(stroke)/P se synchronisent quand sont -co-expressifs
+ -> up parole = up hand etc
+ combinaisons synchrones PaGeste = operative psycholinguistic units
+     -> growth point (GP)
+si prédicat psychologique alors
+importance #ciation focus/background
+définition mutuelle PP/ son ctxt
+PP illustre lien entre GP et context of speaking

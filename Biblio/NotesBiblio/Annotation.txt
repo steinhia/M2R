@@ -1,0 +1,103 @@
+########################################################
+Annotating Multi-media / Multi-modal resources with ELAN
+#######################################################
+Gesture studies VS multimodal interaction -> timing between speech and gesture
+different layers :
+- gesture units
+- preparation/stroke/hold etc
+######################################
+Coding gestural behavior with the NEUROGES–ELAN system
+#################################################
+NEUROGES = coding system : 3 models 
+I/ kinetic gesture coding -> codage indépendant des 2 mains
+    1/ begin/end
+    2/ kind of trajectory/dynamics -> precisely defined
+        -> phasic/ repetitive(ex up/down) /continuous/shift/holding
+    3/ hand on body/distant 
+II/ bimanual relation coding
+    spatial/functional relation
+III/ functional gesture coding
+    codage des fonctions des gesture units
+diff comparer quand pas de convention -> ici standardisation
+xml format -> easy to use
+NEUROpsychological GESture
+ajout d'annotations à annotations/subdivisions -> new tiers (//layers)
+-> kinetic and functional movement categories associated with specific cognitive, emotional and interactive functions
+
+##################################################
+
+Context- based Conversational Hand Gesture Classification in Narrative Interaction
+##################################################
+Resume : voir figure 1 annotation home/stroke/hold etc
+hand gesture features = total duration of gesture segment, mean/var 3D pos/freq stroke et hold
+    sum of duration of hold and stroke
+
+###############################################################
+pattern recognition
+proposed frameword (figure1) : gesture phase features / contextual feature set
+gestures accompanying narrative speech
+Mac Neil : thought is related to the relationship between language and gestures/ gesture play a role in representing part of language
+Kendon : philology of gestures : gestures, pantomines, emblemes ..
+Kendon : gesture phases (prep,stroke,hold,retractation)
+communicative gestures : arbitraire, chg fct ctxt/type de discours etc
+    -> diff mesurer similarité entre gestes/ définir hand shape
+    -> gesture phase features pour tous types de gestes
+    -> stroke a max info, mais hold important pour discrimination
+Hand gestures involve :
+- static posture
+- gesture (with or withoud finger motion)
+-> diff reconnaître début/fin gestures (ambiguité segmentation, variabilité spatio-temporelle)
+-> recognition model
+-> moCap -> voice,head and hand mvt
+Annotation :
+- utterance-> binary variable : speaking ? (longer than 700ms) / GMM to recog speech segments
+- hand gestures -> bin motion ? nonmotion = home pos of gesture phase (ici mains sur cuisses)
+step 1 : annotate nonmotion segments label
+step 2 : start/end mvts and label motion segments btwn these points
+step 3 : phase labels : stroke, hold
+step 4 : prep/retractation (+ court que hold/stroke-> assimilé à un point)
+step 5 : combine GD -> G=D : annotation, 1 seul stroke=stroke, home+hold = hold
+Autom : coord 3D centrées sur participant, origine = médiane entre 2 épaules
+    smooth gaussien (fenêtre 50ms), missing value<500ms interpolée linéairement
+    annot/recog by Hidden Markov Model (HMM)
+- head gesture : speaker and listener, manuel=bin, autom by DWT (Wavelet)
+- head direction
+-> annotation by heuristic combination of the pattern recognition technique
+-> manual annotation to evaluate autonomous annotation
+
+hand gesture features
+(prestroke/poststroke hold phases)
+- total duration of gesture segment
+- Mean and variation (delta mt) of 3d positions sequence
+- frequency of hold and stroke segment (nb of hold/stroke)
+- Sum of duration of hold and stroke segment (voir calcul)
+
+##############################################
+
+ELAN
+
+
+import media file
+file-> new file -> import with wayform
+droite : tool windows
+bas : wayform et annotation tears
+clique tear window + drague souris -> sélect région play S/remove/beg/end
+
+- types and tiers
+type -> add new ling type
+tier -> add new tier -> more options (color/font size etc) ex Mac Cain
+    delete default tier puis type
+
+- annotations
+select region, db clic, écrit annotation
+OU options -> segm mode (current tier important, chg avec flèche haut bas)
+enter (in point) continue, enter (out point) -> crée segments vides
+ici peut bouger segments/ changer taille par drag/drop
+delayed mode : commence segment un peu avant le clic (pd tps appuyer sur entrée)
+PUIS transcription Mode : choisit type talk
+affiche 2 participants et les segmentations -> annote et écoute partie segm
+Options -> Annot mode -> voit le résultat
+
+
+#######################################"
+

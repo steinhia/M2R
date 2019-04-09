@@ -1,0 +1,154 @@
+###########################
+The sounds of many hands clapping
+#########################
+Resume :
+conflit synchro/I B -> alternance de phases synchro/fast clapping
+condition pour synchro : seuil dispersion maximale, donc double T
+order parameter r increases as periodic signal develops, decreases as synchro disappears
+
+###########################
+initial incoherent clapping (fast clapping) , sudden synchro process -> self-organization
+develop of periodic signal -> increases strength of signal/decreases average noise intensity
+pronounced pics in the signal
+
+order parameter increases as periodic signal develops; decreases when disappears
+Order parameter, r, defined as the maximum of the normalized correlation between the signal c(t) and a harmonic function,
+r = max (T,φ)Int (t+T t−T) c(t) sin(2π/T + φ)dt/Int (t+T t−T) c(t)dt, 
+where φ and T span all possible values.
+
+surprizing : s'attend à augm I B pour signaler enthousiasme -> conflit average noise/synchro
+correlation global signal/indiv -> indiv records :
+clapping period suddenly doubles at beginning of synchro, slowly decreases when synchro is lost
+decrease in average noise = conseq of T doubling, + B que si diminution T -> disp synchro
+synchro et desynchro car conflit I B/ synchro
+doubling necessary to synchro ? 
+expe contrôlée : indiv : clap après bonne perfo / applaudissement rythmique
+-> double de modeI à II, et moins de dispersion entre/intra pour mode II (rythmique)
+
+pour un groupe d'oscillateurs globalement couplés, condition nécessaire pour synchro = dispersion<epsilon -> T doubling émerge comme condition (- dispersion quand + lent)
+
+#####################################
+
+
+
+
+################################################
+Why people gesture as they speak
+#########################################
+Resume :
+aveugle font des gestes, même entre eux 
+gestes pas parce qu'on voit un modèle de gestes chez l'autres, ni pour apporter des infos à l'autre -> facilite la pensée ?
+
+###########################
+2 hyp :
+1/ gesture because see others gesture -> apprend de ce modèle
+-> blind gesture ( rate not significantly diff from sighted group)
+same info with same range of gesture forms
+2/ gesture because useful info to the listener
+sighted with blind / BB / SS
+blind to blind gesture
+CCL: gesture does not depend on model or observer -> integral to the speaking process
+May be reflect or facilitate the thinking underlying speaking ?
+
+
+####################################
+
+
+
+#####################################
+Perceptual basis of bimanual coordination
+##############################
+Resume : calcul des relative phase angles btwn left/right
+slips involontaires d'asymétrie vers symétrie 
+coordination plus perceptuelle que motrice
+-> mvts volontaires organisés en buts perceptifs, activité motrice en découle
+##############################
+tendance à la symétrie, slips involontaires d'asymétrie vers symétrie (pas vice-versa)
+-> tendance à la co-activation de muscles ? NON spatial perceptual symetry (coord)
+1/ bimanual finger oscillation -> mirror symetry (stable) or parallel (unstable) -> 2 operations
+    + 2 mains paumes visibles/X (congruent)  ou Vi/X X/Vi(incong) -> 4 bimanual hand positions
+    quand augm fréq, switch vers sym, jms autre sens
+    congruent -> coactivation ok -> attend biais vers symétrie
+    incongruent -> // = co-activation de muscles homologues -> biais vers //? si co-activation
+        si hyp symétrie perceptuelle, attend biais vers sym oscillation
+    Rés:always sym oscillation, révélé par calcul de phase relative (histogrammes)
+XR and XL indicate the transversal positions of the right and left index 
+Theta=tan-1(dXR/dt /XR)-tan-1(dXL/dt /XL) .
+0+-60= sym,180+-60=//,90+-30 et 270+-30 = intermédiaire
+incongruent : // 60% échec (46%sym) , sym 10% échec (0.75% // -> pas de transition into //)
+--> tendance perceptuelle spatiale plutôt que co-activation de muscles
+expe : 
+2/ bimanual finger tapping (tape IM des deux mains) Sym tapping = (_I,I_) or (M_,_M)
+    // = (M_I_),(_I,_M) -> - stable, transitions vers sym -> perceptuel ou moteur ?
+    tâche // ou sym, avec I/I ou I/Annulaire
+    -> homologues dans pattern //
+3/ bimanual circling model -> si rapport fréq x harmonique (5:4,4:3), preque impossible
+coordination purement perceptuelle
+peut faire mvts diff slmt avec un simple feedback visuel, pas besoin de représentation motrice
+-> pas besoin de traduction 'moteur'/'perceptuel' grâce aux modèles internes
+mais organisation des mvts par représentation des buts perceptifs, activité motrice flexible
+
+CCL : bimanual coordination + indép du syst moteur que ce qu'on croit, plutôt perceptuel
+
+########################
+
+#########################################
+A Theoretical Model of Phase Transitions in Human Hand Movements
+#################################
+Resume :
+
+
+#######################################################
+chgts abrupts de phase quand augm fréq -> passe de anti-phase a in-phase (soudain/involontaire)
+qd réduit fréq, repasse X anti-phase -> co-existence bassins attraction pour 2 modes (anti/in)
+prédictible dans l'unité de fréq naturelle -> ratio cst
+chgts ds coordination (trot,galop/synchro,X)  dûs à chgt d'un seul paramètre ?
+diff cpd macro à partir micro -> équations tardives
+comportement de systèmes complexes peut être bien modélisé par quantités macro -> order param
+coopération de syst individuels -> crée param, en retour param gouverne compo des composants
+-> cmt trouver le bon order parameter ? doit varier moins vite que var° pr décrire compo indiv
+expe 2 dgts montre que phase relevant macroscopic parameter of certain mvts patterns
+Phase : -reflection of the cooperativity among components of the systems because :
+-> phase specifies ordering of subsystems
+-> phase invariant across transfo in motor activities, malgré chgt fréq/A
+expe : élongations finger(x1,x2), suppose xi=ricos(wt+φi),φi=time dependant component <w
+-> relative phase φ=φ2-φ1
+-> change of phase : en synergétique, équations pour order parameters : φ=dV/dφ, V fct potentiel
+-> phase pour des fct cos -> V(x+2pi)=V(x)
+-> mains ont rôle sym -> V(x)=V(-x)
+-> V=-acosφ-bcos(2φ) -> φ=coordonnée d'une particle dans un potentiel V
+b=0 -> 1 équil stable à φ=0, a=0 équil stables à pi,-pi,0
+chg a/b -> # chps de potentiel
+qd augm la fréq, hyp b/a diminue -> valeur critique wc, où balle tombe à φ=0 (sym state)
+quand rediminue fréq, reste dans puits de potentiel -> hysteresis phenomenon
+extrema of V ? sinφ=0, cosφ=-a/4b
+transition when maxima vanishes (pas faisable par réel), when |b|<|a|/4 -> b < bc=|a|/4
+r1,r2 diminuent quand w augmente -> critical rc for transition
+-> V=-a(cosφ+1/4*r(w)2/rc2*cos(2φ))
+
+
+#######################################################
+
+#############################################################
+"Computation of continuous relative phase and modulation of frequency of
+human movement"
+
+######################################################
+Resume : Calcul de phase avec la méthode HPN_CP
+
+##############################################################
+
+
+Pour calculer la phase : utilisation de la méthode
+-HPN_CP (Half Period Normalized Continuous Phase)→ divise vit par π/hp
+    avec hp demi période (time ≠ between two inflexion points of the signal)
+    car modulation intra cycle, p suffit pas
+
+Car oscillations pour les méthodes :
+NN_CP (Non Normalized Continuous Phase) 
+MPN_CP (Mean Period Normalized Continuous Phase) → divise vitesse par 2π/p
+
+Et surestimation aux points d'inflexion pour :
+HT_CP (Hilbert-Transform CP)################################################
+
+##############################################################

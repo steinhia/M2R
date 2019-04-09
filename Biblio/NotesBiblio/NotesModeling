@@ -1,0 +1,39 @@
+Hand Gesture Modeling, Analysis and Synthesis
+3 motion phases : preparation, stroke (increased speed) and retractation(returning to rest position)
+mvt des doigts a du sens seulement si la main est fixe
+modèle :
+static hand gestures : hand posture -> finger-thumb-palm configuration
+dynamic hand gestures : general stroke motion + begin/end hand configuration
+-> pdt mvt, chgt de configuration n'apporte pas d'information
+
+gesture analysis : temporal and spatial
+Glove-Talk : 203 gesture-to-words
+vision-based analysis : palm-orientation/joint angles
+feature tracking and model parameter estimation -> Gauss-Newton min of the residual feature error
+Lee and Kuni -> model 27 degrees of freedom
+Kuch 300 point Nurbs-based handmodel -> 26degrees of freedom
+Davis and Shah  computed motion trajectories (marqueurs) -> start/end of gesture
+-> gesture modeled by a set of start-end vectors
+-> cylindrical fingertip model
+Maggiono -> image geometry parameters based on 1stnand 2d moments -> estimation hand position and orientation
+..
+
+
+videos
+gestualité co-verbale
+phrase gestuelle
+préparation
+mise en place (stroke)
+tenue geste rétraction
+
+typologie des gestes manuelle :
+-gestes iconiques : obj, action mimées
+-gestes métaphoriques : idées abstraites
+- déictiques : pointent vers référent énonciatif ou spatial
+- emblèmes : différents selon la culture, gestes conventionnels -> accentuent propos
+- battements : tempo dans discours, rythme propos -> qd a fini de parler
+- adaptateurs qd touche son propre corps
+geste avant début parole -> anticipation du geste sur la parole
+aide à trouver mots, structurer discours -> degré de structuration, entropie ?
+neurones voit qqn parler -> activation main
+réseau perception-action...
