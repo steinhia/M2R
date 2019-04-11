@@ -12,7 +12,76 @@ import time
 from functools import partial
 import pickle
 import csv
+from itertools import islice
+import panda as pd
 
+# calcul de la distance pour le test de dénomination 
+
+Voy=['a','e','y','i','o','u','@','9','2:','OY','aU','aI','2:6','e:6','o:6','y:6','96','E6','u:6','E:6','O:6','i:6','I6','O6','Y6','U6','a:6','a6']
+
+# 6 n'est utilisé qu'en diphtongue, sinon remplacé par @R
+# sinon 6 ne rentre pas dans les schémas CVCVCVC, statut ni de voyelle ni consonne
+Cons=['b','k','d','f','g','h','j','l','m','n','p','r','s','t','v','N','z','Z','C','ts','tS','dZ','S','x','?']
+ # an=@,in=5,on=6,eu=9,j=Z,gn=N,ch=S
+def createNaturalClasses():
+# on met le schwa dans ouvert,semi-ouvert,ferme,arrondi,etire,voyAnt,voyPost,nasal,oral
+# ok car prend en compte les classes contenant le schwa et pas la voyelle en question
+# on a donc dist(*,voy)=0.55
+# [voise,sourd,lieuAvant,Median,Posterieur,nasal,oral,occlusif,fricatif,liquide,ouvert,semi-ouvert,ferme,arrondi,etire,voyAnterieur,voyPosterieur]
+    return ['bvdzZgRmnNjl','pftsSkxCh','pbmfv','tdnszlSZ','xCkgRNhj','mnN','ptkbdg','fsSvzZChxR','lj','a','oe@9','iyu','yuo9','iea@','iye@','uo','a9']
+NaturalClasses=createNaturalClasses()
+
+def _edit_dist_init(len1, len2):
+    lev = []
+    for i in range(len1):
+        lev.append([0] * len2)  # initialize 2D array to zero
+    for i in range(len1):
+        lev[i][0] = i  # column 0: 0,1,2,3,4,...
+    for j in range(len2):
+        lev[0][j] = j  # row 0: 0,1,2,3,4,...
+    return lev
+
+def phonemeDist(NaturalClasses,c1,c2):
+    n=0;n1=0;n2=0;
+    c1=c1.lower()[0]
+    c2=c2.lower()[0]
+    if c1==c2:
+        return 0
+    for s in NaturalClasses:
+        if c1 in s and c2 in s:
+            n+=1
+        elif c1 in s:
+            n1+=1
+        elif c2 in s:
+            n2+=1
+    if n+n1+n2!=0:
+        return float((n1+n2))/float((n+n1+n2))
+    return 1
+
+def _edit_dist_step(lev, i, j, s1, s2, substitution_cost=1.0/0.7):
+    c1 = s1[i - 1]
+    c2 = s2[j - 1]
+    # insertions ou deletions
+    # skipping a character in s1
+    a = lev[i - 1][j] + 1
+    # skipping a character in s2
+    b = lev[i][j - 1] + 1
+    # substitution
+    c = lev[i - 1][j - 1] + (substitution_cost*phonemeDist(NaturalClasses,c1,c2))
+    # pick the cheapest
+    lev[i][j] = min(a, b, c)
+
+
+def edit_distance(s1, s2, substitution_cost=1.0/0.7):
+    # set up a 2-D array
+    s1=[x for x in s1 if x!='.']
+    s2=[x for x in s2 if x!='.']
+    len1=len(s1);len2=len(s2)
+    lev=_edit_dist_init(len1+1,len2+1)
+    for i in range(len1):
+        for j in range(len2):
+            _edit_dist_step(lev,i+1,j+1,s1,s2,substitution_cost=substitution_cost)
+    return lev[len1][len2]
 
 ListOfURL=['fyJR1Nd5bdYf.png',
 'RXu0QM7rpAyU.png',
@@ -64,23 +133,25 @@ def num2type(i):
 # Bonnes réponses du test 
 # noms de à à 11 correspondant aux images
 NamesList=['Mielbete','Keimase','Sonistik','Tereinat','Ligete','Mattendich','Soltete','Madikten','Wecktellin','Lasgelich','Zulergen','Melare']
+PhoneticList=['m_i_l_b_e_t_@','k_aI_m_a_s_@','z_o_n_i_s_t_i_k','t_e_r_aI_n_a_t','l_i_g_e_t_@','m_a_t_@_n_d_i_C','s_o_l_t_e_t_@','m_a_d_i_k_t_@','v_@_k_t_e_l_i_n','l_a_s_g_e_l_i_C','ts_u_l_@_r_g_@','m_e_l_a_r_@']
 
-# liste des mots demandés pour l'identification (questions)
+# liste des mots demandés pour l'identification (questions = mots, réponses = img)
 IdentificationListNum=[2,1,4,0,10,5,7,3,11,6,8,9]
 IdentificationListNumUnit=[1,2,0,3,4,5,6,8,7,10,9,11]
 IdentificationList=map(num2name,IdentificationListNum)
 IdentificationListUnit=map(num2name,IdentificationListNumUnit)
-IdentificationList1=map(num2name,[1,2,0])
-IdentificationList2=map(num2name,[3,4,5])
-IdentificationList3=map(num2name,[6,8,7])
-IdentificationList4=map(num2name,[10,9,11])
+#IdentificationList1=map(num2name,[1,2,0])
+#IdentificationList2=map(num2name,[3,4,5])
+#IdentificationList3=map(num2name,[6,8,7])
+#IdentificationList4=map(num2name,[10,9,11])
 
 # liste des mots espérés pour la pour la dénomination (réponses, questions = img)
 DenominationList=map(num2name,[0,1,2,6,7,8,3,4,5,9,10,11])
-DenominationList1=map(num2name,[2,0,1])
-DenominationList2=map(num2name,[3,4,5])
-DenominationList3=map(num2name,[8,7,6])
-DenominationList4=map(num2name,[9,11,10])
+DenominationListUnit=map(num2name,[2,0,1,3,4,5,8,7,6,9,10,11])
+#DenominationList1=map(num2name,[2,0,1])
+#DenominationList2=map(num2name,[3,4,5])
+#DenominationList3=map(num2name,[8,7,6])
+#DenominationList4=map(num2name,[9,11,10])
 
 
 # condition correspondant à l'histoire pour l'id correspondant
@@ -143,20 +214,23 @@ def singleTest(liste,LN,LNm,dico,num):
         dico[idPart][num]=[ligne[2:5],ligne[5:],0,ident]
     return dico
 
-
+# on prend un test d'un participant et on crée les lignes csv correspondantes
 def createLigne(ligne,permut,n=0):
     sujet=int(ligne[0])
     jour=ligne[1]
     ordre=permut[int(sujet)-1]
     ordreS="".join([str(a[0]) for a in ordre])
     ordreC="".join([str(a[1]) for a in ordre])
-    # on s'interesse à l'identification : liste des noms rentres
-    identNames=[]
+    identNames=[];denomNames=[]
     if len(ligne)>20:
         identNames=[imgName2name(name) for name in ligne[14:]]
+        denomNames=[name for name in ligne[2:14]]
     else:
         identNames=[imgName2name(name) for name in ligne[5:]]
-    # on crée les lignes pour le tableau de résultat
+        denomNames=[name for name in ligne[2:5]]
+
+
+    # on s'interesse à l'identification : liste des noms rentres
     res=[]
     for i,name in enumerate(identNames):
         # boolean réussite/échec
@@ -173,7 +247,22 @@ def createLigne(ligne,permut,n=0):
         condition=ordreC[ordreS.index(str(story))]
         # type : maison etc
         nameType=num2type(i)
-        res.append([sujet,jour,str(ordreS),str(ordreC),story,condition,name,answer,b])
+        res.append([sujet,jour,'s '+str(ordreS),'c '+str(ordreC),story,condition,name,answer,b])
+
+    # dénomination ensuite : on complete la liste
+    for i,name in enumerate(denomNames):
+        if name!='':
+            ordrei=i/3
+            answer=''
+            if len(ligne)>20:
+                answer=DenominationList[i]
+            else:
+                answer=DenominationListUnit[i+n*3] 
+                ordrei+=n
+            # on cherche la bonne ligne
+            for j,l in enumerate(res):
+                if l[7]==answer:
+                    l.append(name)
     return res
 
 
@@ -211,7 +300,7 @@ for i,ligne in enumerate(l[1:]):
     CSVTab+=createLigne(ligne,permut)
     dico[idPart][idTest]=[ligne[2:14],ligne[14:],0,ident,0,identCond,identHist]
 
-# test unitaire : erreur dans le prévu
+# test unitaire 
 for i,ligne in enumerate(l1[1:]):
     ligne=replaceName(ligne)
     CSVTab+=createLigne(ligne,permut)
@@ -277,7 +366,41 @@ print "effet par histoire",histJ3
 
 sorted_d = sorted(errDico.items(), key=operator.itemgetter(1))
 #print sorted_d
+# on rajoute les transcriptions phonétiques (test de dénomination)
 
+
+   
+# on ouvre le fichier csv existant pour récupérer les transcriptions existantes
+with open('brut.csv','r') as f:
+    r=csv.reader(f)
+    for l in islice(r,1,None):
+        # si on trouve une transcription
+        if len(l)>=11 and l[10]!='':
+            transcription=l[10]
+            for csvLigne in CSVTab:
+                strLigne=map(str,csvLigne)
+                if l[:8]==strLigne[:8]:
+                    csvLigne.append(transcription)
+                    # réponse correcte
+                    r=PhoneticList[NamesList.index(l[7])]
+                    # calcule de la distance
+                    d=10
+                    transTab=transcription.split('_')
+                    repTab=r.split('_')
+                    d=min(10,edit_distance(transTab,repTab))
+                    csvLigne+=[r,d]
+
+with open('brut.csv', mode='w') as f:
+    writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    writer.writerow(["id","jour","ordre histoires","ordre conditions","histoire","condition","reponse donnee","reponse attendue","evaluation","orthographe","transcription","reponse phonetique","distance"])
+    listLines=[]
+    for i in CSVTab:
+        if i not in listLines:
+            writer.writerow(i) 
+        else:
+            print "doublon",i
+        listLines.append(i)
+    
 # confusions :
 # entre noms de la même histoire ?
 # entre noms de la même sorte ?
@@ -285,9 +408,3 @@ sorted_d = sorted(errDico.items(), key=operator.itemgetter(1))
 # entre formes se ressemblant ?
 # par image (possibilité) ?
 # par texte (question) ?
-   
-#with open('brut.csv', mode='w') as f:
-#    writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-#    writer.writerow(["id","jour","ordre histoires","ordre conditions","histoire","condition","reponse donnee","reponse attendue","evaluation"])
-#    for i in CSVTab:
-#        writer.writerow(i) 
