@@ -96,6 +96,7 @@ ListOfURL=['fyJR1Nd5bdYf.png',
 'YEMx5pW9l952.png',
 'XnQSXSzM0tU7']
 
+
 # f(4)=1 : numero d'image -> numero d'histoire
 def num2s(imgNum):
     return imgNum/3
@@ -128,12 +129,19 @@ def num2type(i):
         return 'maison'
     else:
         return 'vehicule'
+def name2type(wd):
+    i=NamesList.index(wd)
+    return num2type(i)
+
 
 # les histoires vont de 0 à 3, les mots de 0 à 11, les conditions de 0 à 3
 # Bonnes réponses du test 
 # noms de à à 11 correspondant aux images
 NamesList=['Mielbete','Keimase','Sonistik','Tereinat','Ligete','Mattendich','Soltete','Madikten','Wecktellin','Lasgelich','Zulergen','Melare']
 PhoneticList=['m_i_l_b_e_t_@','k_aI_m_a_s_@','z_o_n_i_s_t_i_k','t_e_r_aI_n_a_t','l_i_g_e_t_@','m_a_t_@_n_d_i_C','s_o_l_t_e_t_@','m_a_d_i_k_t_@','v_@_k_t_e_l_i_n','l_a_s_g_e_l_i_C','ts_u_l_@_r_g_@','m_e_l_a_r_@']
+
+
+
 
 # liste des mots demandés pour l'identification (questions = mots, réponses = img)
 IdentificationListNum=[2,1,4,0,10,5,7,3,11,6,8,9]
@@ -243,11 +251,13 @@ def createLigne(ligne,permut,n=0):
             ordrei+=n
         b=(name==answer)
         # de 0 à 3, ordre temporel, pas histoire/condition
-        story=ordrei
+        # on récupère l'histoire à partir de la réponse attendue
+        story=name2s(answer)
+        # condition ocrrespondante
         condition=ordreC[ordreS.index(str(story))]
         # type : maison etc
-        nameType=num2type(i)
-        res.append([sujet,jour,'s '+str(ordreS),'c '+str(ordreC),story,condition,name,answer,b])
+        nameType=name2type(answer)
+        res.append([sujet,jour,'s '+str(ordreS),'c '+str(ordreC),story,nameType,condition,name,answer,b])
 
     # dénomination ensuite : on complete la liste
     for i,name in enumerate(denomNames):
@@ -261,7 +271,7 @@ def createLigne(ligne,permut,n=0):
                 ordrei+=n
             # on cherche la bonne ligne
             for j,l in enumerate(res):
-                if l[7]==answer:
+                if l[8]==answer:
                     l.append(name)
     return res
 
@@ -313,11 +323,6 @@ for i,ligne in enumerate(l3[1:]):
 for i,ligne in enumerate(l4[1:]):
     ligne=replaceName(ligne)
     CSVTab+=createLigne(ligne,permut,3)
-
-
-for i in CSVTab:
-    1#print i,"\n"
-
 
 
 
@@ -374,6 +379,8 @@ sorted_d = sorted(errDico.items(), key=operator.itemgetter(1))
 with open('brut.csv','r') as f:
     r=csv.reader(f)
     for l in islice(r,1,None):
+        # réponse correcte
+        rep=PhoneticList[NamesList.index(l[8])]
         # si on trouve une transcription
         if len(l)>=11 and l[10]!='':
             transcription=l[10]
@@ -381,24 +388,24 @@ with open('brut.csv','r') as f:
                 strLigne=map(str,csvLigne)
                 if l[:8]==strLigne[:8]:
                     csvLigne.append(transcription)
-                    # réponse correcte
-                    r=PhoneticList[NamesList.index(l[7])]
                     # calcule de la distance
                     d=10
                     transTab=transcription.split('_')
-                    repTab=r.split('_')
+                    repTab=rep.split('_')
                     d=min(10,edit_distance(transTab,repTab))
-                    csvLigne+=[r,d]
+                    csvLigne+=[rep,d]
+for csvLigne in CSVTab:
+    if len(csvLigne)<=11 or csvLigne[10]=='':
+        rep=PhoneticList[NamesList.index(csvLigne[8])]
+        csvLigne+=['','',rep,10]
 
 with open('brut.csv', mode='w') as f:
     writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    writer.writerow(["id","jour","ordre histoires","ordre conditions","histoire","condition","reponse donnee","reponse attendue","evaluation","orthographe","transcription","reponse phonetique","distance"])
+    writer.writerow(["id","jour","ordre histoires","ordre conditions","histoire","type","condition","reponse donnee","reponse attendue","evaluation","orthographe","transcription","reponse phonetique","distance"])
     listLines=[]
     for i in CSVTab:
         if i not in listLines:
             writer.writerow(i) 
-        else:
-            print "doublon",i
         listLines.append(i)
     
 # confusions :
