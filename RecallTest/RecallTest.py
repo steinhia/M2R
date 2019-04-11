@@ -155,7 +155,6 @@ def createLigne(ligne,permut,n=0):
     if len(ligne)>20:
         identNames=[imgName2name(name) for name in ligne[14:]]
     else:
-        print ligne[5:]
         identNames=[imgName2name(name) for name in ligne[5:]]
     # on crée les lignes pour le tableau de résultat
     res=[]
@@ -168,7 +167,6 @@ def createLigne(ligne,permut,n=0):
         else:
             answer=IdentificationListUnit[i+n*3] 
             ordrei+=n
-        print 'answer',answer,ordrei
         b=(name==answer)
         # de 0 à 3, ordre temporel, pas histoire/condition
         story=ordrei
@@ -229,7 +227,7 @@ for i,ligne in enumerate(l4[1:]):
 
 
 for i in CSVTab:
-    print i,"\n"
+    1#print i,"\n"
 
 
 
@@ -288,8 +286,8 @@ sorted_d = sorted(errDico.items(), key=operator.itemgetter(1))
 # par image (possibilité) ?
 # par texte (question) ?
    
-with open('brut.csv', mode='w') as f:
-    writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    writer.writerow(["id","jour","ordre histoires","ordre conditions","histoire","condition","reponse donnee","reponse attendue","evaluation"])
-    for i in CSVTab:
-        writer.writerow(i) 
+#with open('brut.csv', mode='w') as f:
+#    writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+#    writer.writerow(["id","jour","ordre histoires","ordre conditions","histoire","condition","reponse donnee","reponse attendue","evaluation"])
+#    for i in CSVTab:
+#        writer.writerow(i) 
