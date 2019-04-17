@@ -24,36 +24,40 @@ def as_range(iterable): # not sure how to do this part elegantly
     else:
         return [l[0],l[0]]
 
-
+# crée les 3 tiers
 def create3Annotations(debut,fin):
     a1=tgt.core.Annotation(debut,fin,'transcription')
     a2=tgt.core.Annotation(debut,fin,'traduction')
     a3=tgt.core.Annotation(debut,fin,'commentaire')
     return [a1,a2,a3]
 
-def add3Annotations(ann,T1,T2,T3):
+# ajoute une annotation
+def add3Annotations(ann,T1,T3):
     tierTranscription.add_annotation(ann[0])
-    tierTraduction.add_annotation(ann[1])
+    #tierTraduction.add_annotation(ann[1])
     tierComm.add_annotation(ann[2])
     
 
-for idNum in range(1,16):
-    path='AudioList/id4/'#+str(idNum)+'/'
+for idNum in range(10,11):
+    path='AudioList/id'+str(idNum).zfill(2)+'/'
     MatPath=path+'Mat/'
     for filename in glob.glob(os.path.join(path, '*.wav')):
-        name='id04-c1243-s1342-j3-n01.wav'
-        matName=MatPath+os.path.basename(name)[:-3]+'mat'
+        #name='id07-c2134-s2431-j1-n06.wav'
+        #filename=path+name
+        matName=MatPath+os.path.basename(filename)[:-3]+'mat'
         txtGName=filename[:-3]+'TextGrid'
         exists = os.path.isfile(txtGName) 
-        if not exists: # on les écrase pas
+        if not exists or True: # on les écrase pas
             # on importe le signal
             fs, data = wavfile.read(filename)
             lenData=len(data)
             # on importe la détection de parties voisées
             file = scipy.io.loadmat(matName)
             mat=file['vadout']
+            # on importe des [0 0 0 1 1 1 1 0 0]
             mat=[i[0] for i in mat]
             lenDetection=len(mat)
+            # on fait un resemple car le detect voice est échantillé à 10 ms
             r=float(lenData)/(float(lenDetection)*float(fs))
             # on met ça dans le format début-fin
             indicesTab=[i for i in range(len(mat)) if mat[i]==1]
@@ -66,19 +70,20 @@ for idNum in range(1,16):
         
             # on crée le textGrid
             txtGrid=tgt.core.TextGrid('essai.TextGrid')
-            tierTranscription=tgt.core.IntervalTier(0,lenData,'transcription')
-            tierTraduction=tgt.core.IntervalTier(0,lenData,'traduction')
-            tierComm=tgt.core.IntervalTier(0,lenData,'commentaires')
+            tierTranscription=tgt.core.IntervalTier(0,lenData/fs,'transcription')
+            #tierTraduction=tgt.core.IntervalTier(0,lenData/fs,'traduction')
+            tierComm=tgt.core.IntervalTier(0,lenData/fs,'commentaires')
         
             # on crée les annotations
             for I in intervals:
                 ann=create3Annotations(I[0],I[1])
-                add3Annotations(ann,tierTranscription,tierTraduction,tierComm)
+                add3Annotations(ann,tierTranscription,tierComm)
             txtGrid.add_tier(tierTranscription)
-            txtGrid.add_tier(tierTraduction)
+            #txtGrid.add_tier(tierTraduction)
             txtGrid.add_tier(tierComm)
     
             tgt.io.write_to_file(txtGrid, txtGName)
+            tgt.io.read_textgrid(txtGName)
 
 
 
