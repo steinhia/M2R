@@ -138,7 +138,7 @@ def name2type(wd):
 # Bonnes réponses du test 
 # noms de à à 11 correspondant aux images
 NamesList=['Mielbete','Keimase','Sonistik','Tereinat','Ligete','Mattendich','Soltete','Madikten','Wecktellin','Lasgelich','Zulergen','Melare']
-PhoneticList=['m_i_l_b_e_t_@','k_aI_m_a_s_@','z_o_n_i_s_t_i_k','t_e_r_aI_n_a_t','l_i_g_e_t_@','m_a_t_@_n_d_i_C','s_o_l_t_e_t_@','m_a_d_i_k_t_@','v_@_k_t_e_l_i_n','l_a_s_g_e_l_i_C','ts_u_l_@_r_g_@','m_e_l_a_r_@']
+PhoneticList=['m_i_l_b_e_t_@','k_aI_m_a_s_@','z_o_n_i_s_t_i_k','t_e_r_aI_n_a_t','l_i_g_e_t_@','m_a_t_@_n_d_i_C','z_o_l_t_e_t_@','m_a_d_i_k_t_@','v_@_k_t_e_l_i_n','l_a_s_g_e_l_i_C','ts_u_l_@_r_g_@','m_e_l_a_r_@']
 
 
 
@@ -277,7 +277,7 @@ def createLigne(ligne,permut,n=0):
 
 
 # on télécharge tout avec une virgule en séparateur
-l=CsvReader('recall_test_v3.csv')
+l=CsvReader('recall_test.csv')
 l1=CsvReader('recall_s1.csv')
 l2=CsvReader('recall_s2.csv')
 l3=CsvReader('recall_s3.csv')
@@ -376,32 +376,48 @@ sorted_d = sorted(errDico.items(), key=operator.itemgetter(1))
 
    
 # on ouvre le fichier csv existant pour récupérer les transcriptions existantes
-with open('brut.csv','r') as f:
-    r=csv.reader(f)
-    for l in islice(r,1,None):
-        # réponse correcte
-        rep=PhoneticList[NamesList.index(l[8])]
-        # si on trouve une transcription
-        if len(l)>=11 and l[10]!='':
-            transcription=l[10]
-            for csvLigne in CSVTab:
-                strLigne=map(str,csvLigne)
-                if l[:8]==strLigne[:8]:
-                    csvLigne.append(transcription)
-                    # calcule de la distance
-                    d=10
-                    transTab=transcription.split('_')
-                    repTab=rep.split('_')
-                    d=min(10,edit_distance(transTab,repTab))
-                    csvLigne+=[rep,d]
+if os.path.isfile('brut.csv'): 
+    with open('brut.csv','r') as f:
+        r=csv.reader(f)
+        for l in islice(r,1,None):
+            # réponse correcte
+            PRep=PhoneticList[NamesList.index(l[8])]
+            # si on trouve une transcription
+            if len(l)>=12 and l[11]!='':
+                transcription=l[11]
+                print transcription
+                for csvLigne in CSVTab:
+                    strLigne=map(str,csvLigne)
+                    if l[:8]==strLigne[:8]:
+                        csvLigne.append(transcription)
+                        # calcul de la distance avec la bonne réponse
+                        d=10
+                        transTab=transcription.split('_')
+                        PRepTab=PRep.split('_')
+                        d=min(10,edit_distance(transTab,PRepTab))
+                        csvLigne+=[PRep,d]
+                        # calcul de la distance minimale
+                        dConf=10;Pconf='';
+                        for Pname in PhoneticList:
+                            PTab=Pname.split('_')
+                            tmp=edit_distance(transTab,PTab)
+                            if tmp<dConf:
+                                Pconf=Pname;dConf=tmp;
+                        conf=NamesList[PhoneticList.index(Pconf)]
+                        csvLigne+=[conf,Pconf,dConf]
+                    else:
+                        csvLigne+=''
 for csvLigne in CSVTab:
-    if len(csvLigne)<=11 or csvLigne[10]=='':
-        rep=PhoneticList[NamesList.index(csvLigne[8])]
-        csvLigne+=['','',rep,10]
+    rep=PhoneticList[NamesList.index(csvLigne[8])]
+    if len(csvLigne)<=10 or (len(csvLigne)>=11 and csvLigne[10]==''):
+        print csvLigne
+        csvLigne+=['','',rep,10,'','',10]
+    elif (len(csvLigne)==11 and csvLigne[10]!='') or (len(csvLigne)>=12 and (csvLigne[11]=='' or csvLigne[11]==''))   :
+        csvLigne+=['',rep,10,'','',10]
 
 with open('brut.csv', mode='w') as f:
     writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    writer.writerow(["id","jour","ordre histoires","ordre conditions","histoire","type","condition","reponse donnee","reponse attendue","evaluation","orthographe","transcription","reponse phonetique","distance"])
+    writer.writerow(["id","jour","ordre histoires","ordre conditions","histoire","type","condition","reponse donnee","reponse attendue","evaluation","orthographe","transcription","reponse phonetique","distance","mot le plus proche","transcription","distance"])
     listLines=[]
     for i in CSVTab:
         if i not in listLines:

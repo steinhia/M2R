@@ -1,0 +1,12 @@
+
+
+Extract audio
+ffmpeg -i Ep1.mp4 -vn Ep1.mp3
+
+Cut Audio
+ffmpeg -ss 0 -t 10 -i Ep1.mp3 -acodec copy Ep1Crop.mp3
+
+
+ffmpeg -f image2 -loop 1 -vframes 100 -r 25 -i img-01.jpg -vcodec mpeg4 a.mp4
+ffmpeg -f image2 -loop 1 -vframes 200 -r 25 -i img-02.jpg -vcodec mpeg4 b.mp4
+mencoder -ovc copy -o out.mp4 a.mp4 b.mp4
