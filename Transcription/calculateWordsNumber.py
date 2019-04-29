@@ -43,7 +43,7 @@ for idNum in range(16):
         fs, data = wavfile.read(filename)
         t=float(len(data))/float(fs)
         tps+=t
-    print "id"+str(idNum)+'/ ' + str(tps/60)                
+    print("id"+str(idNum)+'/ ' + str(tps/60))                
 #path='Resultats/id1/'
 #for filename in glob.glob(os.path.join(path, '*.TextGrid')):
 #    with open(filename, 'rb') as source_file:

@@ -1,993 +1,869 @@
 File type = "ooTextFile"
 Object class = "TextGrid"
 
-xmin = 0 
-xmax = 205.824 
-tiers? <exists> 
-size = 3 
-item []: 
-    item [1]:
-        class = "IntervalTier" 
-        name = "transcription" 
-        xmin = 0 
-        xmax = 205.824 
-        intervals: size = 142 
-        intervals [1]:
-            xmin = 0 
-            xmax = 10.0511953353 
-            text = "" 
-        intervals [2]:
-            xmin = 10.0511953353 
-            xmax = 11.0012594752 
-            text = "transcription Also." 
-        intervals [3]:
-            xmin = 11.0012594752 
-            xmax = 11.5713725948 
-            text = "" 
-        intervals [4]:
-            xmin = 11.5713725948 
-            xmax = 12.9714892128 
-            text = "transcription Ein {:Anglais Alien:}" 
-        intervals [5]:
-            xmin = 12.9714892128 
-            xmax = 13.5616046647 
-            text = "" 
-        intervals [6]:
-            xmin = 13.5616046647 
-            xmax = 14.4116571429 
-            text = "transcription ist" 
-        intervals [7]:
-            xmin = 14.4116571429 
-            xmax = 14.4717107872 
-            text = "" 
-        intervals [8]:
-            xmin = 14.4717107872 
-            xmax = 16.9519533528 
-            text = "transcription hm, in der Wüste gelandet. Das letzte." 
-        intervals [9]:
-            xmin = 16.9519533528 
-            xmax = 17.6620827988 
-            text = "" 
-        intervals [10]:
-            xmin = 17.6620827988 
-            xmax = 18.682155102 
-            text = "transcription Hm." 
-        intervals [11]:
-            xmin = 18.682155102 
-            xmax = 20.6924361516 
-            text = "" 
-        intervals [12]:
-            xmin = 20.6924361516 
-            xmax = 25.762980758 
-            text = "transcription Und wollte dort ein Haus bauen. Und hat dann, hm, Kamele getroffen." 
-        intervals [13]:
-            xmin = 25.762980758 
-            xmax = 28.1332571429 
-            text = "transcription Die es zu einer Oase geführt haben." 
-        intervals [14]:
-            xmin = 28.1332571429 
-            xmax = 28.6333620991 
-            text = "" 
-        intervals [15]:
-            xmin = 28.6333620991 
-            xmax = 29.8534577259 
-            text = "transcription Hm." 
-        intervals [16]:
-            xmin = 29.8534577259 
-            xmax = 30.5335836735 
-            text = "" 
-        intervals [17]:
-            xmin = 30.5335836735 
-            xmax = 34.6440163265 
-            text = "transcription Wo es dann sein Haus bauen wollte. Da kam dann aber ein" 
-        intervals [18]:
-            xmin = 34.6440163265 
-            xmax = 35.8542040816 
-            text = "" 
-        intervals [19]:
-            xmin = 35.8542040816 
-            xmax = 37.6143626822 
-            text = "transcription hm, Filmteam hin." 
-        intervals [20]:
-            xmin = 37.6143626822 
-            xmax = 37.7444244898 
-            text = "" 
-        intervals [21]:
-            xmin = 37.7444244898 
-            xmax = 39.4045714286 
-            text = "transcription Hm, das" 
-        intervals [22]:
-            xmin = 39.4045714286 
-            xmax = 40.2647183673 
-            text = "" 
-        intervals [23]:
-            xmin = 40.2647183673 
-            xmax = 42.3449142857 
-            text = "transcription eine Serie filmen wollte." 
-        intervals [24]:
-            xmin = 42.3449142857 
-            xmax = 42.8750227405 
-            text = "" 
-        intervals [25]:
-            xmin = 42.8750227405 
-            xmax = 44.0151090379 
-            text = "transcription Hm." 
-        intervals [26]:
-            xmin = 44.0151090379 
-            xmax = 44.9752209913 
-            text = "transcription Die waren dann" 
-        intervals [27]:
-            xmin = 44.9752209913 
-            xmax = 44.9952699708 
-            text = "" 
-        intervals [28]:
-            xmin = 44.9952699708 
-            xmax = 50.7558950437 
-            text = "transcription die, hm, waren dann von dem {:Anglais Alien:} begeistert und wollten, dass das {:Anglais Alien:} in der Serie mitspielt." 
-        intervals [29]:
-            xmin = 50.7558950437 
-            xmax = 51.256 
-            text = "" 
-        intervals [30]:
-            xmin = 51.256 
-            xmax = 51.9060291545 
-            text = "transcription {N}" 
-        intervals [31]:
-            xmin = 51.9060291545 
-            xmax = 52.1561049563 
-            text = "" 
-        intervals [32]:
-            xmin = 52.1561049563 
-            xmax = 52.8261364431 
-            text = "transcription Hm." 
-        intervals [33]:
-            xmin = 52.8261364431 
-            xmax = 54.576387172 
-            text = "" 
-        intervals [34]:
-            xmin = 54.576387172 
-            xmax = 55.3164268222 
-            text = "transcription Genau." 
-        intervals [35]:
-            xmin = 55.3164268222 
-            xmax = 55.736522449 
-            text = "" 
-        intervals [36]:
-            xmin = 55.736522449 
-            xmax = 56.5365690962 
-            text = "transcription {S}" 
-        intervals [37]:
-            xmin = 56.5365690962 
-            xmax = 56.7266379009 
-            text = "" 
-        intervals [38]:
-            xmin = 56.7266379009 
-            xmax = 57.4866798834 
-            text = "transcription Okay." 
-        intervals [39]:
-            xmin = 57.4866798834 
-            xmax = 59.9469667638 
-            text = "transcription Hm. Ein anderes Alien." 
-        intervals [40]:
-            xmin = 59.9469667638 
-            xmax = 61.0571428571 
-            text = "" 
-        intervals [41]:
-            xmin = 61.0571428571 
-            xmax = 61.9271976676 
-            text = "transcription Hm." 
-        intervals [42]:
-            xmin = 61.9271976676 
-            xmax = 62.0172548105 
-            text = "" 
-        intervals [43]:
-            xmin = 62.0172548105 
-            xmax = 62.8573061224 
-            text = "transcription Ich glaube, das" 
-        intervals [44]:
-            xmin = 62.8573061224 
-            xmax = 64.6975673469 
-            text = "" 
-        intervals [45]:
-            xmin = 64.6975673469 
-            xmax = 66.6677504373 
-            text = "transcription erste oder zweite ist" 
-        intervals [46]:
-            xmin = 66.6677504373 
-            xmax = 66.7378052478 
-            text = "" 
-        intervals [47]:
-            xmin = 66.7378052478 
-            xmax = 68.7679953353 
-            text = "transcription hm, im Wald gelandet." 
-        intervals [48]:
-            xmin = 68.7679953353 
-            xmax = 69.8281655977 
-            text = "" 
-        intervals [49]:
-            xmin = 69.8281655977 
-            xmax = 70.5982087464 
-            text = "transcription Hm." 
-        intervals [50]:
-            xmin = 70.5982087464 
-            xmax = 71.1582740525 
-            text = "transcription Hm." 
-        intervals [51]:
-            xmin = 71.1582740525 
-            xmax = 71.948412828 
-            text = "" 
-        intervals [52]:
-            xmin = 71.948412828 
-            xmax = 73.1385049563 
-            text = "transcription Wo es" 
-        intervals [53]:
-            xmin = 73.1385049563 
-            xmax = 75.3888139942 
-            text = "" 
-        intervals [54]:
-            xmin = 75.3888139942 
-            xmax = 76.388883965 
-            text = "transcription Ich weiss nicht mehr, welches" 
-        intervals [55]:
-            xmin = 76.388883965 
-            xmax = 76.4089329446 
-            text = "" 
-        intervals [56]:
-            xmin = 76.4089329446 
-            xmax = 83.2696862974 
-            text = "transcription Tier es getroffen hat. Aber, hm, das wollte ihr dann helfen, ein Haus, ihr das Haus zu bauen. Und" 
-        intervals [57]:
-            xmin = 83.2696862974 
-            xmax = 84.8998763848 
-            text = "transcription dann kamen aber" 
-        intervals [58]:
-            xmin = 84.8998763848 
-            xmax = 86.1600699708 
-            text = "" 
-        intervals [59]:
-            xmin = 86.1600699708 
-            xmax = 87.290155102 
-            text = "transcription hm, Menschen (...)" 
-        intervals [60]:
-            xmin = 87.290155102 
-            xmax = 89.2904349854 
-            text = "" 
-        intervals [61]:
-            xmin = 89.2904349854 
-            xmax = 91.5306495627 
-            text = "transcription Menschen vorbei, die dann, hm," 
-        intervals [62]:
-            xmin = 91.5306495627 
-            xmax = 92.1907731778 
-            text = "" 
-        intervals [63]:
-            xmin = 92.1907731778 
-            xmax = 94.2209632653 
-            text = "transcription die Wildhüter gerufen haben." 
-        intervals [64]:
-            xmin = 94.2209632653 
-            xmax = 94.3610262391 
-            text = "" 
-        intervals [65]:
-            xmin = 94.3610262391 
-            xmax = 96.0511766764 
-            text = "transcription Die dann das {:Anglais Alien:}" 
-        intervals [66]:
-            xmin = 96.0511766764 
-            xmax = 96.4912746356 
-            text = "" 
-        intervals [67]:
-            xmin = 96.4912746356 
-            xmax = 97.7413737609 
-            text = "transcription vertrieben haben." 
-        intervals [68]:
-            xmin = 97.7413737609 
-            xmax = 99.6016373178 
-            text = "" 
-        intervals [69]:
-            xmin = 99.6016373178 
-            xmax = 100.551701458 
-            text = "transcription Hm." 
-        intervals [70]:
-            xmin = 100.551701458 
-            xmax = 101.541863557 
-            text = "" 
-        intervals [71]:
-            xmin = 101.541863557 
-            xmax = 104.022106122 
-            text = "transcription Und dann hat das {:Anglais Alien:} mit" 
-        intervals [72]:
-            xmin = 104.022106122 
-            xmax = 104.562215743 
-            text = "" 
-        intervals [73]:
-            xmin = 104.562215743 
-            xmax = 106.112349854 
-            text = "transcription dem Tier, ich glaube" 
-        intervals [74]:
-            xmin = 106.112349854 
-            xmax = 107.11251312 
-            text = "" 
-        intervals [75]:
-            xmin = 107.11251312 
-            xmax = 108.072578426 
-            text = "transcription es war ein Bär." 
-        intervals [76]:
-            xmin = 108.072578426 
-            xmax = 108.622689213 
-            text = "" 
-        intervals [77]:
-            xmin = 108.622689213 
-            xmax = 110.002803499 
-            text = "transcription Hm." 
-        intervals [78]:
-            xmin = 110.002803499 
-            xmax = 111.20294344 
-            text = "transcription Haben sie dann" 
-        intervals [79]:
-            xmin = 111.20294344 
-            xmax = 111.363008746 
-            text = "" 
-        intervals [80]:
-            xmin = 111.363008746 
-            xmax = 113.453205831 
-            text = "transcription abseits von den Menschen" 
-        intervals [81]:
-            xmin = 113.453205831 
-            xmax = 113.89330379 
-            text = "" 
-        intervals [82]:
-            xmin = 113.89330379 
-            xmax = 115.743472886 
-            text = "transcription hm, in der Wildnis ihr" 
-        intervals [83]:
-            xmin = 115.743472886 
-            xmax = 115.783524198 
-            text = "" 
-        intervals [84]:
-            xmin = 115.783524198 
-            xmax = 116.883605831 
-            text = "transcription Haus gebaut." 
-        intervals [85]:
-            xmin = 116.883605831 
-            xmax = 118.283815743 
-            text = "" 
-        intervals [86]:
-            xmin = 118.283815743 
-            xmax = 120.504027988 
-            text = "transcription Hm, ein {:Anglais Alien:} ist im" 
-        intervals [87]:
-            xmin = 120.504027988 
-            xmax = 124.274467638 
-            text = "transcription Urwald gelandet und hat dann einen Affen getroffen." 
-        intervals [88]:
-            xmin = 124.274467638 
-            xmax = 124.724566764 
-            text = "" 
-        intervals [89]:
-            xmin = 124.724566764 
-            xmax = 127.724869971 
-            text = "transcription Hm, und, und auch seine Familie kennengelernt." 
-        intervals [90]:
-            xmin = 127.724869971 
-            xmax = 128.535011079 
-            text = "" 
-        intervals [91]:
-            xmin = 128.535011079 
-            xmax = 129.625091545 
-            text = "transcription Hm." 
-        intervals [92]:
-            xmin = 129.625091545 
-            xmax = 130.905287464 
-            text = "" 
-        intervals [93]:
-            xmin = 130.905287464 
-            xmax = 131.875353936 
-            text = "transcription Dort" 
-        intervals [94]:
-            xmin = 131.875353936 
-            xmax = 132.155433236 
-            text = "" 
-        intervals [95]:
-            xmin = 132.155433236 
-            xmax = 133.425534694 
-            text = "transcription kamen dann" 
-        intervals [96]:
-            xmin = 133.425534694 
-            xmax = 133.955643149 
-            text = "" 
-        intervals [97]:
-            xmin = 133.955643149 
-            xmax = 137.045956851 
-            text = "transcription Holzfäller, die den Urwald roden wollten." 
-        intervals [98]:
-            xmin = 137.045956851 
-            xmax = 137.766087464 
-            text = "" 
-        intervals [99]:
-            xmin = 137.766087464 
-            xmax = 139.496242566 
-            text = "transcription Beziehungsweise die Stelle, wo" 
-        intervals [100]:
-            xmin = 139.496242566 
-            xmax = 139.516291545 
-            text = "" 
-        intervals [101]:
-            xmin = 139.516291545 
-            xmax = 141.306453644 
-            text = "transcription das {:Anglais Alien:} sein Haus bauen wollte." 
-        intervals [102]:
-            xmin = 141.306453644 
-            xmax = 142.426630904 
-            text = "" 
-        intervals [103]:
-            xmin = 142.426630904 
-            xmax = 144.14678484 
-            text = "transcription Hm, aber" 
-        intervals [104]:
-            xmin = 144.14678484 
-            xmax = 145.697012245 
-            text = "" 
-        intervals [105]:
-            xmin = 145.697012245 
-            xmax = 148.637308455 
-            text = "transcription das {:Anglais Alien:} und die Affen haben es dann geschafft, die zu vertreiben." 
-        intervals [106]:
-            xmin = 148.637308455 
-            xmax = 151.017586006 
-            text = "transcription Und dann konnte das {:Anglais Alien:} dort leben." 
-        intervals [107]:
-            xmin = 151.017586006 
-            xmax = 152.487804082 
-            text = "" 
-        intervals [108]:
-            xmin = 152.487804082 
-            xmax = 153.497875219 
-            text = "transcription Und" 
-        intervals [109]:
-            xmin = 153.497875219 
-            xmax = 154.37802449 
-            text = "" 
-        intervals [110]:
-            xmin = 154.37802449 
-            xmax = 158.438451312 
-            text = "transcription genau. In einer Geschichte, also in der vierten Geschichte, hm," 
-        intervals [111]:
-            xmin = 158.438451312 
-            xmax = 158.998563265 
-            text = "" 
-        intervals [112]:
-            xmin = 158.998563265 
-            xmax = 161.398796501 
-            text = "transcription ist das {:Anglais Alien:} in der großen Stadt gelandet." 
-        intervals [113]:
-            xmin = 161.398796501 
-            xmax = 161.988911953 
-            text = "" 
-        intervals [114]:
-            xmin = 161.988911953 
-            xmax = 163.018985423 
-            text = "transcription Und" 
-        intervals [115]:
-            xmin = 163.018985423 
-            xmax = 163.389075219 
-            text = "" 
-        intervals [116]:
-            xmin = 163.389075219 
-            xmax = 165.779307289 
-            text = "transcription hat dort dann zwei Vögel getroffen." 
-        intervals [117]:
-            xmin = 165.779307289 
-            xmax = 166.939489213 
-            text = "" 
-        intervals [118]:
-            xmin = 166.939489213 
-            xmax = 168.869667638 
-            text = "transcription Und die Vögel haben" 
-        intervals [119]:
-            xmin = 168.869667638 
-            xmax = 169.929837901 
-            text = "" 
-        intervals [120]:
-            xmin = 169.929837901 
-            xmax = 170.809893878 
-            text = "transcription hm." 
-        intervals [121]:
-            xmin = 170.809893878 
-            xmax = 176.010500292 
-            text = "transcription Und ist dann mit den Vögeln in einen Garten geflogen, hm, wo die Menschen eine Grillparty hatten." 
-        intervals [122]:
-            xmin = 176.010500292 
-            xmax = 176.790637901 
-            text = "" 
-        intervals [123]:
-            xmin = 176.790637901 
-            xmax = 178.090742857 
-            text = "transcription Hm." 
-        intervals [124]:
-            xmin = 178.090742857 
-            xmax = 178.360820991 
-            text = "" 
-        intervals [125]:
-            xmin = 178.360820991 
-            xmax = 179.220874636 
-            text = "transcription Und." 
-        intervals [126]:
-            xmin = 179.220874636 
-            xmax = 179.390941108 
-            text = "" 
-        intervals [127]:
-            xmin = 179.390941108 
-            xmax = 180.841063557 
-            text = "transcription Genau, dann hat das {:Anglais Alien:}" 
-        intervals [128]:
-            xmin = 180.841063557 
-            xmax = 181.001128863 
-            text = "" 
-        intervals [129]:
-            xmin = 181.001128863 
-            xmax = 182.491255977 
-            text = "transcription beschlossen, dort zu leben." 
-        intervals [130]:
-            xmin = 182.491255977 
-            xmax = 184.07148688 
-            text = "" 
-        intervals [131]:
-            xmin = 184.07148688 
-            xmax = 185.051554519 
-            text = "transcription Und" 
-        intervals [132]:
-            xmin = 185.051554519 
-            xmax = 186.471766764 
-            text = "" 
-        intervals [133]:
-            xmin = 186.471766764 
-            xmax = 187.791897376 
-            text = "transcription dies ist, hm, ich glaub, das" 
-        intervals [134]:
-            xmin = 187.791897376 
-            xmax = 190.882234402 
-            text = "transcription {:Anglais Alien) hatte vier Augen, an Fühlern." 
-        intervals [135]:
-            xmin = 190.882234402 
-            xmax = 190.902283382 
-            text = "" 
-        intervals [136]:
-            xmin = 190.902283382 
-            xmax = 191.992363848 
-            text = "transcription Hm." 
-        intervals [137]:
-            xmin = 191.992363848 
-            xmax = 193.062535277 
-            text = "" 
-        intervals [138]:
-            xmin = 193.062535277 
-            xmax = 193.972594752 
-            text = "transcription Aber sonst" 
-        intervals [139]:
-            xmin = 193.972594752 
-            xmax = 196.472909621 
-            text = "transcription ka_, kann ich nicht mehr sagen, wie die aussah. {L}." 
-        intervals [140]:
-            xmin = 196.472909621 
-            xmax = 196.662931778 
-            text = "transcription {N}" 
-        intervals [141]:
-            xmin = 196.662931778 
-            xmax = 197.793040233 
-            text = "transcription Oder welches welches war." 
-        intervals [142]:
-            xmin = 197.793040233 
-            xmax = 205.824 
-            text = "" 
-    item [2]:
-        class = "IntervalTier" 
-        name = "traduction" 
-        xmin = 0 
-        xmax = 205.824 
-        intervals: size = 142 
-        intervals [1]:
-            xmin = 0 
-            xmax = 10.0511953353 
-            text = "" 
-        intervals [2]:
-            xmin = 10.0511953353 
-            xmax = 11.0012594752 
-            text = "traduction" 
-        intervals [3]:
-            xmin = 11.0012594752 
-            xmax = 11.5713725948 
-            text = "" 
-        intervals [4]:
-            xmin = 11.5713725948 
-            xmax = 12.9714892128 
-            text = "traduction" 
-        intervals [5]:
-            xmin = 12.9714892128 
-            xmax = 13.5616046647 
-            text = "" 
-        intervals [6]:
-            xmin = 13.5616046647 
-            xmax = 14.4116571429 
-            text = "traduction" 
-        intervals [7]:
-            xmin = 14.4116571429 
-            xmax = 14.4717107872 
-            text = "" 
-        intervals [8]:
-            xmin = 14.4717107872 
-            xmax = 16.9519533528 
-            text = "traduction" 
-        intervals [9]:
-            xmin = 16.9519533528 
-            xmax = 17.6620827988 
-            text = "" 
-        intervals [10]:
-            xmin = 17.6620827988 
-            xmax = 18.682155102 
-            text = "traduction" 
-        intervals [11]:
-            xmin = 18.682155102 
-            xmax = 20.6924361516 
-            text = "" 
-        intervals [12]:
-            xmin = 20.6924361516 
-            xmax = 25.762980758 
-            text = "traduction" 
-        intervals [13]:
-            xmin = 25.762980758 
-            xmax = 28.1332571429 
-            text = "traduction" 
-        intervals [14]:
-            xmin = 28.1332571429 
-            xmax = 28.6333620991 
-            text = "" 
-        intervals [15]:
-            xmin = 28.6333620991 
-            xmax = 29.8534577259 
-            text = "traduction" 
-        intervals [16]:
-            xmin = 29.8534577259 
-            xmax = 30.5335836735 
-            text = "" 
-        intervals [17]:
-            xmin = 30.5335836735 
-            xmax = 34.6440163265 
-            text = "traduction" 
-        intervals [18]:
-            xmin = 34.6440163265 
-            xmax = 35.8542040816 
-            text = "" 
-        intervals [19]:
-            xmin = 35.8542040816 
-            xmax = 37.6143626822 
-            text = "traduction" 
-        intervals [20]:
-            xmin = 37.6143626822 
-            xmax = 37.7444244898 
-            text = "" 
-        intervals [21]:
-            xmin = 37.7444244898 
-            xmax = 39.4045714286 
-            text = "traduction" 
-        intervals [22]:
-            xmin = 39.4045714286 
-            xmax = 40.2647183673 
-            text = "" 
-        intervals [23]:
-            xmin = 40.2647183673 
-            xmax = 42.3449142857 
-            text = "traduction" 
-        intervals [24]:
-            xmin = 42.3449142857 
-            xmax = 42.8750227405 
-            text = "" 
-        intervals [25]:
-            xmin = 42.8750227405 
-            xmax = 44.0151090379 
-            text = "traduction" 
-        intervals [26]:
-            xmin = 44.0151090379 
-            xmax = 44.9752209913 
-            text = "traduction" 
-        intervals [27]:
-            xmin = 44.9752209913 
-            xmax = 44.9952699708 
-            text = "" 
-        intervals [28]:
-            xmin = 44.9952699708 
-            xmax = 50.7558950437 
-            text = "traduction" 
-        intervals [29]:
-            xmin = 50.7558950437 
-            xmax = 51.256 
-            text = "" 
-        intervals [30]:
-            xmin = 51.256 
-            xmax = 51.9060291545 
-            text = "traduction" 
-        intervals [31]:
-            xmin = 51.9060291545 
-            xmax = 52.1561049563 
-            text = "" 
-        intervals [32]:
-            xmin = 52.1561049563 
-            xmax = 52.8261364431 
-            text = "traduction" 
-        intervals [33]:
-            xmin = 52.8261364431 
-            xmax = 54.576387172 
-            text = "" 
-        intervals [34]:
-            xmin = 54.576387172 
-            xmax = 55.3164268222 
-            text = "traduction" 
-        intervals [35]:
-            xmin = 55.3164268222 
-            xmax = 55.736522449 
-            text = "" 
-        intervals [36]:
-            xmin = 55.736522449 
-            xmax = 56.5365690962 
-            text = "traduction" 
-        intervals [37]:
-            xmin = 56.5365690962 
-            xmax = 56.7266379009 
-            text = "" 
-        intervals [38]:
-            xmin = 56.7266379009 
-            xmax = 57.4866798834 
-            text = "traduction" 
-        intervals [39]:
-            xmin = 57.4866798834 
-            xmax = 59.9469667638 
-            text = "traduction" 
-        intervals [40]:
-            xmin = 59.9469667638 
-            xmax = 61.0571428571 
-            text = "" 
-        intervals [41]:
-            xmin = 61.0571428571 
-            xmax = 61.9271976676 
-            text = "traduction" 
-        intervals [42]:
-            xmin = 61.9271976676 
-            xmax = 62.0172548105 
-            text = "" 
-        intervals [43]:
-            xmin = 62.0172548105 
-            xmax = 62.8573061224 
-            text = "traduction" 
-        intervals [44]:
-            xmin = 62.8573061224 
-            xmax = 64.6975673469 
-            text = "" 
-        intervals [45]:
-            xmin = 64.6975673469 
-            xmax = 66.6677504373 
-            text = "traduction" 
-        intervals [46]:
-            xmin = 66.6677504373 
-            xmax = 66.7378052478 
-            text = "" 
-        intervals [47]:
-            xmin = 66.7378052478 
-            xmax = 68.7679953353 
-            text = "traduction" 
-        intervals [48]:
-            xmin = 68.7679953353 
-            xmax = 69.8281655977 
-            text = "" 
-        intervals [49]:
-            xmin = 69.8281655977 
-            xmax = 70.5982087464 
-            text = "traduction" 
-        intervals [50]:
-            xmin = 70.5982087464 
-            xmax = 71.1582740525 
-            text = "traduction" 
-        intervals [51]:
-            xmin = 71.1582740525 
-            xmax = 71.948412828 
-            text = "" 
-        intervals [52]:
-            xmin = 71.948412828 
-            xmax = 73.1385049563 
-            text = "traduction" 
-        intervals [53]:
-            xmin = 73.1385049563 
-            xmax = 75.3888139942 
-            text = "" 
-        intervals [54]:
-            xmin = 75.3888139942 
-            xmax = 76.388883965 
-            text = "traduction" 
-        intervals [55]:
-            xmin = 76.388883965 
-            xmax = 76.4089329446 
-            text = "" 
-        intervals [56]:
-            xmin = 76.4089329446 
-            xmax = 83.2696862974 
-            text = "traduction" 
-        intervals [57]:
-            xmin = 83.2696862974 
-            xmax = 84.8998763848 
-            text = "traduction" 
-        intervals [58]:
-            xmin = 84.8998763848 
-            xmax = 86.1600699708 
-            text = "" 
-        intervals [59]:
-            xmin = 86.1600699708 
-            xmax = 87.290155102 
-            text = "traduction" 
-        intervals [60]:
-            xmin = 87.290155102 
-            xmax = 89.2904349854 
-            text = "" 
-        intervals [61]:
-            xmin = 89.2904349854 
-            xmax = 91.5306495627 
-            text = "traduction" 
-        intervals [62]:
-            xmin = 91.5306495627 
-            xmax = 92.1907731778 
-            text = "" 
-        intervals [63]:
-            xmin = 92.1907731778 
-            xmax = 94.2209632653 
-            text = "traduction" 
-        intervals [64]:
-            xmin = 94.2209632653 
-            xmax = 94.3610262391 
-            text = "" 
-        intervals [65]:
-            xmin = 94.3610262391 
-            xmax = 96.0511766764 
-            text = "traduction" 
-        intervals [66]:
-            xmin = 96.0511766764 
-            xmax = 96.4912746356 
-            text = "" 
-        intervals [67]:
-            xmin = 96.4912746356 
-            xmax = 97.7413737609 
-            text = "traduction" 
-        intervals [68]:
-            xmin = 97.7413737609 
-            xmax = 99.6016373178 
-            text = "" 
-        intervals [69]:
-            xmin = 99.6016373178 
-            xmax = 100.551701458 
-            text = "traduction" 
-        intervals [70]:
-            xmin = 100.551701458 
-            xmax = 101.541863557 
-            text = "" 
-        intervals [71]:
-            xmin = 101.541863557 
-            xmax = 104.022106122 
-            text = "traduction" 
-        intervals [72]:
-            xmin = 104.022106122 
-            xmax = 104.562215743 
-            text = "" 
-        intervals [73]:
-            xmin = 104.562215743 
-            xmax = 106.112349854 
-            text = "traduction" 
-        intervals [74]:
-            xmin = 106.112349854 
-            xmax = 107.11251312 
-            text = "" 
-        intervals [75]:
-            xmin = 107.11251312 
-            xmax = 108.072578426 
-            text = "traduction" 
-        intervals [76]:
-            xmin = 108.072578426 
-            xmax = 108.622689213 
-            text = "" 
-        intervals [77]:
-            xmin = 108.622689213 
-            xmax = 110.002803499 
-            text = "traduction" 
-        intervals [78]:
-            xmin = 110.002803499 
-            xmax = 111.20294344 
-            text = "traduction" 
-        intervals [79]:
-            xmin = 111.20294344 
-            xmax = 111.363008746 
-            text = "" 
-        intervals [80]:
-            xmin = 111.363008746 
-            xmax = 113.453205831 
-            text = "traduction" 
-        intervals [81]:
-            xmin = 113.453205831 
-            xmax = 113.89330379 
-            text = "" 
-        intervals [82]:
-            xmin = 113.89330379 
-            xmax = 115.743472886 
-            text = "traduction" 
-        intervals [83]:
-            xmin = 115.743472886 
-            xmax = 115.783524198 
-            text = "" 
-        intervals [84]:
-            xmin = 115.783524198 
-            xmax = 116.883605831 
-            text = "traduction" 
-        intervals [85]:
-            xmin = 116.883605831 
-            xmax = 118.283815743 
-            text = "" 
-        intervals [86]:
-            xmin = 118.283815743 
-            xmax = 120.504027988 
-            text = "traduction" 
-        intervals [87]:
-            xmin = 120.504027988 
-            xmax = 124.274467638 
-            text = "traduction" 
-        intervals [88]:
-            xmin = 124.274467638 
-            xmax = 124.724566764 
-            text = "" 
-        intervals [89]:
-            xmin = 124.724566764 
-            xmax = 127.724869971 
-            text = "traduction" 
-        intervals [90]:
-            xmin = 127.724869971 
-            xmax = 128.535011079 
-            text = "" 
-        intervals [91]:
-            xmin = 128.535011079 
-            xmax = 129.625091545 
-            text = "traduction" 
-        intervals [92]:
-            xmin = 129.625091545 
-            xmax = 130.905287464 
-            text = "" 
-        intervals [93]:
-            xmin = 130.905287464 
-            xmax = 131.875353936 
-            text = "traduction" 
-        intervals [94]:
-            xmin = 131.875353936 
-            xmax = 132.155433236 
-            text = "" 
-        intervals [95]:
-            xmin = 132.155433236 
-            xmax = 133.425534694 
-            text = "traduction" 
-        intervals [96]:
-            xmin = 133.425534694 
-            xmax = 133.955643149 
-            text = "" 
-        intervals [97]:
-            xmin = 133.955643149 
-            xmax = 137.045956851 
-            text = "traduction" 
-        intervals [98]:
-            xmin = 137.045956851 
-            xmax = 137.766087464 
-            text = "" 
-        intervals [99]:
-            xmin = 137.766087464 
-            xmax = 139.496242566 
-            text = "traduction" 
-        intervals [100]:
-            xmin = 139.496242566 
-            xmax = 139.516291545 
-            text = "" 
-        intervals [101]:
-            xmin = 139.516291545 
-            xmax = 141.306453644 
-            text = "traduction" 
-     
+0.0
+19779.0
+<exists>
+2
+"IntervalTier"
+"transcription"
+0.0
+19779.0
+142
+0.0
+10.0511953353
+""
+10.0511953353
+11.0012594752
+"Also"
+11.0012594752
+11.5713725948
+""
+11.5713725948
+12.9714892128
+"Ein {:Anglais Alien:}"
+12.9714892128
+13.5616046647
+""
+13.5616046647
+14.4116571429
+"ist"
+14.4116571429
+14.4717107872
+""
+14.4717107872
+16.9519533528
+"hm  in der Wüste gelandet Das letzte"
+16.9519533528
+17.6620827988
+""
+17.6620827988
+18.682155102
+"Hm"
+18.682155102
+20.6924361516
+""
+20.6924361516
+25.762980758
+"Und wollte dort ein Haus bauen Und hat dann  hm  Kamele getroffen"
+25.762980758
+28.1332571429
+"Die es zu einer Oase geführt haben"
+28.1332571429
+28.6333620991
+""
+28.6333620991
+29.8534577259
+"Hm"
+29.8534577259
+30.5335836735
+""
+30.5335836735
+34.6440163265
+"Wo es dann sein Haus bauen wollte Da kam dann aber ein"
+34.6440163265
+35.8542040816
+""
+35.8542040816
+37.6143626822
+"hm  Filmteam hin"
+37.6143626822
+37.7444244898
+""
+37.7444244898
+39.4045714286
+"Hm  das"
+39.4045714286
+40.2647183673
+""
+40.2647183673
+42.3449142857
+"eine Serie filmen wollte"
+42.3449142857
+42.8750227405
+""
+42.8750227405
+44.0151090379
+"Hm"
+44.0151090379
+44.9752209913
+"Die waren dann"
+44.9752209913
+44.9952699708
+""
+44.9952699708
+50.7558950437
+"die  hm  waren dann von dem {:Anglais Alien:} begeistert und wollten  dass das {:Anglais Alien:} in der Serie mitspielt"
+50.7558950437
+51.256
+""
+51.256
+51.9060291545
+"{N}"
+51.9060291545
+52.1561049563
+""
+52.1561049563
+52.8261364431
+"Hm"
+52.8261364431
+54.576387172
+""
+54.576387172
+55.3164268222
+"Genau"
+55.3164268222
+55.736522449
+""
+55.736522449
+56.5365690962
+"{S}"
+56.5365690962
+56.7266379009
+""
+56.7266379009
+57.4866798834
+"Okay"
+57.4866798834
+59.9469667638
+"Hm Ein anderes Alien"
+59.9469667638
+61.0571428571
+""
+61.0571428571
+61.9271976676
+"Hm"
+61.9271976676
+62.0172548105
+""
+62.0172548105
+62.8573061224
+"Ich glaube  das"
+62.8573061224
+64.6975673469
+""
+64.6975673469
+66.6677504373
+"erste oder zweite ist"
+66.6677504373
+66.7378052478
+""
+66.7378052478
+68.7679953353
+"hm  im Wald gelandet"
+68.7679953353
+69.8281655977
+""
+69.8281655977
+70.5982087464
+"Hm"
+70.5982087464
+71.1582740525
+"Hm"
+71.1582740525
+71.948412828
+""
+71.948412828
+73.1385049563
+"Wo es"
+73.1385049563
+75.3888139942
+""
+75.3888139942
+76.388883965
+"Ich weiss nicht mehr  welches"
+76.388883965
+76.4089329446
+""
+76.4089329446
+83.2696862974
+"Tier es getroffen hat Aber  hm  das wollte ihr dann helfen  ein Haus  ihr das Haus zu bauen Und"
+83.2696862974
+84.8998763848
+"dann kamen aber"
+84.8998763848
+86.1600699708
+""
+86.1600699708
+87.290155102
+"hm  Menschen ()"
+87.290155102
+89.2904349854
+""
+89.2904349854
+91.5306495627
+"Menschen vorbei  die dann  hm"
+91.5306495627
+92.1907731778
+""
+92.1907731778
+94.2209632653
+"die Wildhüter gerufen haben"
+94.2209632653
+94.3610262391
+""
+94.3610262391
+96.0511766764
+"Die dann das {:Anglais Alien:}"
+96.0511766764
+96.4912746356
+""
+96.4912746356
+97.7413737609
+"vertrieben haben"
+97.7413737609
+99.6016373178
+""
+99.6016373178
+100.551701458
+"Hm"
+100.551701458
+101.541863557
+""
+101.541863557
+104.022106122
+"Und dann hat das {:Anglais Alien:} mit"
+104.022106122
+104.562215743
+""
+104.562215743
+106.112349854
+"dem Tier  ich glaube"
+106.112349854
+107.11251312
+""
+107.11251312
+108.072578426
+"es war ein Bär"
+108.072578426
+108.622689213
+""
+108.622689213
+110.002803499
+"Hm"
+110.002803499
+111.20294344
+"Haben sie dann"
+111.20294344
+111.363008746
+""
+111.363008746
+113.453205831
+"abseits von den Menschen"
+113.453205831
+113.89330379
+""
+113.89330379
+115.743472886
+"hm  in der Wildnis ihr"
+115.743472886
+115.783524198
+""
+115.783524198
+116.883605831
+"Haus gebaut"
+116.883605831
+118.283815743
+""
+118.283815743
+120.504027988
+"Hm  ein {:Anglais Alien:} ist im"
+120.504027988
+124.274467638
+"Urwald gelandet und hat dann einen Affen getroffen"
+124.274467638
+124.724566764
+""
+124.724566764
+127.724869971
+"Hm  und  und auch seine Familie kennengelernt"
+127.724869971
+128.535011079
+""
+128.535011079
+129.625091545
+"Hm"
+129.625091545
+130.905287464
+""
+130.905287464
+131.875353936
+"Dort"
+131.875353936
+132.155433236
+""
+132.155433236
+133.425534694
+"kamen dann"
+133.425534694
+133.955643149
+""
+133.955643149
+137.045956851
+"Holzfäller  die den Urwald roden wollten"
+137.045956851
+137.766087464
+""
+137.766087464
+139.496242566
+"Beziehungsweise die Stelle  wo"
+139.496242566
+139.516291545
+""
+139.516291545
+141.306453644
+"das {:Anglais Alien:} sein Haus bauen wollte"
+141.306453644
+142.426630904
+""
+142.426630904
+144.14678484
+"Hm  aber"
+144.14678484
+145.697012245
+""
+145.697012245
+148.637308455
+"das {:Anglais Alien:} und die Affen haben es dann geschafft  die zu vertreiben"
+148.637308455
+151.017586006
+"Und dann konnte das {:Anglais Alien:} dort leben"
+151.017586006
+152.487804082
+""
+152.487804082
+153.497875219
+"Und"
+153.497875219
+154.37802449
+""
+154.37802449
+158.438451312
+"genau In einer Geschichte  also in der vierten Geschichte  hm"
+158.438451312
+158.998563265
+""
+158.998563265
+161.398796501
+"ist das {:Anglais Alien:} in der großen Stadt gelandet"
+161.398796501
+161.988911953
+""
+161.988911953
+163.018985423
+"Und"
+163.018985423
+163.389075219
+""
+163.389075219
+165.779307289
+"hat dort dann zwei Vögel getroffen"
+165.779307289
+166.939489213
+""
+166.939489213
+168.869667638
+"Und die Vögel haben"
+168.869667638
+169.929837901
+""
+169.929837901
+170.809893878
+"hm"
+170.809893878
+176.010500292
+"Und ist dann mit den Vögeln in einen Garten geflogen  hm  wo die Menschen eine Grillparty hatten"
+176.010500292
+176.790637901
+""
+176.790637901
+178.090742857
+"Hm"
+178.090742857
+178.360820991
+""
+178.360820991
+179.220874636
+"Und"
+179.220874636
+179.390941108
+""
+179.390941108
+180.841063557
+"Genau  dann hat das {:Anglais Alien:}"
+180.841063557
+181.001128863
+""
+181.001128863
+182.491255977
+"beschlossen  dort zu leben"
+182.491255977
+184.07148688
+""
+184.07148688
+185.051554519
+"Und"
+185.051554519
+186.471766764
+""
+186.471766764
+187.791897376
+"dies ist  hm  ich glaub  das"
+187.791897376
+190.882234402
+"{:Anglais Alien) hatte vier Augen  an Fühlern"
+190.882234402
+190.902283382
+""
+190.902283382
+191.992363848
+"Hm"
+191.992363848
+193.062535277
+""
+193.062535277
+193.972594752
+"Aber sonst"
+193.972594752
+196.472909621
+"ka_  kann ich nicht mehr sagen  wie die aussah {L}"
+196.472909621
+196.662931778
+"{N}"
+196.662931778
+197.793040233
+"Oder welches welches war"
+197.793040233
+19779.0
+""
+"IntervalTier"
+"commentaires"
+0.0
+19779.0
+142
+0.0
+10.0511953353
+""
+10.0511953353
+11.0012594752
+""
+11.0012594752
+11.5713725948
+""
+11.5713725948
+12.9714892128
+""
+12.9714892128
+13.5616046647
+""
+13.5616046647
+14.4116571429
+""
+14.4116571429
+14.4717107872
+""
+14.4717107872
+16.9519533528
+""
+16.9519533528
+17.6620827988
+""
+17.6620827988
+18.682155102
+""
+18.682155102
+20.6924361516
+""
+20.6924361516
+25.762980758
+""
+25.762980758
+28.1332571429
+""
+28.1332571429
+28.6333620991
+""
+28.6333620991
+29.8534577259
+""
+29.8534577259
+30.5335836735
+""
+30.5335836735
+34.6440163265
+""
+34.6440163265
+35.8542040816
+""
+35.8542040816
+37.6143626822
+""
+37.6143626822
+37.7444244898
+""
+37.7444244898
+39.4045714286
+""
+39.4045714286
+40.2647183673
+""
+40.2647183673
+42.3449142857
+""
+42.3449142857
+42.8750227405
+""
+42.8750227405
+44.0151090379
+""
+44.0151090379
+44.9752209913
+""
+44.9752209913
+44.9952699708
+""
+44.9952699708
+50.7558950437
+""
+50.7558950437
+51.256
+""
+51.256
+51.9060291545
+"elle inspire"
+51.9060291545
+52.1561049563
+""
+52.1561049563
+52.8261364431
+""
+52.8261364431
+54.576387172
+""
+54.576387172
+55.3164268222
+""
+55.3164268222
+55.736522449
+""
+55.736522449
+56.5365690962
+""
+56.5365690962
+56.7266379009
+""
+56.7266379009
+57.4866798834
+""
+57.4866798834
+59.9469667638
+""
+59.9469667638
+61.0571428571
+""
+61.0571428571
+61.9271976676
+""
+61.9271976676
+62.0172548105
+""
+62.0172548105
+62.8573061224
+""
+62.8573061224
+64.6975673469
+""
+64.6975673469
+66.6677504373
+""
+66.6677504373
+66.7378052478
+""
+66.7378052478
+68.7679953353
+""
+68.7679953353
+69.8281655977
+""
+69.8281655977
+70.5982087464
+""
+70.5982087464
+71.1582740525
+""
+71.1582740525
+71.948412828
+""
+71.948412828
+73.1385049563
+""
+73.1385049563
+75.3888139942
+""
+75.3888139942
+76.388883965
+""
+76.388883965
+76.4089329446
+""
+76.4089329446
+83.2696862974
+""
+83.2696862974
+84.8998763848
+""
+84.8998763848
+86.1600699708
+""
+86.1600699708
+87.290155102
+""
+87.290155102
+89.2904349854
+""
+89.2904349854
+91.5306495627
+""
+91.5306495627
+92.1907731778
+""
+92.1907731778
+94.2209632653
+""
+94.2209632653
+94.3610262391
+""
+94.3610262391
+96.0511766764
+""
+96.0511766764
+96.4912746356
+""
+96.4912746356
+97.7413737609
+""
+97.7413737609
+99.6016373178
+""
+99.6016373178
+100.551701458
+""
+100.551701458
+101.541863557
+""
+101.541863557
+104.022106122
+""
+104.022106122
+104.562215743
+""
+104.562215743
+106.112349854
+""
+106.112349854
+107.11251312
+""
+107.11251312
+108.072578426
+""
+108.072578426
+108.622689213
+""
+108.622689213
+110.002803499
+""
+110.002803499
+111.20294344
+""
+111.20294344
+111.363008746
+""
+111.363008746
+113.453205831
+""
+113.453205831
+113.89330379
+""
+113.89330379
+115.743472886
+""
+115.743472886
+115.783524198
+""
+115.783524198
+116.883605831
+""
+116.883605831
+118.283815743
+""
+118.283815743
+120.504027988
+""
+120.504027988
+124.274467638
+""
+124.274467638
+124.724566764
+""
+124.724566764
+127.724869971
+""
+127.724869971
+128.535011079
+""
+128.535011079
+129.625091545
+""
+129.625091545
+130.905287464
+""
+130.905287464
+131.875353936
+""
+131.875353936
+132.155433236
+""
+132.155433236
+133.425534694
+""
+133.425534694
+133.955643149
+""
+133.955643149
+137.045956851
+""
+137.045956851
+137.766087464
+""
+137.766087464
+139.496242566
+""
+139.496242566
+139.516291545
+""
+139.516291545
+141.306453644
+""
+141.306453644
+142.426630904
+""
+142.426630904
+144.14678484
+""
+144.14678484
+145.697012245
+""
+145.697012245
+148.637308455
+""
+148.637308455
+151.017586006
+""
+151.017586006
+152.487804082
+""
+152.487804082
+153.497875219
+""
+153.497875219
+154.37802449
+""
+154.37802449
+158.438451312
+""
+158.438451312
+158.998563265
+""
+158.998563265
+161.398796501
+""
+161.398796501
+161.988911953
+""
+161.988911953
+163.018985423
+""
+163.018985423
+163.389075219
+""
+163.389075219
+165.779307289
+""
+165.779307289
+166.939489213
+""
+166.939489213
+168.869667638
+""
+168.869667638
+169.929837901
+""
+169.929837901
+170.809893878
+""
+170.809893878
+176.010500292
+""
+176.010500292
+176.790637901
+""
+176.790637901
+178.090742857
+""
+178.090742857
+178.360820991
+""
+178.360820991
+179.220874636
+""
+179.220874636
+179.390941108
+""
+179.390941108
+180.841063557
+""
+180.841063557
+181.001128863
+""
+181.001128863
+182.491255977
+""
+182.491255977
+184.07148688
+""
+184.07148688
+185.051554519
+""
+185.051554519
+186.471766764
+""
+186.471766764
+187.791897376
+""
+187.791897376
+190.882234402
+""
+190.882234402
+190.902283382
+""
+190.902283382
+191.992363848
+""
+191.992363848
+193.062535277
+""
+193.062535277
+193.972594752
+""
+193.972594752
+196.472909621
+""
+196.472909621
+196.662931778
+"bruissement"
+196.662931778
+197.793040233
+""
+197.793040233
+19779.0
+""

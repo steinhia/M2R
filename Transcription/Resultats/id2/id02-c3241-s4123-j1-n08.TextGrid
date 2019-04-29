@@ -1,446 +1,227 @@
 File type = "ooTextFile"
 Object class = "TextGrid"
 
-xmin = 0 
-xmax = 89.088 
-tiers? <exists> 
-size = 3 
-item []: 
-    item [1]:
-        class = "IntervalTier" 
-        name = "transcription" 
-        xmin = 0 
-        xmax = 89.088 
-        intervals: size = 35 
-        intervals [1]:
-            xmin = 0 
-            xmax = 31.8564769283 
-            text = "" 
-        intervals [2]:
-            xmin = 31.8564769283 
-            xmax = 37.0774509936 
-            text = "Also, jetzt geht es um eine Außerirdische, die einen großen Kopf hat." 
-        intervals [3]:
-            xmin = 37.0774509936 
-            xmax = 37.837685416 
-            text = "" 
-        intervals [4]:
-            xmin = 37.837685416 
-            xmax = 38.9278248569 
-            text = "Und sie ist" 
-        intervals [5]:
-            xmin = 38.9278248569 
-            xmax = 40.4482128663 
-            text = "mit" 
-        intervals [6]:
-            xmin = 40.4482128663 
-            xmax = 41.3183078478 
-            text = "ihrem" 
-        intervals [7]:
-            xmin = 41.3183078478 
-            xmax = 41.3283907039 
-            text = "" 
-        intervals [8]:
-            xmin = 41.3283907039 
-            xmax = 42.6085685416 
-            text = "Raumfahrzeug" 
-        intervals [9]:
-            xmin = 42.6085685416 
-            xmax = 43.3487989222 
-            text = "" 
-        intervals [10]:
-            xmin = 43.3487989222 
-            xmax = 45.3591242843 
-            text = "im, in den Bergen gelandet." 
-        intervals [11]:
-            xmin = 45.3591242843 
-            xmax = 46.2293809363 
-            text = "" 
-        intervals [12]:
-            xmin = 46.2293809363 
-            xmax = 49.8400296396 
-            text = "Und dann hat sie Steine gesucht, um sich ein Haus zu bauen." 
-        intervals [13]:
-            xmin = 49.8400296396 
-            xmax = 50.7602963961 
-            text = "" 
-        intervals [14]:
-            xmin = 50.7602963961 
-            xmax = 53.1807046143 
-            text = "Dort hat sie einen Bären kennengelernt." 
-        intervals [15]:
-            xmin = 53.1807046143 
-            xmax = 54.170985517 
-            text = "" 
-        intervals [16]:
-            xmin = 54.170985517 
-            xmax = 55.931260357 
-            text = "Der einsam ist." 
-        intervals [17]:
-            xmin = 55.931260357 
-            xmax = 57.4316443247 
-            text = "" 
-        intervals [18]:
-            xmin = 57.4316443247 
-            xmax = 58.3017393062 
-            text = "Und" 
-        intervals [19]:
-            xmin = 58.3017393062 
-            xmax = 58.3918383294 
-            text = "" 
-        intervals [20]:
-            xmin = 58.3918383294 
-            xmax = 61.7624385315 
-            text = "dann haben sie sich kennengelernt. Und der Bär will" 
-        intervals [21]:
-            xmin = 61.7624385315 
-            xmax = 61.9725618053 
-            text = "" 
-        intervals [22]:
-            xmin = 61.9725618053 
-            xmax = 63.842858875 
-            text = "der Außerirdischen helfen." 
-        intervals [23]:
-            xmin = 63.842858875 
-            xmax = 65.6433034692 
-            text = "" 
-        intervals [24]:
-            xmin = 65.6433034692 
-            xmax = 69.2739562142 
-            text = "Aber dann, hm, sind Camper vorbeigekommen." 
-        intervals [25]:
-            xmin = 69.2739562142 
-            xmax = 70.224148198 
-            text = "Und haben" 
-        intervals [26]:
-            xmin = 70.224148198 
-            xmax = 70.7043260357 
-            text = "" 
-        intervals [27]:
-            xmin = 70.7043260357 
-            xmax = 73.1147322331 
-            text = "der Waldaufsicht Bescheid gesagt." 
-        intervals [28]:
-            xmin = 73.1147322331 
-            xmax = 74.165025261 
-            text = "" 
-        intervals [29]:
-            xmin = 74.165025261 
-            xmax = 75.2151566184 
-            text = "Also sind" 
-        intervals [30]:
-            xmin = 75.2151566184 
-            xmax = 77.5656315258 
-            text = "die Außerirdische und der Bär geflohen." 
-        intervals [31]:
-            xmin = 77.5656315258 
-            xmax = 78.1958396767 
-            text = "" 
-        intervals [32]:
-            xmin = 78.1958396767 
-            xmax = 80.4962236443 
-            text = "Und führen ein wildes Leben." 
-        intervals [33]:
-            xmin = 80.4962236443 
-            xmax = 80.7263509599 
-            text = "" 
-        intervals [34]:
-            xmin = 80.7263509599 
-            xmax = 82.1865651735 
-            text = "Fernab von den Menschen." 
-        intervals [35]:
-            xmin = 82.1865651735 
-            xmax = 89.088 
-            text = "" 
-    item [2]:
-        class = "IntervalTier" 
-        name = "traduction" 
-        xmin = 0 
-        xmax = 89.088 
-        intervals: size = 35 
-        intervals [1]:
-            xmin = 0 
-            xmax = 31.8564769283 
-            text = "" 
-        intervals [2]:
-            xmin = 31.8564769283 
-            xmax = 37.0774509936 
-            text = "traduction" 
-        intervals [3]:
-            xmin = 37.0774509936 
-            xmax = 37.837685416 
-            text = "" 
-        intervals [4]:
-            xmin = 37.837685416 
-            xmax = 38.9278248569 
-            text = "traduction" 
-        intervals [5]:
-            xmin = 38.9278248569 
-            xmax = 40.4482128663 
-            text = "" 
-        intervals [6]:
-            xmin = 40.4482128663 
-            xmax = 41.3183078478 
-            text = "traduction" 
-        intervals [7]:
-            xmin = 41.3183078478 
-            xmax = 41.3283907039 
-            text = "" 
-        intervals [8]:
-            xmin = 41.3283907039 
-            xmax = 42.6085685416 
-            text = "traduction" 
-        intervals [9]:
-            xmin = 42.6085685416 
-            xmax = 43.3487989222 
-            text = "" 
-        intervals [10]:
-            xmin = 43.3487989222 
-            xmax = 45.3591242843 
-            text = "traduction" 
-        intervals [11]:
-            xmin = 45.3591242843 
-            xmax = 46.2293809363 
-            text = "" 
-        intervals [12]:
-            xmin = 46.2293809363 
-            xmax = 49.8400296396 
-            text = "traduction" 
-        intervals [13]:
-            xmin = 49.8400296396 
-            xmax = 50.7602963961 
-            text = "" 
-        intervals [14]:
-            xmin = 50.7602963961 
-            xmax = 53.1807046143 
-            text = "traduction" 
-        intervals [15]:
-            xmin = 53.1807046143 
-            xmax = 54.170985517 
-            text = "" 
-        intervals [16]:
-            xmin = 54.170985517 
-            xmax = 55.931260357 
-            text = "traduction" 
-        intervals [17]:
-            xmin = 55.931260357 
-            xmax = 57.4316443247 
-            text = "" 
-        intervals [18]:
-            xmin = 57.4316443247 
-            xmax = 58.3017393062 
-            text = "traduction" 
-        intervals [19]:
-            xmin = 58.3017393062 
-            xmax = 58.3918383294 
-            text = "" 
-        intervals [20]:
-            xmin = 58.3918383294 
-            xmax = 61.7624385315 
-            text = "traduction" 
-        intervals [21]:
-            xmin = 61.7624385315 
-            xmax = 61.9725618053 
-            text = "" 
-        intervals [22]:
-            xmin = 61.9725618053 
-            xmax = 63.842858875 
-            text = "traduction" 
-        intervals [23]:
-            xmin = 63.842858875 
-            xmax = 65.6433034692 
-            text = "" 
-        intervals [24]:
-            xmin = 65.6433034692 
-            xmax = 69.2739562142 
-            text = "traduction" 
-        intervals [25]:
-            xmin = 69.2739562142 
-            xmax = 70.224148198 
-            text = "traduction" 
-        intervals [26]:
-            xmin = 70.224148198 
-            xmax = 70.7043260357 
-            text = "" 
-        intervals [27]:
-            xmin = 70.7043260357 
-            xmax = 73.1147322331 
-            text = "traduction" 
-        intervals [28]:
-            xmin = 73.1147322331 
-            xmax = 74.165025261 
-            text = "" 
-        intervals [29]:
-            xmin = 74.165025261 
-            xmax = 75.2151566184 
-            text = "traduction" 
-        intervals [30]:
-            xmin = 75.2151566184 
-            xmax = 77.5656315258 
-            text = "traduction" 
-        intervals [31]:
-            xmin = 77.5656315258 
-            xmax = 78.1958396767 
-            text = "" 
-        intervals [32]:
-            xmin = 78.1958396767 
-            xmax = 80.4962236443 
-            text = "traduction" 
-        intervals [33]:
-            xmin = 80.4962236443 
-            xmax = 80.7263509599 
-            text = "" 
-        intervals [34]:
-            xmin = 80.7263509599 
-            xmax = 82.1865651735 
-            text = "traduction" 
-        intervals [35]:
-            xmin = 82.1865651735 
-            xmax = 89.088 
-            text = "" 
-    item [3]:
-        class = "IntervalTier" 
-        name = "commentaires" 
-        xmin = 0 
-        xmax = 89.088 
-        intervals: size = 35 
-        intervals [1]:
-            xmin = 0 
-            xmax = 31.8564769283 
-            text = "" 
-        intervals [2]:
-            xmin = 31.8564769283 
-            xmax = 37.0774509936 
-            text = "commentaire" 
-        intervals [3]:
-            xmin = 37.0774509936 
-            xmax = 37.837685416 
-            text = "" 
-        intervals [4]:
-            xmin = 37.837685416 
-            xmax = 38.9278248569 
-            text = "commentaire" 
-        intervals [5]:
-            xmin = 38.9278248569 
-            xmax = 40.4482128663 
-            text = "" 
-        intervals [6]:
-            xmin = 40.4482128663 
-            xmax = 41.3183078478 
-            text = "commentaire" 
-        intervals [7]:
-            xmin = 41.3183078478 
-            xmax = 41.3283907039 
-            text = "" 
-        intervals [8]:
-            xmin = 41.3283907039 
-            xmax = 42.6085685416 
-            text = "commentaire" 
-        intervals [9]:
-            xmin = 42.6085685416 
-            xmax = 43.3487989222 
-            text = "" 
-        intervals [10]:
-            xmin = 43.3487989222 
-            xmax = 45.3591242843 
-            text = "commentaire" 
-        intervals [11]:
-            xmin = 45.3591242843 
-            xmax = 46.2293809363 
-            text = "" 
-        intervals [12]:
-            xmin = 46.2293809363 
-            xmax = 49.8400296396 
-            text = "commentaire" 
-        intervals [13]:
-            xmin = 49.8400296396 
-            xmax = 50.7602963961 
-            text = "" 
-        intervals [14]:
-            xmin = 50.7602963961 
-            xmax = 53.1807046143 
-            text = "commentaire" 
-        intervals [15]:
-            xmin = 53.1807046143 
-            xmax = 54.170985517 
-            text = "" 
-        intervals [16]:
-            xmin = 54.170985517 
-            xmax = 55.931260357 
-            text = "commentaire" 
-        intervals [17]:
-            xmin = 55.931260357 
-            xmax = 57.4316443247 
-            text = "" 
-        intervals [18]:
-            xmin = 57.4316443247 
-            xmax = 58.3017393062 
-            text = "commentaire" 
-        intervals [19]:
-            xmin = 58.3017393062 
-            xmax = 58.3918383294 
-            text = "" 
-        intervals [20]:
-            xmin = 58.3918383294 
-            xmax = 61.7624385315 
-            text = "commentaire" 
-        intervals [21]:
-            xmin = 61.7624385315 
-            xmax = 61.9725618053 
-            text = "" 
-        intervals [22]:
-            xmin = 61.9725618053 
-            xmax = 63.842858875 
-            text = "commentaire" 
-        intervals [23]:
-            xmin = 63.842858875 
-            xmax = 65.6433034692 
-            text = "" 
-        intervals [24]:
-            xmin = 65.6433034692 
-            xmax = 69.2739562142 
-            text = "commentaire" 
-        intervals [25]:
-            xmin = 69.2739562142 
-            xmax = 70.224148198 
-            text = "commentaire" 
-        intervals [26]:
-            xmin = 70.224148198 
-            xmax = 70.7043260357 
-            text = "" 
-        intervals [27]:
-            xmin = 70.7043260357 
-            xmax = 73.1147322331 
-            text = "commentaire" 
-        intervals [28]:
-            xmin = 73.1147322331 
-            xmax = 74.165025261 
-            text = "" 
-        intervals [29]:
-            xmin = 74.165025261 
-            xmax = 75.2151566184 
-            text = "commentaire" 
-        intervals [30]:
-            xmin = 75.2151566184 
-            xmax = 77.5656315258 
-            text = "commentaire" 
-        intervals [31]:
-            xmin = 77.5656315258 
-            xmax = 78.1958396767 
-            text = "" 
-        intervals [32]:
-            xmin = 78.1958396767 
-            xmax = 80.4962236443 
-            text = "commentaire" 
-        intervals [33]:
-            xmin = 80.4962236443 
-            xmax = 80.7263509599 
-            text = "" 
-        intervals [34]:
-            xmin = 80.7263509599 
-            xmax = 82.1865651735 
-            text = "commentaire" 
-        intervals [35]:
-            xmin = 82.1865651735 
-            xmax = 89.088 
-            text = "" 
+0.0
+8218.0
+<exists>
+2
+"IntervalTier"
+"transcription"
+0.0
+8218.0
+35
+0.0
+31.8564769283
+""
+31.8564769283
+37.0774509936
+"Also  jetzt geht es um eine Außerirdische  die einen großen Kopf hat"
+37.0774509936
+37.837685416
+""
+37.837685416
+38.9278248569
+"Und sie ist"
+38.9278248569
+40.4482128663
+"mit"
+40.4482128663
+41.3183078478
+"ihrem"
+41.3183078478
+41.3283907039
+""
+41.3283907039
+42.6085685416
+"Raumfahrzeug"
+42.6085685416
+43.3487989222
+""
+43.3487989222
+45.3591242843
+"im  in den Bergen gelandet"
+45.3591242843
+46.2293809363
+""
+46.2293809363
+49.8400296396
+"Und dann hat sie Steine gesucht  um sich ein Haus zu bauen"
+49.8400296396
+50.7602963961
+""
+50.7602963961
+53.1807046143
+"Dort hat sie einen Bären kennengelernt"
+53.1807046143
+54.170985517
+""
+54.170985517
+55.931260357
+"Der einsam ist"
+55.931260357
+57.4316443247
+""
+57.4316443247
+58.3017393062
+"Und"
+58.3017393062
+58.3918383294
+""
+58.3918383294
+61.7624385315
+"dann haben sie sich kennengelernt Und der Bär will"
+61.7624385315
+61.9725618053
+""
+61.9725618053
+63.842858875
+"der Außerirdischen helfen"
+63.842858875
+65.6433034692
+""
+65.6433034692
+69.2739562142
+"Aber dann  hm  sind Camper vorbeigekommen"
+69.2739562142
+70.224148198
+"Und haben"
+70.224148198
+70.7043260357
+""
+70.7043260357
+73.1147322331
+"der Waldaufsicht Bescheid gesagt"
+73.1147322331
+74.165025261
+""
+74.165025261
+75.2151566184
+"Also sind"
+75.2151566184
+77.5656315258
+"die Außerirdische und der Bär geflohen"
+77.5656315258
+78.1958396767
+""
+78.1958396767
+80.4962236443
+"Und führen ein wildes Leben"
+80.4962236443
+80.7263509599
+""
+80.7263509599
+82.1865651735
+"Fernab von den Menschen"
+82.1865651735
+8218.0
+""
+"IntervalTier"
+"commentaires"
+0.0
+8218.0
+35
+0.0
+31.8564769283
+""
+31.8564769283
+37.0774509936
+""
+37.0774509936
+37.837685416
+""
+37.837685416
+38.9278248569
+""
+38.9278248569
+40.4482128663
+""
+40.4482128663
+41.3183078478
+""
+41.3183078478
+41.3283907039
+""
+41.3283907039
+42.6085685416
+""
+42.6085685416
+43.3487989222
+""
+43.3487989222
+45.3591242843
+""
+45.3591242843
+46.2293809363
+""
+46.2293809363
+49.8400296396
+""
+49.8400296396
+50.7602963961
+""
+50.7602963961
+53.1807046143
+""
+53.1807046143
+54.170985517
+""
+54.170985517
+55.931260357
+""
+55.931260357
+57.4316443247
+""
+57.4316443247
+58.3017393062
+""
+58.3017393062
+58.3918383294
+""
+58.3918383294
+61.7624385315
+""
+61.7624385315
+61.9725618053
+""
+61.9725618053
+63.842858875
+""
+63.842858875
+65.6433034692
+""
+65.6433034692
+69.2739562142
+""
+69.2739562142
+70.224148198
+""
+70.224148198
+70.7043260357
+""
+70.7043260357
+73.1147322331
+""
+73.1147322331
+74.165025261
+""
+74.165025261
+75.2151566184
+""
+75.2151566184
+77.5656315258
+""
+77.5656315258
+78.1958396767
+""
+78.1958396767
+80.4962236443
+""
+80.4962236443
+80.7263509599
+""
+80.7263509599
+82.1865651735
+""
+82.1865651735
+8218.0
+""
