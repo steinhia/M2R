@@ -2,6 +2,10 @@
 import tgt
 import os, glob
 
+exec(open(path+'StoryCond.py').read())
+exec(open(path+'Dist.py').read())
+exec(open(path+'CSV.py').read())
+
 
 def isUTF8(data):
     try:

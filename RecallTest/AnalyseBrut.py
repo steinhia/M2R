@@ -14,7 +14,11 @@ import pickle
 from itertools import islice
 import panda as pd
 import csv
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
+path='../PythonUtils/'
+exec(open(path+'StoryCond.py').read())
+exec(open(path+'Dist.py').read())
+exec(open(path+'CSV.py').read())
 
 data=[]
 with open('brut.csv', 'rb') as csvfile:
@@ -73,12 +77,32 @@ def denomErrorS(data,j):
             ECJ[int(ligne[4])]+=float(ligne[13])
     return ECJ
 
+# test de dénomination : distance avec le plus proche
+def denomErrorConfC(data,j):
+    ECJ=[0,0,0,0]
+    for ligne in data[1:]:
+        if int(ligne[1])==j :
+            ECJ[int(ligne[6])]+=float(ligne[16])
+    return ECJ
+def denomErrorConfS(data,j):
+    ECJ=[0,0,0,0]
+    for ligne in data[1:]:
+        if int(ligne[1])==j :
+            ECJ[int(ligne[4])]+=float(ligne[16])
+    return ECJ
+
 
 # erreurs par condition j1 pour l'identification
 print "erreur par condition J1, dénomination"
 print denomErrorC(data,1)
 print "erreur par story J1,dénomination "
 print denomErrorS(data,1),"\n"
+
+print "erreur par condition J1, dénomination CONFUSION"
+print denomErrorConfC(data,1)
+print "erreur par story J1,dénomination CONFUSION"
+print denomErrorConfS(data,1),"\n\n"
+
     
 # erreurs par condition j2 pour l'identification
 print "erreur par condition J2,dénomination "
@@ -86,11 +110,23 @@ print denomErrorC(data,2)
 print "erreur par story J2,dénomination "
 print denomErrorS(data,2),"\n"
 
+print "erreur par condition J2,dénomination CONFUSION"
+print denomErrorConfC(data,2)
+print "erreur par story J2,dénomination CONFUSION"
+print denomErrorConfS(data,2),"\n\n"
+
 # erreurs par condition j3 pour l'identification
 print "erreur par condition J3,dénomination "
 print denomErrorC(data,3)
 print "erreur par story J3,dénomination "
 print denomErrorS(data,3),"\n"
+# erreurs par condition j3 pour l'identification
+print "erreur par condition J3,dénomination CONFUSION"
+print denomErrorConfC(data,3)
+print "erreur par story J3,dénomination CONFUSION"
+print denomErrorConfS(data,3),"\n"
+
+
 
 
 
@@ -117,15 +153,10 @@ def confusionImages(data,j):
 
 dico=confusionImages(data,2)
 sorted_d = sorted(dico.items(), key=operator.itemgetter(1))
+err=0
+for i in dico.values():
+    err+=i
 print sorted_d
-
+print err
 res=[]
-# on plot la confusion
-for v in dico.values():
-    res.append(v)
-x=[i for i in range(len(res))]
-print x,res
-fig = plt.figure()
-plt.bar(x, res, width=0.8, color='b' )
-
 

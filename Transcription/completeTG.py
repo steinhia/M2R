@@ -5,6 +5,9 @@ import os, glob
 #from textgrid import TextGrid,  Interval, Point
 #import textgrid #import TextGrid,  Interval, Point
 
+exec(open(path+'StoryCond.py').read())
+exec(open(path+'Dist.py').read())
+exec(open(path+'CSV.py').read())
 
 def toUTF8(f):
     sourceEncoding = "binary"

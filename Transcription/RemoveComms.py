@@ -6,6 +6,10 @@ import ntpath
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
+path='../PythonUtils/'
+exec(open(path+'StoryCond.py').read())
+exec(open(path+'Dist.py').read())
+exec(open(path+'CSV.py').read())
 
 for idNum in range(7):
     path='Resultats/id'+str(idNum)+'/'

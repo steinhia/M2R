@@ -16,6 +16,10 @@ import tgt
 from scipy.io import wavfile
 from itertools import groupby, count
 import os, glob
+path='../PythonUtils/'
+exec(open(path+'StoryCond.py').read())
+exec(open(path+'Dist.py').read())
+exec(open(path+'CSV.py').read())
 
 def as_range(iterable): # not sure how to do this part elegantly
     l = list(iterable)
@@ -71,7 +75,6 @@ for idNum in range(10,11):
             # on crée le textGrid
             txtGrid=tgt.core.TextGrid('essai.TextGrid')
             tierTranscription=tgt.core.IntervalTier(0,lenData/fs,'transcription')
-            #tierTraduction=tgt.core.IntervalTier(0,lenData/fs,'traduction')
             tierComm=tgt.core.IntervalTier(0,lenData/fs,'commentaires')
         
             # on crée les annotations

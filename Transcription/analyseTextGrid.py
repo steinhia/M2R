@@ -6,6 +6,10 @@ import ntpath
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
+path='../PythonUtils/'
+exec(open(path+'StoryCond.py').read())
+exec(open(path+'Dist.py').read())
+exec(open(path+'CSV.py').read())
 
 # on trouve le nombre de syllabes de chaque mot
 f=codecs.open("german_lexicon.txt",encoding="utf-8")
@@ -75,25 +79,25 @@ def calcSyll(mot,dico):
 
     return 0
 
-def num2CS(filename):
-    name=ntpath.basename(filename)
-    cOrder=name[6:10]
-    sOrder=name[12:16]
-    num=int(name[21:23])
-    tab=[6,3,8,5,10,7,12,9]
-    if num in tab:
-        return [int(cOrder[int(tab.index(num)/2)]),int(sOrder[int(tab.index(num)/2)])]
-    return [-1,-1]
-
-def createLigne(filename,nbSyll,meanf,varf,csvTab):
-    name=ntpath.basename(filename)
-    cOrder=name[6:10]
-    sOrder=name[12:16]
-    num=int(name[21:23])
-    sujet=int(name[2:4])
-    jour=int(name[18])
-    [c,s]=num2CS(name)
-    csvTab.append([sujet,jour,cOrder,sOrder,c,s,nbSyll,meanf,varf])
+#def num2CS(filename):
+#    name=ntpath.basename(filename)
+#    cOrder=name[6:10]
+#    sOrder=name[12:16]
+#    num=int(name[21:23])
+#    tab=[6,3,8,5,10,7,12,9]
+#    if num in tab:
+#        return [int(cOrder[int(tab.index(num)/2)]),int(sOrder[int(tab.index(num)/2)])]
+#    return [-1,-1]
+#
+#def createLigne(filename,nbSyll,meanf,varf,csvTab):
+#    name=ntpath.basename(filename)
+#    cOrder=name[6:10]
+#    sOrder=name[12:16]
+#    num=int(name[21:23])
+#    sujet=int(name[2:4])
+#    jour=int(name[18])
+#    [c,s]=num2CS(name)
+#    csvTab.append([sujet,jour,cOrder,sOrder,c,s,nbSyll,meanf,varf])
 
 def nbSyllOneAnnot(mots,dico):
     nbSyll=0
@@ -171,7 +175,7 @@ for idNum in range(7):
             # plot de fTab
             plotF(fTab)
             # création du csv
-            createLigne(filename,nbCSV,np.mean(fTab),np.var(fTab),csvTab)
+            createLigne(filename,csvTab,[nbCSV,np.mean(fTab),np.var(fTab)])
 print("mots en condition",c)
 print("mots en histoires ",s)
 print("freq C",fC)
@@ -179,11 +183,15 @@ print("freq S",fS)
 print("vfreq C",varfC)
 print("vfreq S",varfS)
 
-with open('brutDebit.csv', mode='w') as f:
-    writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    writer.writerow(["id","jour","ordre histoires","ordre conditions","histoire","condition","nbSyll","mean f", "var f"])
-    listLines=[]
-    for i in csvTab:
-        if i not in listLines:
-            writer.writerow(i) 
-        listLines.append(i)
+firstLine=["id","jour","ordre histoires","ordre conditions","histoire","condition","nbSyll","mean f", "var f"]
+WriteCSV(csvTab,firstLine,'brutDebit.csv')
+
+
+#with open('brutDebit.csv', mode='w') as f:
+#    writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+#    writer.writerow(["id","jour","ordre histoires","ordre conditions","histoire","condition","nbSyll","mean f", "var f"])
+#    listLines=[]
+#    for i in csvTab:
+#        if i not in listLines:
+#            writer.writerow(i) 
+#        listLines.append(i)

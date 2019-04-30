@@ -2,6 +2,10 @@
 import tgt
 import os, glob
 import ntpath
+path='../PythonUtils/'
+exec(open(path+'StoryCond.py').read())
+exec(open(path+'Dist.py').read())
+exec(open(path+'CSV.py').read())
 
 def isUTF8(data):
     try:
@@ -10,19 +14,20 @@ def isUTF8(data):
         return False
     else:
         return True
-
-def num2CS(filename):
-    name=ntpath.basename(filename)
-    cOrder=name[6:10]
-    sOrder=name[12:16]
-    num=int(name[21:23])
-    tab=[6,3,8,5,10,7,12,9]
-    if num in tab:
-        return [cOrder[tab.index(num)/2],sOrder[tab.index(num)/2]]
-    return [-1,-1]
+#
+#def num2CS(filename):
+#    name=ntpath.basename(filename)
+#    cOrder=name[6:10]
+#    sOrder=name[12:16]
+#    num=int(name[21:23])
+#    tab=[6,3,8,5,10,7,12,9]
+#    if num in tab:
+#        return [cOrder[tab.index(num)/2],sOrder[tab.index(num)/2]]
+#    return [-1,-1]
 
 cTab=[0,0,0,0];sTab=[0,0,0,0];nb=0;
 cTabNb=[0,0,0,0];sTabNb=[0,0,0,0]
+[c,s]=[0,0]
 for idNum in range(1,5):
     cTab=[0,0,0,0];sTab=[0,0,0,0];nb=0;
     path='Resultats/id'+str(idNum)+'/'
@@ -46,14 +51,10 @@ for idNum in range(1,5):
                     sTab[int(s)-1]+=n
             cTabNb[int(c)-1]+=1
             sTabNb[int(s)-1]+=1
-                # chaque mot pour pouvoir afficher les accents
-            for i in tab:
-                1#print i
-                #print '\n'
-    print "c",cTab
-    print "c",cTabNb,'\n'
-    print "s",sTab,
-    print "s",sTabNb,'\n'
+    print("c",cTab)
+    print("c",cTabNb,'\n')
+    print("s",sTab)
+    print("s",sTabNb,'\n')
 
 
 
