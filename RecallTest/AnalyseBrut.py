@@ -26,19 +26,20 @@ with open('brut.csv', 'rb') as csvfile:
     for i in reader:
         data.append(i)
 
-def identifErrorC(data,j):
+
+
+def identifError(data,j,case):
     ECJ=[0,0,0,0]
     for ligne in data[1:]:
         if int(ligne[1])==j and ligne[9]=='False':
-            ECJ[int(ligne[6])]+=1
+            ECJ[int(ligne[case])]+=1
     return ECJ
 
+def identifErrorC(data,j):
+    return identifError(data,j,5)
+
 def identifErrorS(data,j):
-    ECJ=[0,0,0,0]
-    for ligne in data[1:]:
-        if int(ligne[1])==j and ligne[9]=='False':
-            ECJ[int(ligne[4])]+=1
-    return ECJ
+    return identifError(data,j,4)
 
 
 # test d'identification
@@ -64,32 +65,26 @@ print identifErrorS(data,3),"\n"
 
 # test de dénomination
 
-def denomErrorC(data,j):
+def denomError(data,j,case1,case2):
     ECJ=[0,0,0,0]
     for ligne in data[1:]:
         if int(ligne[1])==j :
-            ECJ[int(ligne[6])]+=float(ligne[13])
-    return ECJ
-def denomErrorS(data,j):
-    ECJ=[0,0,0,0]
-    for ligne in data[1:]:
-        if int(ligne[1])==j :
-            ECJ[int(ligne[4])]+=float(ligne[13])
+            ECJ[int(ligne[case1])]+=float(ligne[case2])
     return ECJ
 
-# test de dénomination : distance avec le plus proche
+
+def denomErrorC(data,j):
+    return denomError(data,j,5,13)
+
+def denomErrorS(data,j):
+    return denomError(data,j,4,13)
+
+# test de dénomination : distance avec le plus proche (confusion)
 def denomErrorConfC(data,j):
-    ECJ=[0,0,0,0]
-    for ligne in data[1:]:
-        if int(ligne[1])==j :
-            ECJ[int(ligne[6])]+=float(ligne[16])
-    return ECJ
+    return denomError(data,j,5,16)
+
 def denomErrorConfS(data,j):
-    ECJ=[0,0,0,0]
-    for ligne in data[1:]:
-        if int(ligne[1])==j :
-            ECJ[int(ligne[4])]+=float(ligne[16])
-    return ECJ
+    return denomError(data,j,4,16)
 
 
 # erreurs par condition j1 pour l'identification

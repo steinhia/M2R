@@ -19,7 +19,33 @@ ListOfURL=['fyJR1Nd5bdYf.png',
 'XnQSXSzM0tU7']
 
 
+# remplace l'URL par le numéro d'image
+def replaceName(ligne):
+    for i,case in enumerate(ligne):
+        for j,name in enumerate(ListOfURL):
+            if name in case:
+                ligne[i]='img'+str(j)
+    return ligne
+
+
 # f(4)=1 : numero d'image -> numero d'histoire
+def story2condition(filename,s):
+    name=ntpath.basename(filename)
+    cOrder=name[6:10]
+    sOrder=name[12:16]
+    c=cOrder[sOrder.index(str(s))]
+    return c
+
+
+# condition correspondant à l'histoire pour l'id correspondant
+def s2c(idPart,sNum,permut):
+    line=permut[idPart]
+    res=-1
+    for i in line:
+        if i[0]==sNum:
+            res=i[1]
+    return res
+
 def num2s(imgNum):
     return imgNum/3
 
@@ -93,7 +119,7 @@ def replaceName(ligne):
     return ligne
 
 
-# conditions de 1 à 4 pour les recall
+# conditions de 0 à 3 pour les recall
 # return [condition,order]
 def num2CS(filename):
     name=ntpath.basename(filename)
@@ -104,5 +130,11 @@ def num2CS(filename):
     tab=[[6,8,10,12],[3,5,7,9]]
     if j<3 and num in tab[j-1]:
         index=int(tab[j-1].index(num))
-        return [cOrder[index],sOrder[index]]
+        return [int(cOrder[index])-1,int(sOrder[index])-1]
     return [-1,-1]
+
+def Order(order):
+    s=''
+    for i in order:
+        s+=str(int(i)-1)
+    return s

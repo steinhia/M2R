@@ -14,16 +14,7 @@ def isUTF8(data):
         return False
     else:
         return True
-#
-#def num2CS(filename):
-#    name=ntpath.basename(filename)
-#    cOrder=name[6:10]
-#    sOrder=name[12:16]
-#    num=int(name[21:23])
-#    tab=[6,3,8,5,10,7,12,9]
-#    if num in tab:
-#        return [cOrder[tab.index(num)/2],sOrder[tab.index(num)/2]]
-#    return [-1,-1]
+
 
 cTab=[0,0,0,0];sTab=[0,0,0,0];nb=0;
 cTabNb=[0,0,0,0];sTabNb=[0,0,0,0]

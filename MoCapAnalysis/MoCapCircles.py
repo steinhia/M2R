@@ -32,19 +32,6 @@ exec(open(path+'CSV.py').read())
 
 # TODO détecter si c'est les mains ou les pieds
 
-# conditions de 1 à 4 pour les recall
-# return [condition,order]
-#def num2CS(filename):
-#    name=ntpath.basename(filename)
-#    cOrder=name[6:10]
-#    sOrder=name[12:16]
-#    num=int(name[21:23])
-#    j=int(name[18])
-#    tab=[[6,8,10,12],[3,5,7,9]]
-#    if num in tab[j-1]:
-#        index=int(tab[j-1].index(num))
-#        return [cOrder[index],sOrder[index]]
-#    return [-1,-1]
 
 def calcMem():
     data=[]
@@ -476,28 +463,6 @@ def analyseFiles(csvTab):
             print("\n")
         return csvTab
 
-# TODO pondère par la longueur du fichier ??
-#def createLigne(filename,meanf,varf,csvTab,PM=-1):
-#    name=ntpath.basename(filename)
-#    cOrder=name[6:10]
-#    sOrder=name[12:16]
-#    num=int(name[21:23])
-#    sujet=int(name[2:4])
-#    jour=int(name[18])
-#    [c,s]=num2CS(name)
-#    if c==-1:
-#        c=PM
-#    csvTab.append([sujet,jour,sOrder,cOrder,s,c,meanf,varf])
-#
-#def createCSV(csvTab):
-#    with open('brutMoCap.csv', mode='w') as f:
-#        writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-#        writer.writerow(["id","jour","ordre histoires","ordre conditions","histoire","condition","mean f", "var f"])
-#        listLines=[]
-#        for i in csvTab:
-#            if i not in listLines:
-#                writer.writerow(i) 
-#            listLines.append(i)
 #parseFiles()
 #completeDicos()
 csvTab=[]

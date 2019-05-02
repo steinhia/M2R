@@ -79,26 +79,6 @@ def calcSyll(mot,dico):
 
     return 0
 
-#def num2CS(filename):
-#    name=ntpath.basename(filename)
-#    cOrder=name[6:10]
-#    sOrder=name[12:16]
-#    num=int(name[21:23])
-#    tab=[6,3,8,5,10,7,12,9]
-#    if num in tab:
-#        return [int(cOrder[int(tab.index(num)/2)]),int(sOrder[int(tab.index(num)/2)])]
-#    return [-1,-1]
-#
-#def createLigne(filename,nbSyll,meanf,varf,csvTab):
-#    name=ntpath.basename(filename)
-#    cOrder=name[6:10]
-#    sOrder=name[12:16]
-#    num=int(name[21:23])
-#    sujet=int(name[2:4])
-#    jour=int(name[18])
-#    [c,s]=num2CS(name)
-#    csvTab.append([sujet,jour,cOrder,sOrder,c,s,nbSyll,meanf,varf])
-
 def nbSyllOneAnnot(mots,dico):
     nbSyll=0
     for mot in mots:
@@ -112,8 +92,8 @@ def nbSyllOneAnnot(mots,dico):
 
 def completeFTab(cond,story,nbSyll,ann,fTab):
     if cond!=-1:
-        c[int(cond)-1]+=nbSyll
-        s[int(story)-1]+=nbSyll
+        c[int(cond)]+=nbSyll
+        s[int(story)]+=nbSyll
     deb=int(ann.start_time*100);fin=int(ann.end_time*100)
     freq=0
     if fin>deb:
@@ -130,12 +110,12 @@ def removeSpaces(fTab):
     return fTab
 
 def calcEffets(cond,story,fC,fS,varfC,varfS,ccount,scount):
-    fC[cond-1]+=np.mean(fTab)
-    fS[story-1]+=np.mean(fTab)
-    varfC[cond-1]+=np.var(fTab)
-    varfS[story-1]+=np.var(fTab)
-    ccount[int(cond)-1]+=1
-    scount[int(story)-1]+=1
+    fC[cond]+=np.mean(fTab)
+    fS[story]+=np.mean(fTab)
+    varfC[cond]+=np.var(fTab)
+    varfS[story]+=np.var(fTab)
+    ccount[int(cond)]+=1
+    scount[int(story)]+=1
 
 
 def plotF(fTab):
@@ -156,7 +136,7 @@ for idNum in range(7):
         if cond!=-1:
             nbCSV=0
             nbSyll=0
-            f=tgt.io.read_textgrid(filename,encoding='utf-16-be')
+            f=readTG(filename)
             annotations=f.get_tier_by_name('transcription').annotations
             lenFile=int(annotations[-1].end_time*100)
             fTab=np.zeros(lenFile)
@@ -187,11 +167,3 @@ firstLine=["id","jour","ordre histoires","ordre conditions","histoire","conditio
 WriteCSV(csvTab,firstLine,'brutDebit.csv')
 
 
-#with open('brutDebit.csv', mode='w') as f:
-#    writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-#    writer.writerow(["id","jour","ordre histoires","ordre conditions","histoire","condition","nbSyll","mean f", "var f"])
-#    listLines=[]
-#    for i in csvTab:
-#        if i not in listLines:
-#            writer.writerow(i) 
-#        listLines.append(i)
