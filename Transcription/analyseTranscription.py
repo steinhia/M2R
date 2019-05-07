@@ -15,7 +15,7 @@ def isUTF8(data):
     else:
         return True
 
-
+ #### on n'utilise pas ce fichier ########
 cTab=[0,0,0,0];sTab=[0,0,0,0];nb=0;
 cTabNb=[0,0,0,0];sTabNb=[0,0,0,0]
 [c,s]=[0,0]

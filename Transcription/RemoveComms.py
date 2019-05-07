@@ -1,28 +1,27 @@
 # -*- coding: utf-8 -*
 import tgt
 import os, glob
-import codecs
-import ntpath
 import csv
-import numpy as np
-import matplotlib.pyplot as plt
 path='../PythonUtils/'
 exec(open(path+'StoryCond.py').read())
 exec(open(path+'Dist.py').read())
 exec(open(path+'CSV.py').read())
 
-for idNum in range(7):
+###### enlève les commentaires et les 'transcription' en trop pour traiter les fichiers
+
+for idNum in range(9,12):
     path='Resultats/id'+str(idNum)+'/'
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
         print(filename)
-        f=tgt.io.read_textgrid(filename,encoding='utf-16-be')
+        f=readTG(filename)
+        #f=tgt.io.read_textgrid(filename,encoding='utf-16-be')
         annotC=[]
         if 'commentaires' in f.get_tier_names():
             annotC=f.get_tier_by_name('commentaires').annotations
         else:
             annotC=f.get_tier_by_name('commentaire').annotations
         annotT=f.get_tier_by_name('transcription').annotations
-        lenFile=int(annotC[-1].end_time*100)
+        lenFile=int(annotT[-1].end_time*100)
         tierComm=tgt.core.IntervalTier(0,lenFile,'commentaires')
         tierTrans=tgt.core.IntervalTier(0,lenFile,'transcription')
         for ann in annotC:

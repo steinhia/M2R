@@ -4,43 +4,31 @@ from scipy.io import wavfile
 import os, glob
 #from textgrid import TextGrid,  Interval, Point
 #import textgrid #import TextGrid,  Interval, Point
-
+path='../PythonUtils/'
 exec(open(path+'StoryCond.py').read())
 exec(open(path+'Dist.py').read())
 exec(open(path+'CSV.py').read())
 
-def toUTF8(f):
-    sourceEncoding = "binary"
-    targetEncoding = "utf-8"
-    source = open(f)
-    target = open(f,"w")
-    target.write(unicode(source.read(), sourceEncoding).encode(targetEncoding))
+# on ne fusionne les intervalle que pour transcription, ce fichier calque commentaires dessus
 
-
-for idNum in range(7,8):#16):
+for idNum in range(11,16):#16):
     path='AudioList/id'+str(idNum).zfill(2)+'/'
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
-        f=0
-        #toUTF8(filename)
+        print(filename)
         wavName=filename[:-8]+'wav'
-        if 'bis' not in filename:
+        f=readTG(filename)
+        if f!=0:
+            tr=f.get_tier_by_name('transcription')
+            co2=tgt.core.IntervalTier(tr.start_time,tr.end_time, name='commentaires')
+            for iv in tr:
+                ann=tgt.core.Annotation(iv.start_time,iv.end_time,'commentaire')
+                co2.add_annotation(ann)
+            txtGrid=tgt.core.TextGrid()
+            txtGrid.add_tier(tr)
+            txtGrid.add_tier(co2)
+            os.remove(filename)
             try:
-                f=tgt.io.read_textgrid(filename)
+                tgt.io.write_to_file(txtGrid, filename)
             except:
-                print "lecture impossible ",filename
-            if f!=0:
-                tr=f.get_tier_by_name('transcription')
-                co2=tgt.core.IntervalTier(tr.start_time,tr.end_time, name='commentaire')
-                for iv in tr:
-                    ann=tgt.core.Annotation(iv.start_time,iv.end_time,'commentaire')
-                    co2.add_annotation(ann)
-                txtGrid=tgt.core.TextGrid()
-                txtGrid.add_tier(tr)
-                txtGrid.add_tier(co2)
-                nameBis=filename[:-9]+'bis'+'.TextGrid'
-                os.remove(filename)
-                try:
-                    tgt.io.write_to_file(txtGrid, filename)
-                except:
-                    print "écriture impossible ",filename
+                print "écriture impossible ",filename
 
