@@ -6,12 +6,13 @@ setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
 tab <- read.table("../RecallTest/brut.csv",sep=",",header=TRUE)
 
+
 ###
 
-#tab$evaluation <- as.character(tab$evaluation)
-#tab$evaluation[tab$evaluation=="True"] <- "0"
-#tab$evaluation[tab$evaluation=="False"] <- "1"
-#tab$evaluation <- as.factor(tab$evaluation)
+tab$evaluation <- as.character(tab$evaluation)
+tab$evaluation[tab$evaluation=="True"] <- "1"
+tab$evaluation[tab$evaluation=="False"] <- "0"
+tab$evaluation <- as.factor(tab$evaluation)
 
 ### type variable
 
@@ -26,25 +27,66 @@ tab$condition <- as.factor(as.character(tab$condition))
 library(lme4)
 library(AUC)
 library(multcomp)
-
+library(ggplot2)
 
 
 ###################################################### statistiques descriptives #######################################
 
+### creaconditionon fonction  moyenne intervalle de confiance
+
+moyenne <- function(x){mean(x, na.rm=TRUE)}
+
+fonction_ci_inf <- function(x){
+moyenne_boot <- c()
+for(i in 1:1000){moyenne_boot <- c(moyenne_boot,moyenne(sample(x=x,size=length(x),replace=TRUE)))}
+return(quantile(moyenne_boot,0.025))}
+
+fonction_ci_sup <- function(x){
+moyenne_boot <- c()
+for(i in 1:1000){moyenne_boot <- c(moyenne_boot,moyenne(sample(x=x,size=length(x),replace=TRUE)))}
+return(quantile(moyenne_boot,0.975))}
 
 
-tgc <- summarySE(tab, measurevar="evaluation", groupvars=c("jour","condition"))
-p<-ggplot(data=tgc, aes(x=jour, y=evaluation, fill=condition)) + 
-  geom_bar(position=position_dodge(), stat="identity") +
-  geom_errorbar(aes(ymin=tgc$evaluation-tgc$se, ymax=tgc$evaluation+tgc$se),
-                width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
-  ggtitle("Scores en identification")
-p <- p + ylab("Erreur")+ labs(fill='condition') 
-p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
-              plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
-              legend.title=element_text(size=18), legend.text = element_text(size=16))
-p
+### choix de la variale reponse et des facteurs jourants (a modifierselon l'exemple)
+
+reponse <- tab$evaluation
+facteur1 <- tab$condition
+facteur2 <- tab$jour
+
+
+### creaconditionon tableau pour graphique 
+
+tab_agg_moyenne <- aggregate(as.numeric(as.character(reponse)), by=list(facteur1, facteur2),moyenne)
+tab_agg_ci_inf <- aggregate(as.numeric(as.character(reponse)), by=list(facteur1, facteur2),fonction_ci_inf)
+
+tab_agg_ci_sup <- aggregate(as.numeric(as.character(reponse)), by=list(facteur1, facteur2),fonction_ci_sup)
+tab_graphique <- cbind(tab_agg_moyenne,tab_agg_ci_inf[,ncol(tab_agg_ci_inf)],tab_agg_ci_sup[,ncol(tab_agg_ci_sup)])
+
+colnames(tab_graphique)[ncol(tab_graphique)-2] <- "moyenne"
+colnames(tab_graphique)[ncol(tab_graphique)-1] <- "ci_inf"
+colnames(tab_graphique)[ncol(tab_graphique)] <- "ci_sup"
+
+
+### graphique (avec intervalle de confiance) 
+
+mat <- matrix(tab_graphique$moyenne, nrow=nlevels(facteur1), dimnames=list(levels(facteur1),levels(facteur2)))
+bar <- barplot(mat, beside = TRUE,  names.arg = colnames(mat), legend.text = TRUE,ylim=c(0,1), ylab="reponse", xlab="")
+segments(as.vector(bar),tab_graphique$ci_inf,as.vector(bar),tab_graphique$ci_sup)
+
+
+# tgc <- summarySE(tab, measurevar="evaluation", groupvars=c("jour","condition"))
+# p<-ggplot(data=tgc, aes(x=jour, y=evaluation, fill=condition)) +
+#   geom_bar(position=position_dodge(), stat="identity") +
+#   geom_errorbar(aes(ymin=tgc$evaluation-tgc$se, ymax=tgc$evaluation+tgc$se),
+#                 width=.2,                    # Width of the error bars
+#                 position=position_dodge(.9)) +
+#   ggtitle("Scores en identification")
+# p <- p + ylab("Erreur")+ labs(fill='condition')
+# p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+#               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+#               legend.title=element_text(size=18), legend.text = element_text(size=16))
+# p
+
 
 
 ###
@@ -61,7 +103,6 @@ mstart0 <- glmer(evaluation~jour*condition + (1|id), family="binomial", data=tab
 
 st0 <- getME(mstart0,c("theta","fixef"))
 
-# modèle initial où garde tout (jour,cond,id)
 m0 <- glmer(evaluation~jour*condition + (1|id) ,start=st0, family="binomial", data=tab,control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=50000)))
 
 

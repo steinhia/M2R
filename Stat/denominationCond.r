@@ -3,6 +3,7 @@
 
 ### importer tableau 
 setwd("~/Documents/Alex/Stat/")
+source("summarySE.r")
 tab <- read.table("../Transcription/brutTranscriptionCT.csv",sep=",",header=TRUE)
 ### type variable
 
@@ -23,7 +24,7 @@ tab$condition <- as.factor(tab$condition)
 ### packages utilises
 
 library(gamlss)
-
+library(ggplot2)
 
 
 ###################################################### statistiques descriptives #######################################
@@ -35,12 +36,29 @@ p<-ggplot(data=tgc, aes(x=jour, y=score, fill=condition)) +
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
   ggtitle("Scores en dénomination")
-p <- p + ylab("Erreur")+ labs(fill='condition') 
+p <- p + ylab("Score")+ labs(fill='condition') 
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
               legend.title=element_text(size=18), legend.text = element_text(size=16))
 p
 
+
+############## effet de l'histoire ##############""
+
+tgc <- summarySE(tab, measurevar="score", groupvars=c("jour","histoire"))
+p<-ggplot(data=tgc, aes(x=jour, y=score, fill=histoire)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  geom_errorbar(aes(ymin=tgc$score-tgc$se, ymax=tgc$score+tgc$se),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9)) +
+  ggtitle("Scores en dénomination par histoire")
+p <- p + ylab("Score")+ labs(fill='histoire') 
+p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+               legend.title=element_text(size=18), legend.text = element_text(size=16))
+p
+
+#########################################################
 
 ### P(score==0)
 

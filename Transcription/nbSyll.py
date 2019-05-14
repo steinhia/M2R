@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*
 import os, glob
+import tgt
 import stackprinter
 import codecs
 import numpy as np
+import matplotlib.pyplot as plt
 path='../PythonUtils/'
 stackprinter.set_excepthook(style='color')
 exec(open(path+'StoryCond.py').read())
@@ -16,36 +18,45 @@ dico={}
 for i in l:
     line=str(i).split('\t')
     dico[line[0]]=line[1].count('-')+1
-l1=['hm','im','oh','zur','beim','dass','vom','am','hab','nee','crew','na','nem','ne','nen','puh','uff','"m"','"V"','keit','te','Tipps','stûck','New','York','ups']
+l1=['hm','im','oh','zur','beim','dass','vom','am','hab','nee','crew','na','nem','ne','nen','puh','uff','"m"','"V"','keit','te','Tipps','stûck','New','York','ups','"L"','"S"']
 for i in l1:
     dico[i]=1
-l2=['okay','ok','Filmteam','Alien','geschafft','Lasgich','happy','ärmel','düne','dschungel','Deko','Gleitschirm','bestaunt','Löchter','einën','Bubbel','Ufo','Fenchel','spîral']
+l2=['okay','ok','Filmteam','Alien','geschafft','Lasgich','happy','ärmel','düne','dschungel','Deko','Gleitschirm','bestaunt','Löchter','einën','Bubbel','Ufo','Fenchel','spîral','Dikte']
 for i in l2:
     dico[i]=2
-l3=['Holzfäller','Grillparty','Soltete','Soldikte','Tireinat','Ligete','Sonistik','Tereinat','Keimate','Sodecktele','Keimase','SOnestik','Melare','Zulerge','Lasgelich','Welare','Sonestik','Somistik','Meidikte','Kalmate','Melerge','Lersgelich','behilfslich','ähliches','Mergawe','Mandete','Tereimat','Sudete','Zudete','Sodete','Beinchen','Zelerge']
+l3=['Holzfäller','Grillparty','Soltete','Soldikte','Tireinat','Ligete','Sonistik','Tereinat','Keimate','Sodecktele','Keimase','SOnestik','Melare','Zulerge','Lasgelich','Welare','Sonestik','Somistik','Meidikte','Kalmate','Melerge','Lersgelich','behilfslich','ähliches','Mergawe','Mandete','Tereimat','Sudete','Zudete','Sodete','Beinchen','Zelerge','Tereineit','Wecktolin','Lasgerich']
 for i in l3:
     dico[i]=3
 l4=['dreickiges','blattförmigen','kontruieren','Gelaskela','halbrundförmig','Ausstülpungen','Astförmige']
 for i in l4:
     dico[i]=4
 
+
+
+def removePair(mots,deb,fin):
+    # on enlève les couples dans le même mot
+    test=['}',')',']']
+    for i,mot in enumerate(mots.copy()):
+        if deb in mot and any(brace in mot for brace in test):
+            mots.remove(mot)
+    if any(deb in mot for mot in mots):
+        indexDeb=[i for i in range(len(mots)) if deb in mots[i]][0]
+        indexFin=[i for i in range(len(mots)) if fin in mots[i]]
+        # paire incongruente { ] etc
+        if len(indexFin)==0:
+            indexFin=-1
+            for brace in test:
+                if any(brace in mot for mot in mots):
+                    indexFin=[i for i in range(len(mots)) if brace in mots[i]][0]
+        else:
+            indexFin=indexFin[0]
+        mots=mots[:indexDeb]+mots[min(indexFin+1,len(mots)):]
+    return mots
+
 def removeAnnot(mots):
-    if any('{' in mot for mot in mots):
-        indexDeb=[i for i in range(len(mots)) if '{' in mots[i]][0]
-        indexFin=[i for i in range(len(mots)) if '}' in mots[i]]
-        if len(indexFin)==0:
-             indexFin=[i for i in range(len(mots)) if ')' in mots[i]][0]
-        else:
-            indexFin=indexFin[0]
-        mots=mots[:indexDeb]+mots[min(indexFin+1,len(mots)):]
-    if any('(' in mot for mot in mots):
-        indexDeb=[i for i in range(len(mots)) if '(' in mots[i]][0]
-        indexFin=[i for i in range(len(mots)) if ')' in mots[i]]
-        if len(indexFin)==0:
-             indexFin=[i for i in range(len(mots)) if '}' in mots[i]][0]
-        else:
-            indexFin=indexFin[0]
-        mots=mots[:indexDeb]+mots[min(indexFin+1,len(mots)):]
+    mots=removePair(mots,'{','}')
+    mots=removePair(mots,'(',')')
+    mots=removePair(mots,'[',']')
     return mots
 
 def cutWord(mot,dico):
@@ -86,9 +97,17 @@ def nbSyllOneAnnot(mots,dico):
         if nb==0:
             nb=cutWord(mot,dico)
         if nb==0 and '_' not in mot:
-                print(mot,mots)
+                print("mot inconnu ",mot,mots)
         nbSyll+=nb
     return nbSyll
+
+def nbHesitations(mots):
+    nb=0
+    for i in mots:
+        if 'hm' in i.lower():
+            nb+=1
+    return nb
+            
 
 def completeFTab(cond,story,nbSyll,ann,fTab):
     if cond!=-1:
@@ -129,13 +148,14 @@ Special=['{','}','_','Anglais','(',')']
 fC=[0,0,0,0];fS=[0,0,0,0]
 varfC=[0,0,0,0];varfS=[0,0,0,0]
 csvTab=[]
-for idNum in range(12):
+for idNum in range(18):
     path='Resultats/id'+str(idNum)+'/'
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
         [cond,story]=num2CS(filename)
         if cond!=-1:
             nbCSV=0
             nbSyll=0
+            nbHesit=0
             f=readTG(filename)
             annotations=f.get_tier_by_name('transcription').annotations
             lenFile=int(annotations[-1].end_time*100)
@@ -146,6 +166,7 @@ for idNum in range(12):
                 mots=removeAnnot(mots)
                 nbSyll=nbSyllOneAnnot(mots,dico)
                 nbCSV+=nbSyll
+                nbHesit+=nbHesitations(mots)
                 # on remplit le tableau de fréqunences 
                 completeFTab(cond,story,nbSyll,ann,fTab)
             # on enlève les débuts et fins silencieux
@@ -153,9 +174,10 @@ for idNum in range(12):
             # effets de la condition et de l'histoire
             calcEffets(cond,story,fC,fS,varfC,varfS,ccount,scount)
             # plot de fTab
-            plotF(fTab)
+            #plotF(fTab)
+            #plt.show()
             # création du csv
-            createLigne(filename,csvTab,[nbCSV,np.mean(fTab),np.var(fTab)])
+            createLigne(filename,csvTab,[nbCSV,np.mean(fTab),np.var(fTab),nbHesit])
 print("mots en condition",c)
 print("mots en histoires ",s)
 print("freq C",fC)
@@ -163,7 +185,7 @@ print("freq S",fS)
 print("vfreq C",varfC)
 print("vfreq S",varfS)
 
-firstLine=["nbSyll","mean f", "var f"]
+firstLine=["nbSyll","mean f", "var f","nbHesit"]
 WriteCSV(csvTab,firstLine,'brutDebit.csv')
 
 

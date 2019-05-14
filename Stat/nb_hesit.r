@@ -3,7 +3,6 @@
 
 ### importer tableau 
 setwd("~/Documents/Alex/Stat/")
-source("summarySE.r")
 tab <- read.table("../Transcription/brutDebit.csv",sep=",",header=TRUE)
 
 
@@ -29,14 +28,14 @@ library(DHARMa)
 ###################################################### statistiques descriptives #######################################
 
 
-tgc <- summarySE(tab, measurevar="nbSyll", groupvars=c("jour","condition"))
-p<-ggplot(data=tgc, aes(x=jour, y=nbSyll, fill=condition)) + 
+tgc <- summarySE(tab, measurevar="nbHesit", groupvars=c("jour","condition"))
+p<-ggplot(data=tgc, aes(x=jour, y=nbHesit, fill=condition)) + 
   geom_bar(position=position_dodge(), stat="identity") +
-  geom_errorbar(aes(ymin=tgc$nbSyll-tgc$se, ymax=tgc$nbSyll+tgc$se),
+  geom_errorbar(aes(ymin=tgc$nbHesit-tgc$se, ymax=tgc$nbHesit+tgc$se),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
-  ggtitle("Nombre de syllabes total")
-p <- p + ylab("Erreur")+ labs(fill='condition') 
+  ggtitle("Nombre d'hésitations")
+p <- p + ylab("nb")+ labs(fill='condition') 
 p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
               legend.title=element_text(size=18), legend.text = element_text(size=16))
@@ -46,13 +45,13 @@ p
 ##############" effet de l'histoire
 
 
-tgc <- summarySE(tab, measurevar="nbSyll", groupvars=c("jour","histoire"))
-p<-ggplot(data=tgc, aes(x=jour, y=nbSyll, fill=histoire)) + 
+tgc <- summarySE(tab, measurevar="nbHesit", groupvars=c("jour","histoire"))
+p<-ggplot(data=tgc, aes(x=jour, y=nbHesit, fill=histoire)) + 
   geom_bar(position=position_dodge(), stat="identity") +
-  geom_errorbar(aes(ymin=tgc$nbSyll-tgc$se, ymax=tgc$nbSyll+tgc$se),
+  geom_errorbar(aes(ymin=tgc$nbHesit-tgc$se, ymax=tgc$nbHesit+tgc$se),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
-  ggtitle("Nombre de syllabes par histoire")
+  ggtitle("Scores en dénomination")
 p <- p + ylab("Erreur")+ labs(fill='histoire') 
 p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
@@ -77,7 +76,7 @@ return(quantile(moyenne_boot,0.975))}
 
 ### choix de la variale reponse et des facteurs groupants (a modifierselon l'exemple)
 
-reponse <- tab$nbSyll
+reponse <- tab$nbHesit
 facteur1 <- tab$condition
 facteur2 <- tab$jour
 
@@ -109,14 +108,14 @@ segments(as.vector(bar),tab_graphique$ci_inf,as.vector(bar),tab_graphique$ci_sup
 
 ### ecriture modele initial
 
-m0 <- glmer(nbSyll~jour*condition + (1|id) , family="poisson", data=tab,control=glmerControl(optCtrl=list(maxfun=50000)))
+m0 <- glmer(nbHesit~jour*condition + (1|id) , family="poisson", data=tab,control=glmerControl(optCtrl=list(maxfun=50000)))
 
 ### selecconditionon modele (effets aleatoires)
 
 # etape 1
 
-m1 <- glmer(nbSyll~jour*condition + (condition|id) , family="poisson", data=tab,control=glmerControl(optCtrl=list(maxfun=50000)))
-m2 <- glmer(nbSyll~jour*condition + (jour|id) , family="poisson", data=tab,control=glmerControl(optCtrl=list(maxfun=50000)))
+m1 <- glmer(nbHesit~jour*condition + (condition|id) , family="poisson", data=tab,control=glmerControl(optCtrl=list(maxfun=50000)))
+m2 <- glmer(nbHesit~jour*condition + (jour|id) , family="poisson", data=tab,control=glmerControl(optCtrl=list(maxfun=50000)))
 
 anova(m0,m1)
 anova(m0,m2)
@@ -127,7 +126,7 @@ anova(m0,m2)
 
 # etape 1
 
-m3 <- glmer(nbSyll~jour+condition + (jour|id), family="poisson", data=tab)
+m3 <- glmer(nbHesit~jour+condition + (jour|id), family="poisson", data=tab)
 anova(m2,m3)
 
 
@@ -140,7 +139,7 @@ simulationOutput <- simulateResiduals(fittedModel = mod_choisi, n = 1000)
 plotSimulatedResiduals(simulationOutput = simulationOutput)
 testUniformity(simulationOutput = simulationOutput)
 
-plot(tab$nbSyll~fitted(mod_choisi))
+plot(tab$nbHesit~fitted(mod_choisi))
 abline(a=0,b=1,col="red")
 
 

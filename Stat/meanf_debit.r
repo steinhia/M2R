@@ -23,7 +23,7 @@ tab$condition <- as.factor(tab$condition)
 
 library(multcomp)
 library(nlme)
-
+library(ggplot2)
 
 
 ###################################################### statistiques descriptives #######################################
@@ -41,7 +41,20 @@ p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18)
                legend.title=element_text(size=18), legend.text = element_text(size=16))
 p
 
+##############" effet de l'histoire ########"""
 
+tgc <- summarySE(tab, measurevar="mean.f", groupvars=c("jour","histoire"))
+p<-ggplot(data=tgc, aes(x=jour, y=mean.f, fill=histoire)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  geom_errorbar(aes(ymin=tgc$mean.f-tgc$se, ymax=tgc$mean.f+tgc$se),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9)) +
+  ggtitle("Débit moyen selon le jour et la condition")
+p <- p + ylab("débit moyen")+ labs(fill='histoire') 
+p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+               legend.title=element_text(size=18), legend.text = element_text(size=16))
+p
 
 ### distribution
 

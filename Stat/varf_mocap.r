@@ -42,6 +42,23 @@ p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18)
               legend.title=element_text(size=18), legend.text = element_text(size=16))
 p
 
+###############" effet de l'histoire 
+
+tgc <- summarySE(tab, measurevar="varf.rb", groupvars=c("jour","histoire"))
+p<-ggplot(data=tgc, aes(x=jour, y=varf.rb, fill=histoire)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  geom_errorbar(aes(ymin=tgc$varf.rb-tgc$se, ymax=tgc$varf.rb+tgc$se),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9)) +
+  ggtitle("Variabilité de la fréquence de pédalage")
+p <- p + ylab("variance")+ labs(fill='histoire') 
+p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+               legend.title=element_text(size=18), legend.text = element_text(size=16))
+p
+
+
+
 
 
 ### distribution

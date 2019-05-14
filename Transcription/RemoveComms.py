@@ -9,7 +9,7 @@ exec(open(path+'CSV.py').read())
 
 ###### enlève les commentaires et les 'transcription' en trop pour traiter les fichiers
 
-for idNum in range(9,12):
+for idNum in range(13,20):
     path='Resultats/id'+str(idNum)+'/'
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
         print(filename)
