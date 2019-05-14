@@ -1,336 +1,233 @@
 File type = "ooTextFile"
 Object class = "TextGrid"
 
-xmin = 0 
-xmax = 90 
-tiers? <exists> 
-size = 2 
-item []: 
-    item [1]:
-        class = "IntervalTier" 
-        name = "transcription" 
-        xmin = 0 
-        xmax = 90 
-        intervals: size = 36 
-        intervals [1]:
-            xmin = 0 
-            xmax = 3.87088507109 
-            text = "" 
-        intervals [2]:
-            xmin = 3.87088507109 
-            xmax = 9.43215664609 
-            text = "transcription" 
-        intervals [3]:
-            xmin = 9.43215664609 
-            xmax = 9.66225498733 
-            text = "" 
-        intervals [4]:
-            xmin = 9.66225498733 
-            xmax = 22.7551571972 
-            text = "transcription" 
-        intervals [5]:
-            xmin = 22.7551571972 
-            xmax = 24.5155597101 
-            text = "transcription" 
-        intervals [6]:
-            xmin = 24.5155597101 
-            xmax = 24.6656854954 
-            text = "" 
-        intervals [7]:
-            xmin = 24.6656854954 
-            xmax = 29.5667146479 
-            text = "transcription" 
-        intervals [8]:
-            xmin = 29.5667146479 
-            xmax = 29.7968587292 
-            text = "" 
-        intervals [9]:
-            xmin = 29.7968587292 
-            xmax = 34.9479450568 
-            text = "transcription" 
-        intervals [10]:
-            xmin = 34.9479450568 
-            xmax = 38.8388347019 
-            text = "transcription" 
-        intervals [11]:
-            xmin = 38.8388347019 
-            xmax = 41.5094453323 
-            text = "transcription" 
-        intervals [12]:
-            xmin = 41.5094453323 
-            xmax = 41.5295413865 
-            text = "" 
-        intervals [13]:
-            xmin = 41.5295413865 
-            xmax = 42.859754078 
-            text = "transcription" 
-        intervals [14]:
-            xmin = 42.859754078 
-            xmax = 43.3799187424 
-            text = "transcription" 
-        intervals [15]:
-            xmin = 43.3799187424 
-            xmax = 46.2205225118 
-            text = "transcription" 
-        intervals [16]:
-            xmin = 46.2205225118 
-            xmax = 46.4806734542 
-            text = "" 
-        intervals [17]:
-            xmin = 46.4806734542 
-            xmax = 50.0013869999 
-            text = "transcription" 
-        intervals [18]:
-            xmin = 50.0013869999 
-            xmax = 50.2815425163 
-            text = "" 
-        intervals [19]:
-            xmin = 50.2815425163 
-            xmax = 52.8020273614 
-            text = "transcription" 
-        intervals [20]:
-            xmin = 52.8020273614 
-            xmax = 53.0121668687 
-            text = "" 
-        intervals [21]:
-            xmin = 53.0121668687 
-            xmax = 54.3524275873 
-            text = "transcription" 
-        intervals [22]:
-            xmin = 54.3524275873 
-            xmax = 60.5638020776 
-            text = "transcription" 
-        intervals [23]:
-            xmin = 60.5638020776 
-            xmax = 60.8139507329 
-            text = "" 
-        intervals [24]:
-            xmin = 60.8139507329 
-            xmax = 61.7540742312 
-            text = "transcription" 
-        intervals [25]:
-            xmin = 61.7540742312 
-            xmax = 65.3548975532 
-            text = "transcription" 
-        intervals [26]:
-            xmin = 65.3548975532 
-            xmax = 66.7652200209 
-            text = "transcription" 
-        intervals [27]:
-            xmin = 66.7652200209 
-            xmax = 66.9753595283 
-            text = "" 
-        intervals [28]:
-            xmin = 66.9753595283 
-            xmax = 74.9270862173 
-            text = "transcription" 
-        intervals [29]:
-            xmin = 74.9270862173 
-            xmax = 75.1772348727 
-            text = "" 
-        intervals [30]:
-            xmin = 75.1772348727 
-            xmax = 79.4481199438 
-            text = "transcription" 
-        intervals [31]:
-            xmin = 79.4481199438 
-            xmax = 79.508225146 
-            text = "" 
-        intervals [32]:
-            xmin = 79.508225146 
-            xmax = 80.6683989584 
-            text = "transcription" 
-        intervals [33]:
-            xmin = 80.6683989584 
-            xmax = 81.228618511 
-            text = "" 
-        intervals [34]:
-            xmin = 81.228618511 
-            xmax = 82.3088197674 
-            text = "transcription" 
-        intervals [35]:
-            xmin = 82.3088197674 
-            xmax = 84.0991834013 
-            text = "transcription" 
-        intervals [36]:
-            xmin = 84.0991834013 
-            xmax = 90 
-            text = "" 
-    item [2]:
-        class = "IntervalTier" 
-        name = "commentaires" 
-        xmin = 0 
-        xmax = 90 
-        intervals: size = 43 
-        intervals [1]:
-            xmin = 0 
-            xmax = 3.87088507109 
-            text = "" 
-        intervals [2]:
-            xmin = 3.87088507109 
-            xmax = 9.43215664609 
-            text = "commentaire" 
-        intervals [3]:
-            xmin = 9.43215664609 
-            xmax = 9.66225498733 
-            text = "" 
-        intervals [4]:
-            xmin = 9.66225498733 
-            xmax = 22.7551571972 
-            text = "commentaire" 
-        intervals [5]:
-            xmin = 22.7551571972 
-            xmax = 24.5155597101 
-            text = "commentaire" 
-        intervals [6]:
-            xmin = 24.5155597101 
-            xmax = 24.6656854954 
-            text = "" 
-        intervals [7]:
-            xmin = 24.6656854954 
-            xmax = 29.5667146479 
-            text = "commentaire" 
-        intervals [8]:
-            xmin = 29.5667146479 
-            xmax = 29.7968587292 
-            text = "" 
-        intervals [9]:
-            xmin = 29.7968587292 
-            xmax = 34.9479450568 
-            text = "commentaire" 
-        intervals [10]:
-            xmin = 34.9479450568 
-            xmax = 38.8388347019 
-            text = "commentaire" 
-        intervals [11]:
-            xmin = 38.8388347019 
-            xmax = 41.5094453323 
-            text = "commentaire" 
-        intervals [12]:
-            xmin = 41.5094453323 
-            xmax = 41.5295413865 
-            text = "" 
-        intervals [13]:
-            xmin = 41.5295413865 
-            xmax = 42.859754078 
-            text = "commentaire" 
-        intervals [14]:
-            xmin = 42.859754078 
-            xmax = 43.3799187424 
-            text = "commentaire" 
-        intervals [15]:
-            xmin = 43.3799187424 
-            xmax = 46.2205225118 
-            text = "commentaire" 
-        intervals [16]:
-            xmin = 46.2205225118 
-            xmax = 46.4806734542 
-            text = "" 
-        intervals [17]:
-            xmin = 46.4806734542 
-            xmax = 50.0013869999 
-            text = "commentaire" 
-        intervals [18]:
-            xmin = 50.0013869999 
-            xmax = 50.2815425163 
-            text = "" 
-        intervals [19]:
-            xmin = 50.2815425163 
-            xmax = 52.8020273614 
-            text = "commentaire" 
-        intervals [20]:
-            xmin = 52.8020273614 
-            xmax = 53.0121668687 
-            text = "" 
-        intervals [21]:
-            xmin = 53.0121668687 
-            xmax = 54.3524275873 
-            text = "commentaire" 
-        intervals [22]:
-            xmin = 54.3524275873 
-            xmax = 60.5638020776 
-            text = "commentaire" 
-        intervals [23]:
-            xmin = 60.5638020776 
-            xmax = 60.8139507329 
-            text = "" 
-        intervals [24]:
-            xmin = 60.8139507329 
-            xmax = 61.7540742312 
-            text = "commentaire" 
-        intervals [25]:
-            xmin = 61.7540742312 
-            xmax = 65.3548975532 
-            text = "commentaire" 
-        intervals [26]:
-            xmin = 65.3548975532 
-            xmax = 66.7652200209 
-            text = "commentaire" 
-        intervals [27]:
-            xmin = 66.7652200209 
-            xmax = 66.9753595283 
-            text = "" 
-        intervals [28]:
-            xmin = 66.9753595283 
-            xmax = 74.9270862173 
-            text = "commentaire" 
-        intervals [29]:
-            xmin = 74.9270862173 
-            xmax = 75.1772348727 
-            text = "" 
-        intervals [30]:
-            xmin = 75.1772348727 
-            xmax = 79.4481199438 
-            text = "commentaire" 
-        intervals [31]:
-            xmin = 79.4481199438 
-            xmax = 79.508225146 
-            text = "" 
-        intervals [32]:
-            xmin = 79.508225146 
-            xmax = 80.6683989584 
-            text = "commentaire" 
-        intervals [33]:
-            xmin = 80.6683989584 
-            xmax = 81.228618511 
-            text = "" 
-        intervals [34]:
-            xmin = 81.228618511 
-            xmax = 82.3088197674 
-            text = "commentaire" 
-        intervals [35]:
-            xmin = 82.3088197674 
-            xmax = 84.0991834013 
-            text = "commentaire" 
-        intervals [36]:
-            xmin = 84.0991834013 
-            xmax = 84.4493549267 
-            text = "" 
-        intervals [37]:
-            xmin = 84.4493549267 
-            xmax = 84.9393755098 
-            text = "commentaire" 
-        intervals [38]:
-            xmin = 84.9393755098 
-            xmax = 86.1197368566 
-            text = "" 
-        intervals [39]:
-            xmin = 86.1197368566 
-            xmax = 87.0298534939 
-            text = "commentaire" 
-        intervals [40]:
-            xmin = 87.0298534939 
-            xmax = 88.3302422848 
-            text = "" 
-        intervals [41]:
-            xmin = 88.3302422848 
-            xmax = 89.1803909402 
-            text = "commentaire" 
-        intervals [42]:
-            xmin = 89.1803909402 
-            xmax = 89.8705487435 
-            text = "commentaire" 
-        intervals [43]:
-            xmin = 89.8705487435 
-            xmax = 90 
-            text = "" 
+0.0
+90.0
+<exists>
+2
+"IntervalTier"
+"transcription"
+0.0
+90.0
+36
+0.0
+3.87088507109
+""
+3.87088507109
+9.43215664609
+"transcription"
+9.43215664609
+9.66225498733
+""
+9.66225498733
+22.7551571972
+"transcription"
+22.7551571972
+24.5155597101
+"transcription"
+24.5155597101
+24.6656854954
+""
+24.6656854954
+29.5667146479
+"transcription"
+29.5667146479
+29.7968587292
+""
+29.7968587292
+34.9479450568
+"transcription"
+34.9479450568
+38.8388347019
+"transcription"
+38.8388347019
+41.5094453323
+"transcription"
+41.5094453323
+41.5295413865
+""
+41.5295413865
+42.859754078
+"transcription"
+42.859754078
+43.3799187424
+"transcription"
+43.3799187424
+46.2205225118
+"transcription"
+46.2205225118
+46.4806734542
+""
+46.4806734542
+50.0013869999
+"transcription"
+50.0013869999
+50.2815425163
+""
+50.2815425163
+52.8020273614
+"transcription"
+52.8020273614
+53.0121668687
+""
+53.0121668687
+54.3524275873
+"transcription"
+54.3524275873
+60.5638020776
+"transcription"
+60.5638020776
+60.8139507329
+""
+60.8139507329
+61.7540742312
+"transcription"
+61.7540742312
+65.3548975532
+"transcription"
+65.3548975532
+66.7652200209
+"transcription"
+66.7652200209
+66.9753595283
+""
+66.9753595283
+74.9270862173
+"transcription"
+74.9270862173
+75.1772348727
+""
+75.1772348727
+79.4481199438
+"transcription"
+79.4481199438
+79.508225146
+""
+79.508225146
+80.6683989584
+"transcription"
+80.6683989584
+81.228618511
+""
+81.228618511
+82.3088197674
+"transcription"
+82.3088197674
+84.0991834013
+"transcription"
+84.0991834013
+90.0
+""
+"IntervalTier"
+"commentaire"
+0.0
+90.0
+36
+0.0
+3.87088507109
+""
+3.87088507109
+9.43215664609
+"commentaire"
+9.43215664609
+9.66225498733
+""
+9.66225498733
+22.7551571972
+"commentaire"
+22.7551571972
+24.5155597101
+"commentaire"
+24.5155597101
+24.6656854954
+""
+24.6656854954
+29.5667146479
+"commentaire"
+29.5667146479
+29.7968587292
+""
+29.7968587292
+34.9479450568
+"commentaire"
+34.9479450568
+38.8388347019
+"commentaire"
+38.8388347019
+41.5094453323
+"commentaire"
+41.5094453323
+41.5295413865
+""
+41.5295413865
+42.859754078
+"commentaire"
+42.859754078
+43.3799187424
+"commentaire"
+43.3799187424
+46.2205225118
+"commentaire"
+46.2205225118
+46.4806734542
+""
+46.4806734542
+50.0013869999
+"commentaire"
+50.0013869999
+50.2815425163
+""
+50.2815425163
+52.8020273614
+"commentaire"
+52.8020273614
+53.0121668687
+""
+53.0121668687
+54.3524275873
+"commentaire"
+54.3524275873
+60.5638020776
+"commentaire"
+60.5638020776
+60.8139507329
+""
+60.8139507329
+61.7540742312
+"commentaire"
+61.7540742312
+65.3548975532
+"commentaire"
+65.3548975532
+66.7652200209
+"commentaire"
+66.7652200209
+66.9753595283
+""
+66.9753595283
+74.9270862173
+"commentaire"
+74.9270862173
+75.1772348727
+""
+75.1772348727
+79.4481199438
+"commentaire"
+79.4481199438
+79.508225146
+""
+79.508225146
+80.6683989584
+"commentaire"
+80.6683989584
+81.228618511
+""
+81.228618511
+82.3088197674
+"commentaire"
+82.3088197674
+84.0991834013
+"commentaire"
+84.0991834013
+90.0
+""
