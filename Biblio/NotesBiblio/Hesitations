@@ -1,0 +1,52 @@
+################
+Disfluencies and human language comprehension
+######################
+disfluences = hm, repeats, corrections
+uh -> edit term after suspension point
+you will .. you should -> repair the ball -> resumption
+-> spoken utterances != citations/ standard sequences : mistakes, miscomprehensions
+-> sait handle 'dirty' input-> humain peut le distinguer du reste de l'input
+-> rate 6 à 10 / 100 mots -> normal part of human speech
+
+computational model : disfluences influence parsing and comprehension
+trend in cognitive science : cog mecanisms as adaptations to real-world constraints and challenges.
+how are they handled by human sentence comprehension system
+-> ignoring ? (disfluences are non linguistic) non : système de compréhension incrémental
+-> tools for identifying disfluences and predict their locations (24,25)
+
+avant arrêt, pas marqué acoustiqmt, repair marqué ac features acoustiques distinctes
+-> pas de warning, reparandum peut pas être détecté comme tel
+-> pour disfluence : distinctive prosody and aberrant syntactitc structures
+-> disfluences reveal about confidence in utterrances (biblio)
+-> disfluences divide in given/new (pour nous, moments hésitations:) -> début des constituents complexes
+-> disfluences affect temporal processing
+-> disfluences tend to precede the beginning of clauses
+-> disfluence is a clue to correct structure, mais hm entre 2 phrases, résout ambiguité(le président parle à A et hmm les médias prennent des notes)
+
+
+########################################
+STATISTICAL LANGUAGE MODELING FOR SPEECH DISFLUENCIES
+###########################################
+Resume : disfluences, en particulier les filled pauses, servent souvent d'indice de segmentation : un modèle prédicteur du mot suivant où l'on enlève les hm sera moins bon
+-> le mot d'après est corrélé avec le hm
+-> hm have non-random distributions
+
+
+######################################
+disfluences est une des caractéristiques différenciant écrit-planifié/oral
+cause de la mauvaise reconnaissance
+modèle qui prédit probabilistement les disfluences et prédit mots suivant
+généralisation d'un N-gram language model
+programmation dynamique pour calc pba word sequence
+detection par acoustif features (7,6)
+D'après(9), différents types de disfluences :
+filled pauses (hm)
+repetitions 
+deletions (mots en trop qui doivent être supprimés)
+autres moins fréquents : word substitution etc
+modèle : p(want| because I rep)=p(want| because I)
+-> filled pauses rajoutent de l'info pour prédire la suite, si on les enlève, on augmente la perplexité : corrélation avec certains choix lexicaux
+-> because filled pauses at linguistic boundaries
+-> cleanup model rajoute perplexité pour filled pauses, car mot après - bien estimé
+comme séparation entre segments est acoustique, séparation peut être au milieu d'un segment acoustique, et à ce moment là le hm peut servir de boundary
+#######################"
