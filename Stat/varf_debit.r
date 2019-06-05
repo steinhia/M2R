@@ -4,7 +4,8 @@
 ### importer tableau 
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
-tab <- read.table("../Transcription/brutDebit.csv",sep=",",header=TRUE)
+tab <- read.table("../Transcription/brutSyll.csv",sep=",",header=TRUE)
+
 
 
 ### type variable
@@ -16,8 +17,9 @@ tab$condition[tab$condition=="0"] <- "mains libres"
 tab$condition[tab$condition=="1"] <- "mains contraintes"
 tab$condition[tab$condition=="2"] <- "pédalage pieds"
 tab$condition[tab$condition=="3"] <- "pédalage mains"
+tab$condition <- factor(tab$condition,levels = c("mains libres", "pédalage pieds", "pédalage mains","mains contraintes"))
 tab$condition <- as.factor(tab$condition)
-
+tab$varNorm<- tab$varDeb/tab$meanDeb
 
 ### packages utilises
 
@@ -30,10 +32,11 @@ library(ggplot2)
 
 
 
-tgc <- summarySE(tab, measurevar="var.f", groupvars=c("jour","condition"))
-p<-ggplot(data=tgc, aes(x=jour, y=var.f, fill=condition)) + 
-  geom_bar(position=position_dodge(), stat="identity") +
-  geom_errorbar(aes(ymin=tgc$var.f-tgc$se, ymax=tgc$var.f+tgc$se),
+tgc <- summarySE(tab, measurevar="varNorm", groupvars=c("jour","condition"))
+p<-ggplot(data=tgc, aes(x=jour, y=varNorm, fill=condition)) + 
+  scale_fill_brewer() + theme_bw() +
+  geom_bar(position=position_dodge(), stat="identity",colour="black") +
+  geom_errorbar(aes(ymin=tgc$varNorm-tgc$se, ymax=tgc$varNorm+tgc$se),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
   ggtitle("Variabilité du débit")
@@ -45,23 +48,23 @@ p
 
 #################" effet de l'histoire ##############""
 
-tgc <- summarySE(tab, measurevar="var.f", groupvars=c("jour","histoire"))
-p<-ggplot(data=tgc, aes(x=jour, y=var.f, fill=histoire)) + 
-  geom_bar(position=position_dodge(), stat="identity") +
-  geom_errorbar(aes(ymin=tgc$var.f-tgc$se, ymax=tgc$var.f+tgc$se),
-                width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
-  ggtitle("Scores en dénomination par histoire")
-p <- p + ylab("Erreur")+ labs(fill='histoire') 
-p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
-              plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
-              legend.title=element_text(size=18), legend.text = element_text(size=16))
-p
+# tgc <- summarySE(tab, measurevar="varNorm", groupvars=c("jour","histoire"))
+# p<-ggplot(data=tgc, aes(x=jour, y=varDeb, fill=histoire)) + 
+#   geom_bar(position=position_dodge(), stat="identity") +
+#   geom_errorbar(aes(ymin=tgc$varDeb-tgc$se, ymax=tgc$varDeb+tgc$se),
+#                 width=.2,                    # Width of the error bars
+#                 position=position_dodge(.9)) +
+#   ggtitle("Scores en dénomination par histoire")
+# p <- p + ylab("Erreur")+ labs(fill='histoire') 
+# p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+#               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+#               legend.title=element_text(size=18), legend.text = element_text(size=16))
+# p
 
 
 ### distribution
 
-hist(tab$var.f)
+hist(tab$varDeb)
 
 
 
@@ -72,7 +75,7 @@ hist(tab$var.f)
 
 # un effet aleatoire intercept par sujet
 
-fit0 <-  lme(var.f~jour*condition, random=~1|id,data=tab, method="ML",na.action=na.exclude)
+fit0 <-  lme(varDeb~jour*condition, random=~1|id,data=tab, method="ML",na.action=na.exclude)
 plot(fit0, id~resid(.,type="p")|jour, abline=0, xlim=c(-5,5), xlab="residus standardises")
 plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus standardises")
 
@@ -82,12 +85,12 @@ plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus
 
 # un effet aleatoire intercept par sujet different par condition
 
-fit1c <- lme(var.f~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~condition-1)))),data=tab, method="ML",na.action=na.exclude)
-fit1j <- lme(var.f~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),data=tab, method="ML",na.action=na.exclude)
+fit1c <- lme(varDeb~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~condition-1)))),data=tab, method="ML",na.action=na.exclude)
+fit1j <- lme(varDeb~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),data=tab, method="ML",na.action=na.exclude)
 
 anova(fit0,fit1c)
 anova(fit0,fit1j)
-
+# garde fit0 pour ne pas ajouter info qui sert à rien
 
 ### matrice de variance covariance des erreurs
 
@@ -96,13 +99,13 @@ anova(fit0,fit1j)
 boxplot(resid(fit1j,type="p")~tab$condition, xlab="residus normalises")
 boxplot(resid(fit1j,type="p")~tab$jour, xlab="residus normalises")
 
-fit_varc <- lme(var.f~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),weights=varIdent(form=~1|condition),data=tab, method="ML",na.action=na.exclude)
-anova(fit1j,fit_varc)
+fit_varc <- lme(varDeb~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),weights=varIdent(form=~1|condition),data=tab, method="ML",na.action=na.exclude)
+anova(fit0,fit_varc)
 
-fit_varj <- lme(var.f~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
-anova(fit1j,fit_varj)
+fit_varj <- lme(varDeb~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
+anova(fit0,fit_varj)
 
-
+# garde fit0
 # correlation entre jour
 
 tab$combinaison <- as.factor(paste(tab$id,tab$condition))
@@ -120,8 +123,8 @@ cor(mat)
 
 # etape 1
 
-fit_cj <- update(fit1j,.~.-jour:condition)
-anova(fit_varj,fit_cj)
+fit_cj <- update(fit0,.~.-jour:condition)
+anova(fit0,fit_cj) # garde l'intéraction
 
 
 # etape 2
@@ -135,15 +138,17 @@ anova(fit_cj,fit_cj_j)
 
 # etape 3
 
-fit_cj_j_c <- update(fit_cj_j,.~.-condition)
-anova(fit_cj_j_c,fit_cj_j)
+fit_cj_j_c <- update(fit_cj_c,.~.-jour)
+anova(fit_cj_j_c,fit_cj_c)
+
+# enlève les deux
 
 
 
 
 ### validation du modele
 
-mod_choisi <- lme(var.f~condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),data=tab, method="ML",na.action=na.exclude)
+mod_choisi <- fit_cj #fit0 #lme(varDeb~condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),data=tab, method="ML",na.action=na.exclude)
 
 
 # calcul des r?sidus du model 1 avec interaction

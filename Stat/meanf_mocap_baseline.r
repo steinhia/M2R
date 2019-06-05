@@ -1,23 +1,21 @@
 ###################################################### tableau de donnees #######################################
-# DOne : pas d'effet
-
+# Attention : diviser les deux moyennes c'est pas la même chose que faire le quotient pour chaque et en calculer la moyenne
+# DONE : pas effet jour, mais de la condition
 ### importer tableau 
-
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
-tab <- read.table("../Transcription/brutSyll.csv",sep=",",header=TRUE)
+tab <- read.table("../MoCapAnalysis/brutMoCapBaseline.csv",sep=",",header=TRUE)
 
 ### type variable
 
 tab$jour <- as.factor(as.character(tab$jour))
 tab$id <- as.factor(as.character(tab$id))
 tab$histoire <- as.factor(as.character(tab$histoire))
-tab$condition[tab$condition=="0"] <- "mains libres"
-tab$condition[tab$condition=="1"] <- "mains contraintes"
-tab$condition[tab$condition=="2"] <- "pédalage pieds"
-tab$condition[tab$condition=="3"] <- "pédalage mains"
-tab$condition <- factor(tab$condition,levels = c("mains libres", "pédalage pieds", "pédalage mains","mains contraintes"))
-tab$condition <- as.factor(tab$condition)
+tab$condition[tab$condition=="2"] <- "pieds"
+tab$condition[tab$condition=="3"] <- "mains"
+#tab$condition <- factor(tab$condition,levels = c("pédalage mains", "pédalage pieds"))
+tab$condition <- as.factor(as.character(tab$condition))
+
 
 
 ### packages utilises
@@ -28,39 +26,47 @@ library(ggplot2)
 
 
 ###################################################### statistiques descriptives #######################################
+x=100
+a<- tab$id[which(tab$meanf.rb<x)]
+b<- tab$jour[which(tab$meanf.rb<x)]
+c<- tab$condition[which(tab$meanf.rb<x)]
+d<- tab$meanf.rb[which(tab$meanf.rb<x)]
+tab2=data.table(id=a,jour=b,condition=c,meanf.rb=d)
 
-tgc <- summarySE(tab, measurevar="meanDeb", groupvars=c("jour","condition"))
-p<-ggplot(data=tgc, aes(x=jour, y=meanDeb, fill=condition)) + 
+
+
+
+tgc <- summarySE(tab, measurevar="meanf.rb", groupvars=c("jour","condition"))
+p<-ggplot(data=tgc, aes(x=jour, y=meanf.rb, fill=condition)) + 
   scale_fill_brewer() + theme_bw() +
   geom_bar(position=position_dodge(), stat="identity",colour="black") +
-  geom_errorbar(aes(ymin=tgc$meanDeb-tgc$se, ymax=tgc$meanDeb+tgc$se),
+  geom_errorbar(aes(ymin=tgc$meanf.rb-tgc$se, ymax=tgc$meanf.rb+tgc$se),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
-  ggtitle("Débit moyen selon le jour et la condition")
-p <- p + ylab("débit moyen")+ labs(fill='condition') 
+  ggtitle("Moyenne de la fréquence de pédalage \n recall/baseline")
+p <- p + ylab("fréquence moyenne")+ labs(fill='pédalage') 
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
                legend.title=element_text(size=18), legend.text = element_text(size=16))
 p
 
-##############" effet de l'histoire ########"""
+###############" effet de l'histoire ##########
 
-# tgc <- summarySE(tab, measurevar="meanDeb", groupvars=c("jour","histoire"))
-# p<-ggplot(data=tgc, aes(x=jour, y=meanDeb, fill=histoire)) + 
+# tgc <- summarySE(tab, measurevar="meanf.rb", groupvars=c("jour","histoire"))
+# p<-ggplot(data=tgc, aes(x=jour, y=meanf.rb, fill=histoire)) + 
 #   geom_bar(position=position_dodge(), stat="identity") +
-#   geom_errorbar(aes(ymin=tgc$meanDeb-tgc$se, ymax=tgc$meanDeb+tgc$se),
+#   geom_errorbar(aes(ymin=tgc$meanf.rb-tgc$se, ymax=tgc$meanf.rb+tgc$se),
 #                 width=.2,                    # Width of the error bars
 #                 position=position_dodge(.9)) +
-#   ggtitle("Débit moyen selon le jour et la condition")
-# p <- p + ylab("débit moyen")+ labs(fill='histoire') 
+#   ggtitle("Moyenne de la fréquence de pédalage")
+# p <- p + ylab("fréquence moyenne")+ labs(fill='pédalage') 
 # p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
 #                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
 #                legend.title=element_text(size=18), legend.text = element_text(size=16))
 # p
-
 ### distribution
 
-hist(tab$meanDeb)
+hist(tab$meanf.rb)
 
 
 
@@ -71,7 +77,7 @@ hist(tab$meanDeb)
 
 # un effet aleatoire intercept par sujet
 
-fit0 <-  lme(meanDeb~jour*condition, random=~1|id,data=tab, method="ML",na.action=na.exclude)
+fit0 <-  lme(meanf.rb~jour*condition, random=~1|id,data=tab, method="ML",na.action=na.exclude)
 plot(fit0, id~resid(.,type="p")|jour, abline=0, xlim=c(-5,5), xlab="residus standardises")
 plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus standardises")
 
@@ -81,11 +87,12 @@ plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus
 
 # un effet aleatoire intercept par sujet different par condition
 
-fit1c <- lme(meanDeb~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~condition-1)))),data=tab, method="ML",na.action=na.exclude)
-fit1j <- lme(meanDeb~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),data=tab, method="ML",na.action=na.exclude)
+fit1c <- lme(meanf.rb~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~condition-1)))),data=tab, method="ML",na.action=na.exclude)
+fit1j <- lme(meanf.rb~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),data=tab, method="ML",na.action=na.exclude)
 
-anova(fit0,fit1c)
-anova(fit0,fit1j)
+anova(fit0,fit1c) # -> effet aléatoire différent par sujet selon la condition
+anova(fit0,fit1j) # pas de différence, on enlève le jour
+# on garde fit1c
 
 
 ### matrice de variance covariance des erreurs
@@ -95,13 +102,12 @@ anova(fit0,fit1j)
 boxplot(resid(fit0,type="p")~tab$condition, xlab="residus normalises")
 boxplot(resid(fit0,type="p")~tab$jour, xlab="residus normalises")
 
-fit_varc <- lme(meanDeb~jour*condition, random=~1|id,weights=varIdent(form=~1|condition),data=tab, method="ML",na.action=na.exclude)
-anova(fit0,fit_varc)
+fit_varc <- lme(meanf.rb~jour*condition, random=~1|id,weights=varIdent(form=~1|condition),data=tab, method="ML",na.action=na.exclude)
+anova(fit1c,fit_varc)
 
-fit_varj <- lme(meanDeb~jour*condition, random=~1|id,weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
-anova(fit0,fit_varj)
-
-# garde fit0 car le modèle le plus simple
+fit_varj <- lme(meanf.rb~jour*condition, random=~1|id,weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
+anova(fit1c,fit_varj)
+# on garde fit1c
 
 # correlation entre jour
 
@@ -120,31 +126,24 @@ cor(mat)
 
 # etape 1
 
-fit_cj <- update(fit0,.~.-jour:condition)
-anova(fit0,fit_cj)
-# gpas de différence : garde le modèle le plus simple
+fit_cj <- update(fit1c,.~.-jour:condition)
+anova(fit1c,fit_cj)
+# on vire l'intéraction car pas de diff entre les 2 modèles
 
 # etape 2
 
-fit_cj_c <- update(fit_cj,.~.-condition)
-fit_cj_j <- update(fit_cj,.~.-jour)
+fit_cj_c <- update(fit_cj,.~.-condition) # la y a diff : on garde fit_cj_c
+fit_cj_j <- update(fit_cj,.~.-jour) # pas de diff : on vire le jour
 
 anova(fit_cj,fit_cj_c)
 anova(fit_cj,fit_cj_j)
-# enlève celui avec la plus grosse p-value fit_cj_c
-
-
-# etape 3
-
-fit_cj_j_c <- update(fit_cj_c,.~.-jour)
-anova(fit_cj_j_c,fit_cj_c)
-
+# on n'enlève rien
 
 
 
 ### validation du modele
 
-mod_choisi <-fit_cj_j_c # lme(meanDeb~1, random=~1|id,weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
+mod_choisi <-fit_cj_c # lme(meanf.rb~1, random=~1|id,weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
 
 
 # calcul des r?sidus du model 1 avec interaction

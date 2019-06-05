@@ -1,6 +1,6 @@
 ###################################################### tableau de donnees #######################################
 
-
+# TODO : bizarre, pourquoi effet d'intéraction? fonction not defined
 ### importer tableau 
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
@@ -16,6 +16,8 @@ tab$condition[tab$condition=="0"] <- "mains libres"
 tab$condition[tab$condition=="1"] <- "mains contraintes"
 tab$condition[tab$condition=="2"] <- "pédalage pieds"
 tab$condition[tab$condition=="3"] <- "pédalage mains"
+tab$condition <- factor(tab$condition,levels = c("mains libres", "pédalage pieds", "pédalage mains","mains contraintes"))
+
 tab$condition <- as.factor(tab$condition)
 
 ### packages utilises
@@ -23,7 +25,7 @@ tab$condition <- as.factor(tab$condition)
 library(multcomp)
 library(lsmeans) # library(emmeans)
 library(lme4)
-library(DHARMa)
+#library(DHARMa)
 
 
 ###################################################### statistiques descriptives #######################################
@@ -31,12 +33,13 @@ library(DHARMa)
 
 tgc <- summarySE(tab, measurevar="nbSyll", groupvars=c("jour","condition"))
 p<-ggplot(data=tgc, aes(x=jour, y=nbSyll, fill=condition)) + 
-  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_brewer() + theme_bw() +
+  geom_bar(position=position_dodge(), stat="identity",colour="black") +
   geom_errorbar(aes(ymin=tgc$nbSyll-tgc$se, ymax=tgc$nbSyll+tgc$se),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
-  ggtitle("Nombre de syllabes total")
-p <- p + ylab("Erreur")+ labs(fill='condition') 
+  ggtitle("Nombre de syllabes total \n par jour et condition")
+p <- p + ylab("nombre de syllabes")+ labs(fill='condition') 
 p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
               legend.title=element_text(size=18), legend.text = element_text(size=16))
@@ -46,62 +49,18 @@ p
 ##############" effet de l'histoire
 
 
-tgc <- summarySE(tab, measurevar="nbSyll", groupvars=c("jour","histoire"))
-p<-ggplot(data=tgc, aes(x=jour, y=nbSyll, fill=histoire)) + 
-  geom_bar(position=position_dodge(), stat="identity") +
-  geom_errorbar(aes(ymin=tgc$nbSyll-tgc$se, ymax=tgc$nbSyll+tgc$se),
-                width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
-  ggtitle("Nombre de syllabes par histoire")
-p <- p + ylab("Erreur")+ labs(fill='histoire') 
-p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
-              plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
-              legend.title=element_text(size=18), legend.text = element_text(size=16))
-p
-
-
-### creation fonction  moyenne intervalle de confiance
-
-moyenne <- function(x){mean(x, na.rm=TRUE)}
-
-fonction_ci_inf <- function(x){
-moyenne_boot <- c()
-for(i in 1:1000){moyenne_boot <- c(moyenne_boot,moyenne(sample(x=x,size=length(x),replace=TRUE)))}
-return(quantile(moyenne_boot,0.025))}
-
-fonction_ci_sup <- function(x){
-moyenne_boot <- c()
-for(i in 1:1000){moyenne_boot <- c(moyenne_boot,moyenne(sample(x=x,size=length(x),replace=TRUE)))}
-return(quantile(moyenne_boot,0.975))}
-
-
-### choix de la variale reponse et des facteurs groupants (a modifierselon l'exemple)
-
-reponse <- tab$nbSyll
-facteur1 <- tab$condition
-facteur2 <- tab$jour
-
-
-### creation tableau pour graphique 
-
-tab_agg_moyenne <- aggregate(as.numeric(as.character(reponse)), by=list(facteur1, facteur2),moyenne)
-tab_agg_ci_inf <- aggregate(as.numeric(as.character(reponse)), by=list(facteur1, facteur2),fonction_ci_inf)
-
-tab_agg_ci_sup <- aggregate(as.numeric(as.character(reponse)), by=list(facteur1, facteur2),fonction_ci_sup)
-tab_graphique <- cbind(tab_agg_moyenne,tab_agg_ci_inf[,ncol(tab_agg_ci_inf)],tab_agg_ci_sup[,ncol(tab_agg_ci_sup)])
-
-colnames(tab_graphique)[ncol(tab_graphique)-2] <- "moyenne"
-colnames(tab_graphique)[ncol(tab_graphique)-1] <- "ci_inf"
-colnames(tab_graphique)[ncol(tab_graphique)] <- "ci_sup"
-
-
-### graphique (avec intervalle de confiance) 
-
-mat <- matrix(tab_graphique$moyenne, nrow=nlevels(facteur1), dimnames=list(levels(facteur1),levels(facteur2)))
-bar <- barplot(mat, beside = TRUE,  names.arg = colnames(mat), legend.text = TRUE,ylim=c(0,600), ylab="reponse", xlab="")
-segments(as.vector(bar),tab_graphique$ci_inf,as.vector(bar),tab_graphique$ci_sup)
-
-
+# tgc <- summarySE(tab, measurevar="nbSyll", groupvars=c("jour","histoire"))
+# p<-ggplot(data=tgc, aes(x=jour, y=nbSyll, fill=histoire)) + 
+#   geom_bar(position=position_dodge(), stat="identity") +
+#   geom_errorbar(aes(ymin=tgc$nbSyll-tgc$se, ymax=tgc$nbSyll+tgc$se),
+#                 width=.2,                    # Width of the error bars
+#                 position=position_dodge(.9)) +
+#   ggtitle("Nombre de syllabes par histoire")
+# p <- p + ylab("Erreur")+ labs(fill='histoire') 
+# p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+#               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+#               legend.title=element_text(size=18), legend.text = element_text(size=16))
+# p
 
 
 ###################################################### modelisation #######################################
@@ -120,6 +79,10 @@ m2 <- glmer(nbSyll~jour*condition + (jour|id) , family="poisson", data=tab,contr
 
 anova(m0,m1)
 anova(m0,m2)
+# garde + petit AIC et refait ?
+m3<-glmer(nbSyll~jour*condition + (jour+condition|id), family="poisson", data=tab)
+anova(m2,m3)
+# on garde les 2 effets résiduels
 
 
 
@@ -127,14 +90,14 @@ anova(m0,m2)
 
 # etape 1
 
-m3 <- glmer(nbSyll~jour+condition + (jour|id), family="poisson", data=tab)
-anova(m2,m3)
-
+m4<- glmer(nbSyll~jour+condition + (jour+condition|id), family="poisson", data=tab)
+anova(m3,m4) # on garde m3 : l'intéraction
+# bizarre : pourquoi garde l'intéraction ??
 
 
 ### validation modele (surdispersion) 
 
-mod_choisi <- m2
+mod_choisi <- m3
 simulationOutput <- simulateResiduals(fittedModel = mod_choisi, n = 1000)
 
 plotSimulatedResiduals(simulationOutput = simulationOutput)

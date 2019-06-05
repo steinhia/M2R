@@ -1,5 +1,5 @@
 ###################################################### tableau de donnees #######################################
-
+# score ~ jour + (re(random = ~1 | id)) -> pour les 3
 
 ### importer tableau 
 
@@ -11,47 +11,170 @@ tab <- read.table("../RecallTest/brut.csv",sep=",",header=TRUE)
 ### type variable
 
 tab$jour <- as.factor(as.character(tab$jour))
-tab$id <- as.factor(as.character(tab$id))
+tab$id <- as.factor(tab$id)
 tab$histoire <- as.factor(as.character(tab$histoire))
 
 tab$condition[tab$condition=="0"] <- "mains libres"
 tab$condition[tab$condition=="1"] <- "mains contraintes"
 tab$condition[tab$condition=="2"] <- "pédalage pieds"
 tab$condition[tab$condition=="3"] <- "pédalage mains"
+tab$condition <- factor(tab$condition,levels = c("mains libres", "pédalage pieds", "pédalage mains","mains contraintes"))
 tab$condition <- as.factor(tab$condition)
+tab$nb0=as.factor(as.numeric((tab$score=='0')))
+#tab$score<- as.factor(tab$score)
+
+# score différent de 0
+a<- tab$jour[which(tab$score!='0')] # & tab$score!='1')]
+b<- tab$condition[which(tab$score!='0')]# & tab$score!='1')]
+c<- tab$score[which(tab$score!='0')]#  & tab$score!='1')]
+d<- tab$id[which(tab$score!='0')]#  & tab$score!='1')]
+e<- tab$histoire[which(tab$score!='0')]#  & tab$score!='1')]
+f<- tab$type[which(tab$score!='0')]#  & tab$score!='1')]
+tab2=data.table(jour=a,condition=b,score=c,id=d,histoire=e,type=f)
 
 
-### 
+# score différent == 0  ###et 1
+a<- tab$jour[which(tab$score=="0")]
+b<- tab$condition[which(tab$score=="0")]
+c<- (tab$score=="0")[which(tab$score=="0")]
+d<- tab$id[which(tab$score=="0")]
+e<- tab$histoire[which(tab$score=="0")]
+f<- tab$type[which(tab$score=="0")]
+tab3=data.table(jour=a,condition=b,score=c,id=d,histoire=e,type=f)
 
-tab$distance2 <- tab$distance/10
+# nombre de 0
+a<- sum(tab$score=='0')
+# nombre de 1
 
 
 ### packages utilises
 
 library(gamlss)
 library(ggplot2)
+library(data.table)   
 
+# splitFacet <- function(x){
+#   facet_vars <- names(x$facet$params$facets)         # 1
+#   x$facet    <- ggplot2::ggplot()$facet              # 2
+#   datasets   <- split(x$data, x$data[facet_vars])    # 3
+#   cat("var",facet_vars)
+#   new_plots  <- lapply(datasets,function(new_data) { # 4
+#     cat("var",facet_vars)
+#     x$data <- new_data
+#     x})
+# }  
+# 
+# 
+# 
+# myplots3 <-
+#   df %>% 
+#   split(ceiling(group_indices(.,z)/n_facets)) %>% 
+#   map(~ggplot(.,aes(x =x, y=y))+geom_point()+facet_wrap(~z))
+# 
+# myplots3[[3]]
 
-tgc <- summarySE(tab, measurevar="distance2", groupvars=c("jour","condition"))
-p<-ggplot(data=tgc, aes(x=jour, y=distance2, fill=condition)) + 
+  tgc <- summarySE(tab, measurevar="score", groupvars=c("jour","condition"))
+  p<-ggplot(tgc, aes(x=jour, y=score, fill=condition)) + 
+    scale_fill_brewer() + theme_bw() +
+    geom_bar(position=position_dodge(), stat="identity" ,colour="black") +
+     geom_errorbar(aes(ymin=tgc$score-tgc$se, ymax=tgc$score+tgc$se),
+     width=.2,         # Width of the error bars
+     position=position_dodge(.9)) +
+    ggtitle(paste("Scores en dénomination"))
+  p <- p + ylab("Score")+ labs(fill='condition')
+  p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+                legend.title=element_text(size=18), legend.text = element_text(size=16))
+  # p<- p+facet_grid(.~type)
+
+  p
+
+  # scale fill brewer -> bleue dégradée
+################# score complet individuel ###########
+
+# for(s in levels(tab$id))
+# {
+# tgc <- summarySE(subset(tab,id==s), measurevar="score", groupvars=c("jour","condition","id"))
+# p<-ggplot(tgc, aes(x=jour, y=score, fill=condition)) + 
+#   geom_bar(position=position_dodge(), stat="identity") +
+#   # geom_errorbar(aes(ymin=tgc$score-tgc$se, ymax=tgc$score+tgc$se),
+#   #               width=.2,                    # Width of the error bars
+#   #               position=position_dodge(.9)) +
+#   ggtitle(paste(s,"Scores en dénomination"))
+# p <- p + ylab("Scores")+ labs(fill='condition')
+# p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+#               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+#               legend.title=element_text(size=18), legend.text = element_text(size=16))
+# p
+# ggsave(paste(s,"fig.png"))
+# }
+
+# ggsave 
+# cmd -> imprime tout va dans pdf (dev)
+# dev.off
+
+######## score sans 0 
+
+tgc <- summarySE(tab2, measurevar="score", groupvars=c("jour","condition"))
+p<-ggplot(data=tgc, aes(x=jour, y=score, fill=condition)) +
+  # #p<-p+geom_histogram()
+   geom_bar(position=position_dodge(), stat="identity") +
+   geom_errorbar(aes(ymin=tgc$score-tgc$se, ymax=tgc$score+tgc$se),
+                 width=.2,                    # Width of the error bars
+                 position=position_dodge(.9)) +
+   ggtitle("Scores en dénomination en cas de réponse")
+p <- p + ylab("Score")+ labs(fill='condition')
+p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+              plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+              legend.title=element_text(size=18), legend.text = element_text(size=16))
+p
+
+########## score binaire : effet plancher trop important ############
+
+tgc <- summarySE(tab, measurevar="scoreBinaire", groupvars=c("jour","condition"))
+p<-ggplot(data=tgc, aes(x=jour, y=scoreBinaire, fill=condition)) + 
   geom_bar(position=position_dodge(), stat="identity") +
-  geom_errorbar(aes(ymin=tgc$distance2-tgc$se, ymax=tgc$distance2+tgc$se),
+  geom_errorbar(aes(ymin=tgc$scoreBinaire-tgc$se, ymax=tgc$scoreBinaire+tgc$se),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
-  ggtitle("Scores en dénomination")
-p <- p + ylab("Erreur")+ labs(fill='condition') 
+  ggtitle("Scores en identification")
+p <- p + ylab("Scores")+ labs(fill='condition')
 p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
               legend.title=element_text(size=18), legend.text = element_text(size=16))
 p
 
 
+####### histogramme des 0 et des 1 ######################
+
+
+
+
+
+# tgc <- summarySE(tab, measurevar="score", groupvars=c("jour","condition","id"))
+# #p<-ggplot(data=tab, aes(x=score)) 
+# #p<-ggplot(data=tgc, aes(x=jour, y=score, fill=condition)) +
+# p<-ggplot(data=tgc, aes(x=jour, y=score, fill=condition)) +
+# #p<-p+geom_histogram()
+#   geom_bar(position=position_dodge(), stat="identity") +
+#   geom_errorbar(aes(ymin=tgc$score-tgc$se, ymax=tgc$score+tgc$se),
+#                 width=.2,                    # Width of the error bars
+#                 position=position_dodge(.9)) +
+#   ggtitle("Scores en dénomination")
+# p <- p + ylab("Score")+ labs(fill='condition')
+# p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+#               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+#               legend.title=element_text(size=18), legend.text = element_text(size=16))
+#  p <- p+ facet_grid(.~id)
+# p1<- splitFacet(p)
+# p1
+
 ############# effet de l'histoire ###############
 
-tgc <- summarySE(tab, measurevar="distance2", groupvars=c("jour","histoire"))
-p<-ggplot(data=tgc, aes(x=jour, y=distance2, fill=histoire)) + 
+tgc <- summarySE(tab, measurevar="score", groupvars=c("jour","histoire"))
+p<-ggplot(data=tgc, aes(x=jour, y=score, fill=histoire)) + 
   geom_bar(position=position_dodge(), stat="identity") +
-  geom_errorbar(aes(ymin=tgc$distance2-tgc$se, ymax=tgc$distance2+tgc$se),
+  geom_errorbar(aes(ymin=tgc$score-tgc$se, ymax=tgc$score+tgc$se),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
   ggtitle("Erreurs cumulées en dénomination par histoire")
@@ -65,26 +188,26 @@ p
 
 
 
-# distance 2 = ramené entre 0 et 1
+# score 2 = ramené entre 0 et 1
 
 
-### P(distance==0)
+### P(score==0)
 
-tab$distance4 <- as.character(tab$distance2) 
-tab$distance4[tab$distance4 != "0"] <- "autre"
-tab$distance4 <- as.factor(as.character(tab$distance4))
-prop.table(table(tab$distance4,tab$condition),2)
-prop.table(table(tab$distance4,tab$jour),2)
+tab$score4 <- as.character(tab$score) 
+tab$score4[tab$score4 != "0"] <- "autre"
+tab$score4 <- as.factor(as.character(tab$score4))
+prop.table(table(tab$score4,tab$condition),2)
+prop.table(table(tab$score4,tab$jour),2)
 
 
 
-### P(distance==1)
+### P(score==1)
 
-tab$distance3 <- as.character(tab$distance2) 
-tab$distance3[tab$distance3 != "1"] <- "autre"
-tab$distance3 <- as.factor(as.character(tab$distance3))
-prop.table(table(tab$distance3,tab$condition),2)
-prop.table(table(tab$distance3,tab$jour),2)
+tab$score3 <- as.character(tab$score) 
+tab$score3[tab$score3 != "1"] <- "autre"
+tab$score3 <- as.factor(as.character(tab$score3))
+prop.table(table(tab$score3,tab$condition),2)
+prop.table(table(tab$score3,tab$jour),2)
 
 
 
@@ -95,7 +218,7 @@ prop.table(table(tab$distance3,tab$jour),2)
 
 ### ecriture modele
 
-mod <- gamlss(distance2~jour*condition+ re(random=~1|id) ,nu.formula = ~jour*condition+ re(random=~1|id), tau.formula = ~jour*condition+ re(random=~1|id),family=BEINF,data=tab)
+mod <- gamlss(score~jour*condition+ re(random=~1|id) ,nu.formula = ~jour*condition+ re(random=~1|id), tau.formula = ~jour*condition+ re(random=~1|id),family=BEINF,data=tab)
 
 
 ### selection modele
@@ -104,18 +227,29 @@ mod <- gamlss(distance2~jour*condition+ re(random=~1|id) ,nu.formula = ~jour*con
 mod_choisi_nu <- stepGAIC(mod, scope=list(lower=~1,upper=~jour*condition + re(random=~1|id)),what=c("nu"))
 mod_choisi_nu_tau <- stepGAIC(mod_choisi_nu, scope=list(lower=~1,upper=~jour*condition + re(random=~1|id)),what=c("tau"))
 mod_choisi_nu_tau_mu <- stepGAIC(mod_choisi_nu_tau, scope=list(lower=~1,upper=~jour*condition + re(random=~1|id)),what=c("mu"))
+# on enlève la condition pour les 3
+
+
 
 
 ### validation modele
-
-mod_choisi <- gamlss(distance2~jour+condition+ re(random=~1|id) ,nu.formula = ~jour+ re(random=~1|id), tau.formula = ~jour+condition+ re(random=~1|id),family=BEINF,data=tab)
+# gamlss -> modèle beta, stepGAIG fait sélection itérative
+mod_choisi <- gamlss(score~jour+ re(random=~1|id) ,nu.formula = ~jour+ re(random=~1|id), tau.formula = ~jour+ re(random=~1|id),family=BEINF,data=tab)
 plot(mod_choisi)
 Rsq(mod_choisi)
 
+# Call:  gamlss(formula = score ~ jour + (re(random = ~1 | id)),  
+#nu.formula = ~jour + (re(random = ~1 | id)), tau.formula = ~jour +  
+#  (re(random = ~1 | id)), family = BEINF, data = tab,      trace = FALSE) 
+# slmt 40% variation de la variable réponse expliquée par le modèle
 
 ### comparaisons 
-
-tab$jour <- relevel(tab$jour, ref="1")
-tab$condition <- relevel(tab$condition, ref="3")
-mod_choisi <- gamlss(distance2~jour+condition+ re(random=~1|id) ,nu.formula = ~jour+ re(random=~1|id), tau.formula = ~jour+condition+ re(random=~1|id),family=BEINF,data=tab)
+#j2/#j3
+tab$jour <- relevel(tab$jour, ref="2")
+#tab$condition <- relevel(tab$condition, ref="3")
+mod_choisi <- gamlss(score~jour+ re(random=~1|id) ,nu.formula = ~jour+ re(random=~1|id), tau.formula = ~jour+ re(random=~1|id),family=BEINF,data=tab)
 summary(mod_choisi)
+
+#nu (0) pas != j2 j3
+# tau j2 !=j3
+# mu pas != j2 j3

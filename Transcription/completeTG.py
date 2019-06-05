@@ -11,7 +11,7 @@ exec(open(path+'CSV.py').read())
 
 # on ne fusionne les intervalle que pour transcription, ce fichier calque commentaires dessus
 
-for idNum in range(11,16):#16):
+for idNum in range(21,22):#16):
     path='AudioList/id'+str(idNum).zfill(2)+'/'
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
         print(filename)

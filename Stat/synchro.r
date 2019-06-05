@@ -5,8 +5,9 @@
 
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
-tab <- read.table("brutSynchro.csv",sep=",",header=TRUE)
-
+tab <- read.table("brutResume.csv",sep=",",header=TRUE)
+tab2 <- read.table("../MoCapAnalysis/brutMoCap.csv",sep=",",header=TRUE)
+tab3 <- read.table("../Transcription/brutSyll.csv",sep=",",header=TRUE)
 ### type variable
 
 tab$jour <- as.factor(as.character(tab$jour))
@@ -17,7 +18,10 @@ tab$condition[tab$condition=="1"] <- "mains contraintes"
 tab$condition[tab$condition=="2"] <- "pédalage pieds"
 tab$condition[tab$condition=="3"] <- "pédalage mains"
 tab$condition <- as.factor(tab$condition)
+tab$nb <- tab$nbCycles.parole.mocap
 #tab$nb <- as.factor(tab$nb)
+tab$varNMocap<- tab$variance.pédalage/tab$freq.moy.pédalage
+tab$var<-tab$variance.debit/tab$debit.moyen
 
 
 ### packages utilises
@@ -26,17 +30,38 @@ library(multcomp)
 library(nlme)
 library(ggplot2)
 
+lm_eqn <- function(df,v1,v2){
+  m <- lm(v1 ~ v2, df);
+  eq <- substitute(italic(y) == a + b %.% italic(x)*","~~italic(r)^2~"="~r2, 
+                   list(a = format(coef(m)[1], digits = 2),
+                        b = format(coef(m)[2], digits = 2),
+                        r2 = format(summary(m)$r.squared, digits = 3)))
+  as.character(as.expression(eq));
+}
 
+
+b <- ggplot(tab, aes(x = tab$var, y=tab$varNMocap))
+b<- b + geom_point() # rajouter y dans le ggplot de base
+b<- b+geom_smooth(method = "lm")
+b <-b + geom_text(x = 2, y = 4, label = lm_eqn(tab,tab$var,tab$varNMocap), parse = TRUE)
+b
+
+b <- ggplot(tab, aes(x = tab$mean, y=tab$varNMocap))
+b<- b + geom_point() # rajouter y dans le ggplot de base
+b<- b+geom_smooth(method = "lm")
+b <-b + geom_text(x = 2, y = 4, label = lm_eqn(tab,tab$var,tab$varNMocap), parse = TRUE)
+b
 ###################################################### statistiques descriptives #######################################
 
 tgc <- summarySE(tab, measurevar="nb", groupvars=c("jour","condition"))
 p<-ggplot(data=tgc, aes(x=jour, y=nb, fill=condition)) + 
-  geom_bar(position=position_dodge(), stat="identity") +
+  scale_fill_brewer() + theme_bw() +
+  geom_bar(position=position_dodge(), stat="identity",colour="black") +
   geom_errorbar(aes(ymin=tgc$nb-tgc$se, ymax=tgc$nb+tgc$se),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
-  ggtitle("Débit moyen selon le jour et la condition")
-p <- p + ylab("débit moyen")+ labs(fill='condition') 
+  ggtitle("Rapport entre le débit et la vitesse de pédalage")
+p <- p + ylab("débit/pédalage")+ labs(fill='condition') 
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
                legend.title=element_text(size=18), legend.text = element_text(size=16))

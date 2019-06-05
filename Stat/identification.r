@@ -1,92 +1,68 @@
 ###################################################### tableau de donnees #######################################
-
-
+# pas d'effet dans les comparaisons multiples mais effet jour condition : on fait quelles stats
+# effet du type mais pas monstrueux
 ### importer tableau 
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
 tab <- read.table("../RecallTest/brut.csv",sep=",",header=TRUE)
 
 
-###
-
-tab$evaluation <- as.character(tab$evaluation)
-tab$evaluation[tab$evaluation=="True"] <- "1"
-tab$evaluation[tab$evaluation=="False"] <- "0"
-tab$evaluation <- as.factor(tab$evaluation)
-
-### type variable
-
 tab$jour <- as.factor(as.character(tab$jour))
 tab$id <- as.factor(as.character(tab$id))
 tab$histoire <- as.factor(as.character(tab$histoire))
-tab$condition <- as.factor(as.character(tab$condition))
 
-
+tab$condition[tab$condition=="0"] <- "mains libres"
+tab$condition[tab$condition=="1"] <- "mains contraintes"
+tab$condition[tab$condition=="2"] <- "pédalage pieds"
+tab$condition[tab$condition=="3"] <- "pédalage mains"
+tab$condition <- factor(tab$condition,levels = c("mains libres", "pédalage pieds", "pédalage mains","mains contraintes"))
+tab$condition <- as.factor(tab$condition)
 ### packages uconditionlises
 
 library(lme4)
 library(AUC)
 library(multcomp)
 library(ggplot2)
+library(psy)
 
+# + = 2 effets, * = intéraction
+################# effet condition  #####################
+tgc <- summarySE(tab, measurevar="evaluation", groupvars=c("jour","condition"))
+p<-ggplot(data=tgc, aes(x=jour, y=evaluation, fill=condition)) + 
+  scale_fill_brewer() + theme_bw() +
+  scale_fill_brewer() + theme_bw() +
+  geom_bar(position=position_dodge(), stat="identity",colour="black") +
+ geom_errorbar(aes(ymin=tgc$evaluation-tgc$se, ymax=tgc$evaluation+tgc$se),
+             width=.2,                    # Width of the error bars
+            position=position_dodge(.9)) +
+ ggtitle("Scores en identification")
+p <- p + ylab("Scores")+ labs(fill='condition')
+p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+              plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+              legend.title=element_text(size=18), legend.text = element_text(size=16))
+# p<- p+facet_grid(.~type)
+p
 
-###################################################### statistiques descriptives #######################################
+a<- tab$id
+b<- tab$evaluation
+tab2=data.table(id=a,evaluation=b)
+df=as.data.frame.matrix(tab2)
+cronbach(df)
 
-### creaconditionon fonction  moyenne intervalle de confiance
+################## effet de l'histoire #############
 
-moyenne <- function(x){mean(x, na.rm=TRUE)}
-
-fonction_ci_inf <- function(x){
-moyenne_boot <- c()
-for(i in 1:1000){moyenne_boot <- c(moyenne_boot,moyenne(sample(x=x,size=length(x),replace=TRUE)))}
-return(quantile(moyenne_boot,0.025))}
-
-fonction_ci_sup <- function(x){
-moyenne_boot <- c()
-for(i in 1:1000){moyenne_boot <- c(moyenne_boot,moyenne(sample(x=x,size=length(x),replace=TRUE)))}
-return(quantile(moyenne_boot,0.975))}
-
-
-### choix de la variale reponse et des facteurs jourants (a modifierselon l'exemple)
-
-reponse <- tab$evaluation
-facteur1 <- tab$condition
-facteur2 <- tab$jour
-
-
-### creaconditionon tableau pour graphique 
-
-tab_agg_moyenne <- aggregate(as.numeric(as.character(reponse)), by=list(facteur1, facteur2),moyenne)
-tab_agg_ci_inf <- aggregate(as.numeric(as.character(reponse)), by=list(facteur1, facteur2),fonction_ci_inf)
-
-tab_agg_ci_sup <- aggregate(as.numeric(as.character(reponse)), by=list(facteur1, facteur2),fonction_ci_sup)
-tab_graphique <- cbind(tab_agg_moyenne,tab_agg_ci_inf[,ncol(tab_agg_ci_inf)],tab_agg_ci_sup[,ncol(tab_agg_ci_sup)])
-
-colnames(tab_graphique)[ncol(tab_graphique)-2] <- "moyenne"
-colnames(tab_graphique)[ncol(tab_graphique)-1] <- "ci_inf"
-colnames(tab_graphique)[ncol(tab_graphique)] <- "ci_sup"
-
-
-### graphique (avec intervalle de confiance) 
-
-mat <- matrix(tab_graphique$moyenne, nrow=nlevels(facteur1), dimnames=list(levels(facteur1),levels(facteur2)))
-bar <- barplot(mat, beside = TRUE,  names.arg = colnames(mat), legend.text = TRUE,ylim=c(0,1), ylab="reponse", xlab="")
-segments(as.vector(bar),tab_graphique$ci_inf,as.vector(bar),tab_graphique$ci_sup)
-
-
-# tgc <- summarySE(tab, measurevar="evaluation", groupvars=c("jour","condition"))
-# p<-ggplot(data=tgc, aes(x=jour, y=evaluation, fill=condition)) +
+# tgc <- summarySE(tab, measurevar="evaluation", groupvars=c("jour","histoire"))
+# p<-ggplot(data=tgc, aes(x=jour, y=evaluation, fill=histoire)) + 
 #   geom_bar(position=position_dodge(), stat="identity") +
 #   geom_errorbar(aes(ymin=tgc$evaluation-tgc$se, ymax=tgc$evaluation+tgc$se),
 #                 width=.2,                    # Width of the error bars
 #                 position=position_dodge(.9)) +
-#   ggtitle("Scores en identification")
-# p <- p + ylab("Erreur")+ labs(fill='condition')
+#   ggtitle("Effet de l'histoire sur l'identification")
+# p <- p + ylab("Scores")+ labs(fill='histoire')
 # p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
 #               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
 #               legend.title=element_text(size=18), legend.text = element_text(size=16))
 # p
-
 
 
 ###
@@ -120,36 +96,39 @@ m1 <- glmer(evaluation~jour*condition + (condition|id),start=st1 , family="binom
 m2 <- glmer(evaluation~jour*condition + (jour|id),start=st2 , family="binomial", data=tab,control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=50000)))
 
 anova(m0,m1)
-anova(m0,m2)
+anova(m0,m2) # on garde m2
 
 
 
 ### selecconditionon modele (effets fixes)
 
 # etape 1
-
-m3 <- glmer(evaluation~jour+condition + (1|id), family="binomial", data=tab)
-anova(m0,m3)
+# doit écrire m2 + modif -> on garde jour|id, on teste intéraction
+mstart3 <- glmer(evaluation~jour+condition + (jour|id), family="binomial", data=tab,control=glmerControl(optCtrl=list(maxfun=50000)))
+st3 <- getME(mstart3,c("theta","fixef"))
+m3 <- glmer(evaluation~jour+condition + (jour|id), family="binomial", data=tab, ,control=glmerControl(optCtrl=list(maxfun=50000)),start=st3)
+anova(m2,m3) # on garde m3 
+# pb convergence -> garde terme d'intéraction -> doute : vérifie dans compar multiples
 
 
 # etape 2
 
-m4 <- glmer(evaluation~jour + (1|id), family="binomial", data=tab)
-m5 <- glmer(evaluation~condition + (1|id), family="binomial", data=tab)
-
-anova(m3,m4)
-anova(m3,m5)
+# m4 <- glmer(evaluation~jour + (1|id), family="binomial", data=tab)
+# m5 <- glmer(evaluation~condition + (1|id), family="binomial", data=tab)
+# 
+# anova(m2,m4)
+# anova(m2,m5)
 
 
 
 ### taux d'erreur + courbe roc
 
-mod_choisi <- glmer(evaluation~jour + (1|id) , data=tab, family="binomial",control=glmerControl(optCtrl=list(maxfun=50000)))
+mod_choisi <- m2#glmer(evaluation~jour + (1|id) , data=tab, family="binomial",control=glmerControl(optCtrl=list(maxfun=50000)))
 prevision_prob <- predict(mod_choisi, newdata=tab, type="response")
 prevision_label <- as.numeric(prevision_prob>0.5)
 
 mat_conf <- table(tab$evaluation, prevision_label)
-tx_erreur <- (mat_conf[1,2] + mat_conf[2,1])/nrow(tab)
+tx_erreur <- (mat_conf[1,2] + mat_conf[2,1])/nrow(tab) # 80% 
 
 pred <- roc( prevision_prob, tab$evaluation)
 plot(pred)
@@ -157,14 +136,64 @@ auc(pred)
 
 
 ### comparaisons mulconditionples
+# avant chgt
+# patmat <- rbind(c(1,0,0,0,0,0,0,0,0,0,0,0),c(1,1,0,0,0,0,0,0,0,0,0,0), c(1,0,1,0,0,0,0,0,0,0,0,0),
+#                 c(1,0,0,1,0,0,0,0,0,0,0,0),c(1,1,0,1,0,0,1,0,0,0,0,0), c(1,0,1,1,0,0,0,1,0,0,0,0),
+#                 c(1,0,0,0,1,0,0,0,0,0,0,0),c(1,1,0,0,1,0,0,0,1,0,0,0), c(1,0,1,0,1,0,0,0,0,1,0,0),
+#                 c(1,0,0,0,0,1,0,0,0,0,0,0),c(1,1,0,0,0,1,0,0,0,0,1,0), c(1,0,1,0,0,1,0,0,0,0,0,1)) # donne valeur à chaque cellule
+# rownames(patmat) <- c("jour1-Contrainte","jour2-Contrainte","jour3-Contrainte",
+#                       "jour1-Libre","jour2-Libre","jour3-Libre",
+#                       "jour1-Mains","jour2-Mains","jour3-Mains",
+#                       "jour1-Pieds","jour2-Pieds","jour3-Pieds"
+#                       ) # doit tout définir
 
-patmat <- rbind(c(1,0,0),c(1,1,0),c(1,0,1))
-rownames(patmat) <- c("jour1","jour2","jour3")
+# maintenant
 
-contrmat <- matrix(rep(0,3*3),ncol=3)
-rownames(contrmat) <- c("jour1 - jour2","jour1-jour3","jour2-jour3")
-contrmat[1,] <- patmat[1,] - patmat[2,]
-contrmat[2,] <- patmat[1,] - patmat[3,]
-contrmat[3,] <- patmat[2,] - patmat[3,]
+patmat <- rbind(c(1,0,0,1,0,0,0,0,0,0,0,0),c(1,1,0,1,0,0,1,0,0,0,0,0), c(1,0,1,1,0,0,0,1,0,0,0,0),
+                c(1,0,0,0,0,1,0,0,0,0,0,0),c(1,1,0,0,0,1,0,0,0,0,1,0), c(1,0,1,0,0,1,0,0,0,0,0,1),
+                c(1,0,0,0,1,0,0,0,0,0,0,0),c(1,1,0,0,1,0,0,0,1,0,0,0), c(1,0,1,0,1,0,0,0,0,1,0,0),
+                c(1,0,0,0,0,0,0,0,0,0,0,0),c(1,1,0,0,0,0,0,0,0,0,0,0), c(1,0,1,0,0,0,0,0,0,0,0,0))
 
-comp_mult <- summary(glht(mod_choisi,linfct=contrmat))
+
+# donne valeur à chaque cellule
+rownames(patmat) <- c("jour1-Libre","jour2-Libre","jour3-Libre",
+                      "jour1-Pieds","jour2-Pieds","jour3-Pieds",
+                      "jour1-Mains","jour2-Mains","jour3-Mains",
+                      "jour1-Contrainte","jour2-Contrainte","jour3-Contrainte")
+
+
+
+# comparaisons multiples
+contrmat <- matrix(rep(0,12*3),ncol=12) # nbCol*nb Compar qu'on veut faire
+rownames(contrmat) <- c("j1C - j1L","j1M-j1P")
+
+# # comparaisons j1
+contrmat[1,] <- patmat[1,] - patmat[4,] # j1 mains libres-contraintes *
+contrmat[2,] <- patmat[7,] - patmat[4,] # j1 mains libres - velo mains .
+contrmat[3,] <- patmat[10,] - patmat[4,] # j1 mains libres - velo pieds -> pas significatif
+
+# # comparaisons j2
+# contrmat[4,] <- patmat[2,] - patmat[5,] # j1 mains libres-contraintes *
+# contrmat[5,] <- patmat[8,] - patmat[5,] # j1 mains libres - velo mains .
+# contrmat[6,] <- patmat[11,] - patmat[5,] # j1 mains libres - velo pieds -> pas significatif
+
+# comparaisons j3
+# contrmat[1,] <- patmat[3,] - patmat[6,] # j1 mains libres-contraintes *
+# contrmat[2,] <- patmat[9,] - patmat[6,] # j1 mains libres - velo mains .
+# contrmat[3,] <- patmat[12,] - patmat[6,] # j1 mains libres - velo pieds -> pas significatif
+
+# contrmat[1,]<-(patmat[4,]+patmat[5,]+patmat[6,])-(patmat[1,]+patmat[2,]+patmat[3,])
+# contrmat[2,]<-(patmat[4,]+patmat[5,]+patmat[6,])-(patmat[7,]+patmat[8,]+patmat[9,])
+# contrmat[3,]<-(patmat[4,]+patmat[5,]+patmat[6,])-(patmat[10,]+patmat[11,]+patmat[12,])
+
+# comparaison j2-j3
+#contrmat[10,]<-(patmat[2,]+patmat[5,]+patmat[8,]+patmat[11,])-(patmat[3,]+patmat[6,]+patmat[9,]+patmat[12,])
+
+# 4*3 pour les jours ou juste j2 j3
+# 18 au sein d'un jour
+# -> peut enlever entre j1 et j2
+# Amélie : pourquoi a tout teste
+
+
+comp_mult <- summary(glht(mod_choisi,linfct=contrmat,adjust.method="none"))
+# % autres études que j1

@@ -1,8 +1,8 @@
 ###################################################### tableau de donnees #######################################
-# DOne : pas d'effet
 
-### importer tableau 
-
+# peut être effet de var ipu et var deb, pas d'effet de la moyenne
+# pas d'effet SDTD ou meanIPU ?
+# durée des pauses -> histogramme par condition
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
 tab <- read.table("../Transcription/brutSyll.csv",sep=",",header=TRUE)
@@ -16,8 +16,8 @@ tab$condition[tab$condition=="0"] <- "mains libres"
 tab$condition[tab$condition=="1"] <- "mains contraintes"
 tab$condition[tab$condition=="2"] <- "pédalage pieds"
 tab$condition[tab$condition=="3"] <- "pédalage mains"
-tab$condition <- factor(tab$condition,levels = c("mains libres", "pédalage pieds", "pédalage mains","mains contraintes"))
 tab$condition <- as.factor(tab$condition)
+tab
 
 
 ### packages utilises
@@ -26,18 +26,31 @@ library(multcomp)
 library(nlme)
 library(ggplot2)
 
+lm_eqn <- function(df,v1,v2){
+  m <- lm(v1 ~ v2, df);
+  eq <- substitute(italic(y) == a + b %.% italic(x)*","~~italic(r)^2~"="~r2, 
+                   list(a = format(coef(m)[1], digits = 2),
+                        b = format(coef(m)[2], digits = 2),
+                        r2 = format(summary(m)$r.squared, digits = 3)))
+  as.character(as.expression(eq));
+}
 
+
+b <- ggplot(tab, aes(x = tab$meanDeb, y=tab$SpeechRate))
+b<- b + geom_point() # rajouter y dans le ggplot de base
+b<- b+geom_smooth(method = "lm")
+b <-b + geom_text(x = 2, y = 4, label = lm_eqn(tab,tab$meanDeb,tab$SpeechRate), parse = TRUE)
+b
 ###################################################### statistiques descriptives #######################################
 
-tgc <- summarySE(tab, measurevar="meanDeb", groupvars=c("jour","condition"))
-p<-ggplot(data=tgc, aes(x=jour, y=meanDeb, fill=condition)) + 
-  scale_fill_brewer() + theme_bw() +
-  geom_bar(position=position_dodge(), stat="identity",colour="black") +
-  geom_errorbar(aes(ymin=tgc$meanDeb-tgc$se, ymax=tgc$meanDeb+tgc$se),
+tgc <- summarySE(tab, measurevar="meanIPU", groupvars=c("jour","condition"))
+p<-ggplot(data=tgc, aes(x=jour, y=meanIPU, fill=condition)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  geom_errorbar(aes(ymin=tgc$meanIPU-tgc$se, ymax=tgc$meanIPU+tgc$se),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
-  ggtitle("Débit moyen selon le jour et la condition")
-p <- p + ylab("débit moyen")+ labs(fill='condition') 
+  ggtitle("mean IPU")
+p <- p + ylab("mean ipu")+ labs(fill='condition') 
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
                legend.title=element_text(size=18), legend.text = element_text(size=16))
@@ -45,22 +58,22 @@ p
 
 ##############" effet de l'histoire ########"""
 
-# tgc <- summarySE(tab, measurevar="meanDeb", groupvars=c("jour","histoire"))
-# p<-ggplot(data=tgc, aes(x=jour, y=meanDeb, fill=histoire)) + 
-#   geom_bar(position=position_dodge(), stat="identity") +
-#   geom_errorbar(aes(ymin=tgc$meanDeb-tgc$se, ymax=tgc$meanDeb+tgc$se),
-#                 width=.2,                    # Width of the error bars
-#                 position=position_dodge(.9)) +
-#   ggtitle("Débit moyen selon le jour et la condition")
-# p <- p + ylab("débit moyen")+ labs(fill='histoire') 
-# p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
-#                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
-#                legend.title=element_text(size=18), legend.text = element_text(size=16))
-# p
+tgc <- summarySE(tab, measurevar="meanIPU", groupvars=c("jour","histoire"))
+p<-ggplot(data=tgc, aes(x=jour, y=meanIPU, fill=histoire)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  geom_errorbar(aes(ymin=tgc$meanIPU-tgc$se, ymax=tgc$meanIPU+tgc$se),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9)) +
+  ggtitle("Débit moyen selon le jour et la condition")
+p <- p + ylab("débit moyen")+ labs(fill='histoire') 
+p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+               legend.title=element_text(size=18), legend.text = element_text(size=16))
+p
 
 ### distribution
 
-hist(tab$meanDeb)
+hist(tab$meanIPU)
 
 
 
@@ -71,7 +84,7 @@ hist(tab$meanDeb)
 
 # un effet aleatoire intercept par sujet
 
-fit0 <-  lme(meanDeb~jour*condition, random=~1|id,data=tab, method="ML",na.action=na.exclude)
+fit0 <-  lme(meanIPU~jour*condition, random=~1|id,data=tab, method="ML",na.action=na.exclude)
 plot(fit0, id~resid(.,type="p")|jour, abline=0, xlim=c(-5,5), xlab="residus standardises")
 plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus standardises")
 
@@ -81,8 +94,8 @@ plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus
 
 # un effet aleatoire intercept par sujet different par condition
 
-fit1c <- lme(meanDeb~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~condition-1)))),data=tab, method="ML",na.action=na.exclude)
-fit1j <- lme(meanDeb~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),data=tab, method="ML",na.action=na.exclude)
+fit1c <- lme(meanIPU~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~condition-1)))),data=tab, method="ML",na.action=na.exclude)
+fit1j <- lme(meanIPU~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),data=tab, method="ML",na.action=na.exclude)
 
 anova(fit0,fit1c)
 anova(fit0,fit1j)
@@ -95,13 +108,12 @@ anova(fit0,fit1j)
 boxplot(resid(fit0,type="p")~tab$condition, xlab="residus normalises")
 boxplot(resid(fit0,type="p")~tab$jour, xlab="residus normalises")
 
-fit_varc <- lme(meanDeb~jour*condition, random=~1|id,weights=varIdent(form=~1|condition),data=tab, method="ML",na.action=na.exclude)
+fit_varc <- lme(meanIPU~jour*condition, random=~1|id,weights=varIdent(form=~1|condition),data=tab, method="ML",na.action=na.exclude)
 anova(fit0,fit_varc)
 
-fit_varj <- lme(meanDeb~jour*condition, random=~1|id,weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
+fit_varj <- lme(meanIPU~jour*condition, random=~1|id,weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
 anova(fit0,fit_varj)
 
-# garde fit0 car le modèle le plus simple
 
 # correlation entre jour
 
@@ -120,9 +132,9 @@ cor(mat)
 
 # etape 1
 
-fit_cj <- update(fit0,.~.-jour:condition)
-anova(fit0,fit_cj)
-# gpas de différence : garde le modèle le plus simple
+fit_cj <- update(fit_varj,.~.-jour:condition)
+anova(fit_varj,fit_cj)
+
 
 # etape 2
 
@@ -131,20 +143,19 @@ fit_cj_j <- update(fit_cj,.~.-jour)
 
 anova(fit_cj,fit_cj_c)
 anova(fit_cj,fit_cj_j)
-# enlève celui avec la plus grosse p-value fit_cj_c
 
 
 # etape 3
 
-fit_cj_j_c <- update(fit_cj_c,.~.-jour)
-anova(fit_cj_j_c,fit_cj_c)
+fit_cj_j_c <- update(fit_cj_j,.~.-condition)
+anova(fit_cj_j_c,fit_cj_j)
 
 
 
 
 ### validation du modele
 
-mod_choisi <-fit_cj_j_c # lme(meanDeb~1, random=~1|id,weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
+mod_choisi <- lme(meanIPU~1, random=~1|id,weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
 
 
 # calcul des r?sidus du model 1 avec interaction

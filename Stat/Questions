@@ -1,0 +1,73 @@
+varf_mocap_baseline -> graphe
+
+comparaison multiple : erreur
+ok garde intéraction
+
+
+varf_mocap -> tableau
+
+analyse seulement baseline + varf_mocap_baseline ?
+idem pour mean ?
+
+
+identification : quelles comparaisons ?
+## quelle fonction à regarder pour calculer les corrections ? échange
+pour l'instant effet du jour : j2!=j3
+que jour1 % autres études
+glht corrections ? holmes
+
+dénomination enlève tout même si a l'air significatif quand !=0 ?
+# comment regarder à quel point on est loin
+
+
+rappel_libre CT
+-> garde nombre aussi ?
+-> pas d'effet de la condition
+
+rappel libre LT
+-> converge pas, qui est tau ?
+-> comment sait si on est proche quand pas d'effet ?
+
+meanDeb : pourquoi garde intéraction ???
+comment voit le nom de la méthode ?
+
+
+varDeb : erreur covariate interaction found
+## intéraction à 0.07 mais ensuite 0.7 ??
+# si >0.05 :
+# rajoute pas d'effet aléatoire, et enlève cond etc pour avoir modèle + simple
+# avec AIC ?
+
+nbSyll : effets aléatoires, sélectionne l'un après l'autre ?
+bizarre garde l'intéraction 
+## garde AIC petit ou df petit quand diff significative ?
+impossible trouver fct "simulateresiduals" + autres erreurs
+
+propHesit même erreur! garde l'intéraction : bizarre!
+# effets aléatoires garde lequel ?
+# à la fin fit_cj_j
+
+regarder en noir et blanc sinon +
+ou geom lines
+
+si <0.05, garde + petit AIC
+changer ordre conditions ggplot
+graphes en lignes
+
+
+à voir avec S:
+ident : quelle correction ?
+dénomination : comment regarder si on est loin ?
+meanDeb Done
+varDeb : on garde presque intéraction mais effet disparait
+meanMocap baseline : DONE si garde le plus complexe si différence significative (même si AIC peut augmenter)
+varMocap baseline : on garde presque intéraction mais effet disparait ??
+meanMocap : effet de la condition
+varMocap : erreur dans effets aléatoires
+nbSyll : à refaire, 2 effets aléatories, lequel
+propHesit : vérifier garde fit1j + 2 à la limite : fait comment ?
+lien debit/fréq pédalage
+rappel libre : lequel nu/tau/mu
+ + problème de convergence rappel LT
+
+

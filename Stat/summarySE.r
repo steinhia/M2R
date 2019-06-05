@@ -20,16 +20,17 @@ summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
                  measurevar
   )
   
-  # Rename the "mean" column    
+  # Rename the "mean" column  
+  cat("c1")
   datac <- rename(datac, c("mean" = measurevar))
-  
+  cat("c2")
   datac$se <- datac$sd / sqrt(datac$N)  # Calculate standard error of the mean
-  
+  cat("c3")
   # Confidence interval multiplier for standard error
   # Calculate t-statistic for confidence interval: 
   # e.g., if conf.interval is .95, use .975 (above/below), and use df=N-1
   ciMult <- qt(conf.interval/2 + .5, datac$N-1)
   datac$ci <- datac$se * ciMult
-  
+  cat("c4")
   return(datac)
 }

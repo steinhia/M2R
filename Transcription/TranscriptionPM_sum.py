@@ -121,18 +121,13 @@ l=split_(PhoneticList)
 csvTabCT=[]
 csvTabLT=[]
 [dico,dico_add,dico_moy]=[{},{},{}]
-for idNum in range(1,22):
-    print(len(dico))
-    print(len(csvTabCT))
-    print('\n')
+for idNum in range(1,21):
     path='Resultats/id'+str(idNum).zfill(2)+'/'
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
         [cond,story]=num2CS(filename)
         if cond!=-1:
             [PM,PM_add,PM_moy,nb_add]=calcScoreShort(filename)
-            createLigne(filename,csvTabCT,[PM[0],PM_add[0],nb_add[0]]) 
-            createLigne(filename,csvTabCT,[PM[1],PM_add[1],nb_add[1]]) 
-            createLigne(filename,csvTabCT,[PM[2],PM_add[2],nb_add[2]]) 
+            createLigne(filename,csvTabCT,[sum(PM)/3,sum(PM_add)/3,sum(nb_add)/3]) 
         else:
             # pour les recall longs, on reconnait le mot parmi tous
             # on garde le nom jusqu'à n01, pas les bis,tris,001 etc
@@ -143,31 +138,15 @@ for idNum in range(1,22):
         for i,v in enumerate(value):
             if v!=0:
                 1#dico_moy[key]=dico_add[key][i]/v
-for key,value in dico.items():
-    ligne0=createLigne(key,csvTabLT,[value[0],dico_add[key][0],dico_moy[key][0]])
-    ligne1=createLigne(key,csvTabLT,[value[1],dico_add[key][1],dico_moy[key][1]])
-    ligne2=createLigne(key,csvTabLT,[value[2],dico_add[key][2],dico_moy[key][2]])
-    ligne3=createLigne(key,csvTabLT,[value[3],dico_add[key][3],dico_moy[key][3]])
-    ligne4=createLigne(key,csvTabLT,[value[4],dico_add[key][4],dico_moy[key][4]])
-    ligne5=createLigne(key,csvTabLT,[value[5],dico_add[key][5],dico_moy[key][5]])
-    ligne6=createLigne(key,csvTabLT,[value[6],dico_add[key][6],dico_moy[key][6]])
-    ligne7=createLigne(key,csvTabLT,[value[7],dico_add[key][7],dico_moy[key][7]])
-    ligne8=createLigne(key,csvTabLT,[value[8],dico_add[key][8],dico_moy[key][8]])
-    ligne9=createLigne(key,csvTabLT,[value[9],dico_add[key][9],dico_moy[key][9]])
-    ligne10=createLigne(key,csvTabLT,[value[10],dico_add[key][10],dico_moy[key][10]])
-    ligne11=createLigne(key,csvTabLT,[value[11],dico_add[key][11],dico_moy[key][11]])
-    completeLigne(ligne0,key,0)
-    completeLigne(ligne1,key,0)
-    completeLigne(ligne2,key,0)
-    completeLigne(ligne3,key,1)
-    completeLigne(ligne4,key,1)
-    completeLigne(ligne5,key,1)
-    completeLigne(ligne6,key,2)
-    completeLigne(ligne7,key,2)
-    completeLigne(ligne8,key,2)
-    completeLigne(ligne9,key,3)
-    completeLigne(ligne10,key,3)
-    completeLigne(ligne11,key,3)
+    for key,value in dico.items():
+        ligne1=createLigne(key,csvTabLT,[sum(value[:3])/3,sum(dico_add[key][:3])/3,sum(dico_moy[key][:3])/3])
+        completeLigne(ligne1,key,0)
+        ligne2=createLigne(key,csvTabLT,[sum(value[3:6])/3,sum(dico_add[key][3:6])/3,sum(dico_moy[key][3:6])/3])
+        completeLigne(ligne2,key,1)
+        ligne3=createLigne(key,csvTabLT,[sum(value[6:9])/3,sum(dico_add[key][6:9])/3,sum(dico_moy[key][6:9])/3])
+        completeLigne(ligne3,key,2)
+        ligne4=createLigne(key,csvTabLT,[sum(value[9:])/3,sum(dico_add[key][9:])/3,sum(dico_moy[key][9:])/3])
+        completeLigne(ligne4,key,3)
 firstLine=["score","scoreCumule","nbRepet"]
 WriteCSV(csvTabCT,firstLine,'brutTranscriptionCT.csv')
 WriteCSV(csvTabLT,firstLine,'brutTranscriptionLT.csv')

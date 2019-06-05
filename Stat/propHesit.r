@@ -1,32 +1,22 @@
 ###################################################### tableau de donnees #######################################
-#TODO : j'analyse lequel : avec ou sans outliers ?
-# pas d'effet de la condition
-# enlève outlier mais ça change pas le nombre
-### importer tableau 
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
-tab <- read.table("../MoCapAnalysis/brutMoCap.csv",sep=",",header=TRUE)
+tab <- read.table("../Transcription/brutDebit.csv",sep=",",header=TRUE)
 
-
+# pê pédalage pieds != mains lbres
+# pê mains contraintes != pédalage pieds
 ### type variable
 
 tab$jour <- as.factor(as.character(tab$jour))
 tab$id <- as.factor(as.character(tab$id))
 tab$histoire <- as.factor(as.character(tab$histoire))
-tab$condition[tab$condition=="2"] <- "pieds"
-tab$condition[tab$condition=="3"] <- "mains"
-tab$condition <- as.factor(tab$condition)
-tab$baseline[tab$histoire=="-1"] <- "baseline"
-tab$baseline[tab$histoire=="3" | tab$histoire=="2" | tab$histoire=="1" | tab$histoire=="0"] <- "recall"
-tab$varNorm<- tab$var.f/tab$mean.f
+tab$condition[tab$condition=="0"] <- "mains libres"
+tab$condition[tab$condition=="1"] <- "mains contraintes"
+tab$condition[tab$condition=="2"] <- "pédalage pieds"
+tab$condition[tab$condition=="3"] <- "pédalage mains"
+tab$condition <- factor(tab$condition,levels = c("mains libres", "pédalage pieds", "pédalage mains","mains contraintes"))
 
-xMax=mean(tab$var.f)+2*sqrt(var(tab$var.f))
-xMin=mean(tab$var.f)-2*sqrt(var(tab$var.f))
-# juste baseline
-b<- tab$condition[which(tab$baseline=="baseline" & tab$var.f<xMax)]
-c<- tab$var.f[which(tab$baseline=="baseline" & tab$var.f<xMax)]
-d<- tab$id[which(tab$baseline=="baseline" & tab$var.f<xMax)]
-tab2=data.table(condition=b,var.f=c,id=d)
+tab$condition <- as.factor(tab$condition)
 
 ### packages utilises
 
@@ -37,57 +27,19 @@ library(ggplot2)
 
 
 ###################################################### statistiques descriptives #######################################
-# histo var fréquence
-b <- ggplot(tab, aes(x = tab$var.f))
-b<- b + geom_histogram(bins=10)
-b <- b+ facet_grid(.~condition)
-b
 
-# histo var z
-b <- ggplot(tab, aes(x = tab$varz))
-b<- b + geom_histogram(bins=10)
-b <- b+ facet_grid(.~condition)
-b
-
-# régression
-b <- ggplot(tab, aes(x = tab$var.f, y=tab$varz))
-b<- b + geom_point() # rajouter y dans le ggplot de base
-b <- b+ facet_grid(.~condition)
-b
-
-
-# 
-# x=0.05
-# a<- tab$id[which(tab$var.f<x)]
-# b<- tab$jour[which(tab$var.f<x)]
-# c<- tab$condition[which(tab$var.f<x)]
-# d<- tab$var.f[which(tab$var.f<x)]
-# e<- tab$baseline[which(tab$var.f<x)]
-# tab2=data.table(id=a,jour=b,condition=c,var.f=d,baseline=e)
-# 
-# x=0.000005
-# a<- tab$id[which(tab$var.f<x)]
-# b<- tab$jour[which(tab$var.f<x)]
-# c<- tab$condition[which(tab$var.f<x)]
-# d<- tab$var.f[which(tab$var.f<x)]
-# e<- tab$baseline[which(tab$var.f<x)]
-# tab3=data.table(id=a,jour=b,condition=c,var.f=d,baseline=e)
-# 
-
-
-tgc <- summarySE(tab2, measurevar="var.f", groupvars=c("condition"))
-p<-ggplot(data=tgc, aes(x=condition, y=var.f)) +
+tgc <- summarySE(tab, measurevar="propHesit", groupvars=c("jour","condition"))
+p<-ggplot(data=tgc, aes(x=jour, y=propHesit, fill=condition)) +
   scale_fill_brewer() + theme_bw() +
   geom_bar(position=position_dodge(), stat="identity",colour="black") +
-  geom_errorbar(aes(ymin=tgc$var.f-tgc$se, ymax=tgc$var.f+tgc$se),
+  geom_errorbar(aes(ymin=tgc$propHesit-tgc$se, ymax=tgc$propHesit+tgc$se),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
-  ggtitle("Variabilité de la fréquence de pédalage")
-p <- p + ylab("variance")+ labs(fill='pédalage')
+  ggtitle("Proportion d'hésitations")
+p <- p + ylab("nb")+ labs(fill='condition') 
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
               legend.title=element_text(size=18), legend.text = element_text(size=16))
-#p <- p+ facet_grid(.~baseline)
 p
 
 ###############" effet de l'histoire 
@@ -122,10 +74,13 @@ hist(tab$var.f)
 
 # un effet aleatoire intercept par sujet
 
-fit0 <-  lme(var.f~condition, random=~1|id,data=tab2, method="ML",na.action=na.exclude)
+fit0 <-  lme(var.f~jour*condition, random=~1|id,data=tab, method="ML",na.action=na.exclude)
 
 # résidus standardisés
-## plot des différents sujets, est-ce que les variabilités inter-individuelles changent selon la condition ?
+# plot des différents sujets, est-ce que les variabilités inter-individuelles changent selon le jour ?
+plot(fit0, id~resid(.,type="p")|jour, abline=0, xlim=c(-5,5), xlab="residus standardises")
+
+# plot des différents sujets, est-ce que les variabilités inter-individuelles changent selon la condition ?
 plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus standardises")
 
 
@@ -135,29 +90,35 @@ plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus
 # un effet aleatoire intercept par sujet different par condition
 
 # effet aléatoire différent selon la condition ?
-fit1c <- lme(var.f~condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~condition-1)))),data=tab2, method="ML",na.action=na.exclude)
+fit1c <- lme(var.f~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~condition-1)))),data=tab, method="ML",na.action=na.exclude)
+# effet aléatoire différent selon le jour ?
+fit1j <- lme(var.f~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),data=tab, method="ML",na.action=na.exclude)
 
-anova(fit0,fit1c) 
-# pas d'info suppl
+anova(fit0,fit1c) # non
+anova(fit0,fit1j)# ouiiii
+# TODO garde lequel
 
 
 ### matrice de variance covariance des erreurs
 
 # meme variance selon les modalites de condition
 
-boxplot(resid(fit1j,type="p")~tab2$condition, xlab="residus normalises")
-boxplot(resid(fit1j,type="p")~tab2$jour, xlab="residus normalises")
+boxplot(resid(fit1j,type="p")~tab$condition, xlab="residus normalises")
+boxplot(resid(fit1j,type="p")~tab$jour, xlab="residus normalises")
 
-fit_varc <- lme(var.f~condition, random=list(id=pdBlocked(list(pdIdent(~1)))),weights=varIdent(form=~1|condition),data=tab2, method="ML",na.action=na.exclude)
-anova(fit0,fit_varc) # ERREUR
+fit_varc <- lme(var.f~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),weights=varIdent(form=~1|condition),data=tab, method="ML",na.action=na.exclude)
+anova(fit1j,fit_varc) # ajoute pas d'information
 
+fit_varj <- lme(var.f~jour*condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
+anova(fit1j,fit_varj) # jour apporte de l'information -> garde fit_varj
+# les 2 sont à la limite # TODO fait comment
 
 # correlation entre jour
 
-tab2$combinaison <- as.factor(paste(tab2$id,tab2$condition))
-tab2$residus <- resid(fit1j,type="normalized")
-mat <- matrix(rep(0,nlevels(tab2$jour)*nlevels(tab2$combinaison)),ncol=nlevels(tab2$jour))
-for(i in 1:nlevels(tab2$combinaison)){for(j in 1:nlevels(tab2$jour)){mat[i,j] <- tab2$residus[which(tab2$combinaison == levels(tab2$combinaison)[i] & tab2$jour == levels(tab2$jour)[j])]}}
+tab$combinaison <- as.factor(paste(tab$id,tab$condition))
+tab$residus <- resid(fit1j,type="normalized")
+mat <- matrix(rep(0,nlevels(tab$jour)*nlevels(tab$combinaison)),ncol=nlevels(tab$jour))
+for(i in 1:nlevels(tab$combinaison)){for(j in 1:nlevels(tab$jour)){mat[i,j] <- tab$residus[which(tab$combinaison == levels(tab$combinaison)[i] & tab$jour == levels(tab$jour)[j])]}}
 
 pairs(mat)
 cor(mat)
@@ -168,11 +129,21 @@ cor(mat)
 ### structure effets fixes
 
 # etape 1
+# on enlève l'intéraction et on teste
+fit_cj <- update(fit1j,.~.-jour:condition)
+anova(fit1j,fit_cj) # -> on enlève l'intéraction car pas diff entre les 2
 
-fit_cj_c <- update(fit0,.~.-condition)
 
-anova(fit0,fit_cj_c) # peut pas enlever la condition
-# -> on garde fit_cj_j : on enlève la condition
+# etape 2
+
+fit_cj_c <- update(fit_cj,.~.-condition)
+fit_cj_j <- update(fit_cj,.~.-jour)
+
+anova(fit_cj,fit_cj_c) # peut pas enlever la condition car différence
+anova(fit_cj,fit_cj_j) # 0.58 : enlève le jour
+# on garde fit_cj_j !!
+
+# -> on garde fit_cj
 
 
 # etape 3 : on a enlevé le plus petit des 2 (un à chaque étape), on regarde si on enlève le deuxième
@@ -185,7 +156,7 @@ anova(fit0,fit_cj_c) # peut pas enlever la condition
 
 ### validation du modele
 # poser questions comment réécrire le modèle
-mod_choisi <- lme(var.f~condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),data=tab2, method="ML",na.action=na.exclude)
+mod_choisi <- fit_cj_j #lme(var.f~condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),data=tab, method="ML",na.action=na.exclude)
 
 
 # calcul des r?sidus du model 1 avec interaction

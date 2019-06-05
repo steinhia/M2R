@@ -42,7 +42,7 @@ def add3Annotations(ann,T1,T3):
     tierComm.add_annotation(ann[2])
     
 
-for idNum in range(17,22):
+for idNum in range(21,22):
     path='AudioList/id'+str(idNum).zfill(2)+'/'
     MatPath=path+'Mat/'
     for filename in glob.glob(os.path.join(path, '*.wav')):
@@ -51,7 +51,7 @@ for idNum in range(17,22):
         matName=MatPath+os.path.basename(filename)[:-3]+'mat'
         txtGName=filename[:-3]+'TextGrid'
         exists = os.path.isfile(txtGName) 
-        if not exists or True: # on les écrase pas
+        if not exists and 'j3' in filename : # on les écrase pas
             # on importe le signal
             fs, data = wavfile.read(filename)
             lenData=len(data)
