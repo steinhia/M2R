@@ -1,0 +1,50 @@
+﻿########### pour envoyer les fichiers à Maren ########
+0- Créer un dossier Audio_Maren et un dossier Transcription/Audiolist : les fichiers audios doivent être dans Audio_Maren idi/j1 j2 j3
+0bis- lancer importAudio.sh pour importer les bons audios dans Audiolist et créer les dossier Mat et Syll
+1- apply_vad (matlab) sur les fichiers considérés pour détecter les parties voisées
+	-> ça crée un .mat
+2- createTG.py pour créer les TextGrid à partir des .mat
+3- vérifier la création dans praat et enlever les débuts et fins de fichier de « transcription »
+4- completeTG pour appliquer ça à « commentaires » -> ça écrase les Textgrid, ne rien changer à ces Textgrid là
+
+########### pour analyser les résultats de maren ############"""
+1 - RemoveComms pour enlever le texte inutile 
+2 - analyser le nombre de syllabes : nbSyll
+3 - faire la transcription dans les textgrid (Praat)
+4 - lancer analyseTranscriptionPM.py pour créer le nouveau csv 
+
+
+######### pour analyser le débit
+1 - génération des textgrid_syll avec generate TextGridSyll
+2 - découpe du début et de la fin avec cutTextGridSyll
+3 - analyse avec debit.py
+
+
+########### les différents fichiers ############
+calculateIDLength : calcule la durée totale des wav pour chaque participant
+completeTG : après avoir modifié le champ transcription (début et fin de fichier + corrections), on l'applique au champ commentaires
+createFolder : crée le dossier Syll nécessaire pour stocker les textgrid_syll
+create TextGrid : crée le textgrid à partir du fichier mat généré dans matlab
+cutTextGridSyll : après avoir calculé les nbSyll et unités interpausales avec Praat (textgrid_syll), on coupe le début et la fin selols
+n les bornes du fichiers textgrid de maren
+debit.py analyse les fichiers TextGrid_syll
+	- exporte la position des syllabes et les IPU pour la synchro -> SyllablesPoints.pkl
+	- calcule le nb de pauses, IPU, leur durée moyenne, totale etc
+	- calcule les SpeechRate, ArticulationRate, SpeakingDUration, TotalDuration etc
+	- calcule le débit glissant
+	- crée brutSyll.csv
+generateTextGridSyll : génère les textgrid servant à analyser le débit
+myspsolution.praat : fichier praat qui détecte les parties voisées (pas mon code)
+nbSyll : calcule le nombre de syllabes à partir de la transcription
+	- rajoute les mots inexistants au dictionnaire
+	- enlève les {bla bla} des annotations
+	- calcul le débit, constant sur chaque IPU (plus utilisé) -> fTab
+	- calcule le nombre d'hésitations
+	- calcule les positions et durées des hésitations (analysé dans synchro.py)
+	- crée le CSV brutDebit.py -> nbSyll, meanF, varF, nbHesit, propHesit
+RemoveComms : enlève les "transcription" et "commentaire" laissés par la traductrice
+SpeechRate : interface avec la détection de voisement dans praat
+transcriptionPM : analyse la transcription des pseudo-mots en rappel libre
+AnalNbSyll : pour analyser les résultats "étonnants" de Nbsyll, qui étaient significatifs, j'ai ploté mainsLibres - autreCond et sauvé dans brutNbSyll
+exportHesitations : exporte les hesitations : Hesitations.pkl pour les utiliser en synchro
+

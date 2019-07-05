@@ -2,9 +2,6 @@
 import os, glob
 import tgt
 import stackprinter
-import codecs
-import numpy as np
-import matplotlib.pyplot as plt
 path='../PythonUtils/'
 stackprinter.set_excepthook(style='color')
 exec(open(path+'StoryCond.py').read())
@@ -12,17 +9,19 @@ exec(open(path+'Dist.py').read())
 exec(open(path+'CSV.py').read())
 
 def deleteAnnot(fSyll,name,mini,maxi):
-    tier=fSyll.get_tier_by_name(name)
+    tier=fSyll.get_tier_by_name(name) # silence ou syllables
     times=[]
     for annot in tier:
         begin=annot.start_time
         end=annot.end_time
         length=end-begin
         # on gère l'overlapping : si dépasse un tout petit peu, garde
+        # on choisit celles qu'on va supprimer (on supprime pas dans le parcours)
         if length>0 and ((end>maxi and (end-maxi)/length>0.3) or (begin<mini and (mini-begin)/length>0.3)):
             times.append(begin)
         elif length==0 and (end>maxi or begin<mini):
             times.append(begin)
+    # on les supprime
     for begin in times:
          tier.delete_annotation_by_start_time(begin)
     return tier
@@ -35,7 +34,9 @@ for idNum in range(1,22):
     for filename in glob.glob(os.path.join(pathSyll, '*.TextGrid_syll')):
         [cond,story]=num2CS(filename)
         name=ntpath.basename(filename)[:-5]
+        # textgrid avec les positions de syllabes
         fSyll=readTG(filename)
+        # textgrid avec la transcription -> donne le début et la fin
         f=readTG(path+name)
         # on trouve les première et dernière annotations du textgrid annoté
         if f!=0 :
@@ -48,6 +49,8 @@ for idNum in range(1,22):
             # on choisit manuellement ce qu'on supprime pour affiner les conditions
             syllTier=deleteAnnot(fSyll,'syllables',mini,maxi)
             silencesTier=deleteAnnot(fSyll,'silences',mini,maxi)
+            # on rajoute les tier au textgrid
             txtGrid.add_tier(syllTier)
             txtGrid.add_tier(silencesTier)
+            # on écrit le textgrid
             tgt.io.write_to_file(txtGrid,filename)

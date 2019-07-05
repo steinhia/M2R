@@ -1,15 +1,9 @@
-
 # -*- coding: utf-8 -*
 import tgt
 import os, glob
 import codecs
 import ntpath
 import csv
-import numpy as np
-import matplotlib.pyplot as plt
-import sys
-import runpy
-import ntpath
 from functools import partial
 import stackprinter
 stackprinter.set_excepthook(style='color')
@@ -21,7 +15,7 @@ exec(open(path+'CSV.py').read())
 
 
 
-# i = histoire
+# i = histoire, on en déduit la condition
 def completeLigne(ligne,filename,i):
         ligne[5]=i # histoire
         c=story2condition(filename,i)
@@ -29,24 +23,29 @@ def completeLigne(ligne,filename,i):
 
 ############# récupération des mots
 
+#print les mots de idNum, jour, dans une condition précise, à court terme ou pas
 def printWords(idNum,jour,cond,CT=True):
     for idRange in range(1,13):
         path='Resultats/id'+str(idRange).zfill(2)+'/'
         for filename in glob.glob(os.path.join(path, '*.TextGrid')):
             liste=['id'+str(idNum).zfill(2),'j'+str(jour)]
+            # si c'est à la fois le bon participant et le bon jour
             if all(i in filename for i in liste):
                 [c,_]=num2CS(filename)
+                # si c'est la bonne condition et qu'on veut printer à court terme
                 if c==cond and CT:
                     print(filename,'\n',getWords(filename),'\n')
+                # si on veut long terme
                 elif not CT and c==-1:
                     print(filename,'\n',getWords(filename),'\n')
 
+# m_i_l -> [m,i,l] 
 def split_(liste):
     for i,l in enumerate(liste):
         liste[i]=l.split('_')
     return liste
 
-# récupère la liste de mots transcrits
+# récupère la liste de mots transcrits dans tout le fichier
 def getWords(filename):
     f=readTG(filename)
     annotations=f.get_tier_by_name('commentaires').annotations
@@ -58,7 +57,7 @@ def getWords(filename):
         elif '_' in txt:
             txtSplit=txt.split()
             words+=txtSplit
-            # on trouve les transcriptions avec un pb de _
+            # on trouve les transcriptions avec un pb de _ (mal transcrit)
             for i in txtSplit:
                 for letter in i:
                     if len(letter)>1 and letter !='aI' and letter!='ts':
@@ -69,107 +68,89 @@ def getWords(filename):
 
 ######## calcul des scores ########
 
-def findWord(PM,wd,l):
+
+# mise à jour des scores du rappel libre avec un mot
+def findWord(PM, PM_add,nb_add,wd,l):
+    # trouve le mot le plus proche
     lmap=list(map(partial(edit_distance,wd),l))
     mini=min(lmap)
     ind=lmap.index(mini)
-    if max(0,1-mini/8)>PM[ind]:
-        PM[ind]=1-mini/8
-    return PM
-
-
-def findWord_add(PM_add,nb_add,wd,l):
-    lmap=list(map(partial(edit_distance,wd),l))
-    mini=min(lmap)
-    ind=lmap.index(mini)
+    # s'il est assez proche, on l'ajoute aux scores cumulés
     if 1-mini/8>0.7:
         PM_add[ind]+=1-mini/8
-        nb_add[ind]+=1
-    return [PM_add,nb_add]
+        nb_add[ind]+=1 # nombre de fois que le psedo-mot est prononcé
+    # score max, on l'ajoute s'il est meilleur que le meilleur
+    if max(0,1-mini/8)>PM[ind]:
+        PM[ind]=1-mini/8
+    return [PM, PM_add,nb_add]
 
+# calcul des scores à court terme pour tous les mots
 def calcScoreShort(filename):
     PM=[0,0,0];PM_add=[0,0,0];nb_add=[0,0,0]
-    # mots attendus
+    # mots attendus : sous liste des 12 mots
     a=(int(story))*3
     l2=l[a:a+3]
+    # mots rappelés
     words=getWords(filename)
+    # on calcule les scores pour chaque mot
     for wd in words:
-        PM=findWord(PM,wd,l2)
-        [PM_add,nb_add]=findWord_add(PM_add,nb_add,wd,l2)
-    PM_moy=[PM_add[i]/nb_add[i] if nb_add[i]>0 else 0 for i in range(3)]
+        [PM, PM_add,nb_add]=findWord(PM, PM_add,nb_add,wd,l2) # score max, cumulé, nb
+    PM_moy=[PM_add[i]/nb_add[i] if nb_add[i]>0 else 0 for i in range(3)] #score moyen
     return [PM,PM_add,PM_moy,nb_add]
 
 # les scores s'étalent sur plusieurs fichiers -> dico cumulatif
-def calcScoreLong(filename,dico,dico_add,dico_moy):
+def calcScoreLong(filename,dico,dico_add,dico_moy, dico_nb):
     # pour les recall longs, on reconnait le mot parmi tous
     # on garde le nom jusqu'à n01, pas les bis,tris,001 etc
     words=getWords(filename)
-    name=ntpath.basename(filename)
+    name=ntpath.basename(filename) # nom sans le path
     recallname=path+name[:23]+name[-9:]
+    # initialisation des dicos max, cumulé, moyen si existe pas dans dico
     if recallname not in dico.keys():
         dico[recallname]=[0]*12
         dico_add[recallname]=[0]*12
         dico_moy[recallname]=[0]*12
+        dico_nb[recallname]=[0]*12
+    # calcule les scores
     for wd in words:
-        dico[recallname]=findWord(dico[recallname],wd,l)
-        [dico_add[recallname],dico_moy[recallname]]=findWord_add(dico_add[recallname],dico_moy[recallname],wd,l)
-    return [dico,dico_add,dico_moy]
+        [dico[recallname], dico_add[recallname],dico_nb[recallname]]=findWord(dico[recallname], dico_add[recallname],dico_nb[recallname], wd,l)
+    dico_moy[recallname]=[dico_add[recallname][i]/dico_nb[recallname][i] if dico_nb[recallname][i]>0 else 0 for i in range(12)] #score moyen
+    return [dico,dico_add,dico_moy, dico_nb]
 
 ######### main ###########"
 
-l=split_(PhoneticList)
+l=split_(PhoneticList) # liste dans PythonUtils
 csvTabCT=[]
 csvTabLT=[]
-[dico,dico_add,dico_moy]=[{},{},{}]
+[dico,dico_add,dico_moy, dico_nb]=[{},{},{},{}] # scores max, cumulés, moyens
 for idNum in range(1,22):
-    print(len(dico))
-    print(len(csvTabCT))
-    print('\n')
     path='Resultats/id'+str(idNum).zfill(2)+'/'
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
         [cond,story]=num2CS(filename)
-        if cond!=-1:
-            [PM,PM_add,PM_moy,nb_add]=calcScoreShort(filename)
-            createLigne(filename,csvTabCT,[PM[0],PM_add[0],nb_add[0]]) 
-            createLigne(filename,csvTabCT,[PM[1],PM_add[1],nb_add[1]]) 
-            createLigne(filename,csvTabCT,[PM[2],PM_add[2],nb_add[2]]) 
+        if cond!=-1: # court terme
+            # calcule les scores de mémorisation
+            [PM,PM_add,PM_moy,nb_add]=calcScoreShort(filename) # max, cumulé, moy, nb
+            # une ligne par histoire/condition
+            createLigne(filename,csvTabCT,[PM[0],PM_add[0],PM_moy[0], nb_add[0]]) # 
+            createLigne(filename,csvTabCT,[PM[1],PM_add[1],PM_moy[1], nb_add[1]]) 
+            createLigne(filename,csvTabCT,[PM[2],PM_add[2],PM_moy[2], nb_add[2]]) 
         else:
-            # pour les recall longs, on reconnait le mot parmi tous
-            # on garde le nom jusqu'à n01, pas les bis,tris,001 etc
-            [dico,dico_add,dico_moy]=calcScoreLong(filename,dico,dico_add,dico_moy)
+            # pour les recall longs, on reconnait le mot parmi la liste de 12 mots
+            # stocké dans un dictionnaire car réparti sur plusieurs fichiers
+            [dico,dico_add,dico_moy,dico_nb]=calcScoreLong(filename,dico,dico_add,dico_moy,dico_nb)
     # on crée une ligne par histoire pour chaque fichier du dico (LT)
     # on trouve les pseudo-mots par histoire, on en déduit la condition
-    for key,value in dico_add.items():
-        for i,v in enumerate(value):
-            if v!=0:
-                1#dico_moy[key]=dico_add[key][i]/v
-for key,value in dico.items():
-    ligne0=createLigne(key,csvTabLT,[value[0],dico_add[key][0],dico_moy[key][0]])
-    ligne1=createLigne(key,csvTabLT,[value[1],dico_add[key][1],dico_moy[key][1]])
-    ligne2=createLigne(key,csvTabLT,[value[2],dico_add[key][2],dico_moy[key][2]])
-    ligne3=createLigne(key,csvTabLT,[value[3],dico_add[key][3],dico_moy[key][3]])
-    ligne4=createLigne(key,csvTabLT,[value[4],dico_add[key][4],dico_moy[key][4]])
-    ligne5=createLigne(key,csvTabLT,[value[5],dico_add[key][5],dico_moy[key][5]])
-    ligne6=createLigne(key,csvTabLT,[value[6],dico_add[key][6],dico_moy[key][6]])
-    ligne7=createLigne(key,csvTabLT,[value[7],dico_add[key][7],dico_moy[key][7]])
-    ligne8=createLigne(key,csvTabLT,[value[8],dico_add[key][8],dico_moy[key][8]])
-    ligne9=createLigne(key,csvTabLT,[value[9],dico_add[key][9],dico_moy[key][9]])
-    ligne10=createLigne(key,csvTabLT,[value[10],dico_add[key][10],dico_moy[key][10]])
-    ligne11=createLigne(key,csvTabLT,[value[11],dico_add[key][11],dico_moy[key][11]])
-    completeLigne(ligne0,key,0)
-    completeLigne(ligne1,key,0)
-    completeLigne(ligne2,key,0)
-    completeLigne(ligne3,key,1)
-    completeLigne(ligne4,key,1)
-    completeLigne(ligne5,key,1)
-    completeLigne(ligne6,key,2)
-    completeLigne(ligne7,key,2)
-    completeLigne(ligne8,key,2)
-    completeLigne(ligne9,key,3)
-    completeLigne(ligne10,key,3)
-    completeLigne(ligne11,key,3)
-firstLine=["score","scoreCumule","nbRepet"]
-WriteCSV(csvTabCT,firstLine,'brutTranscriptionCT.csv')
-WriteCSV(csvTabLT,firstLine,'brutTranscriptionLT.csv')
 
-printWords(1,2,1,False)
+lignei=[[] for i in range(12)]
+for key,value in dico.items():
+    for hist in range(12):
+        # on crée la ligne : max, cumulé, nb
+        lignei[hist]=createLigne(key,csvTabLT,[value[hist],dico_add[key][hist],dico_moy[key][hist],dico_nb[key][hist]])
+        # on assigne la condition correspondante le jour du court terme
+        completeLigne(lignei[hist],key,int(hist/4))
+
+# on écrit le csv en spécifiant les colonnes spécifiques à ce calcul (sans id etc)
+firstLine=["scoreMax","scoreCumule","scoreMoyen","nbRepet"]
+WriteCSV(csvTabCT,firstLine,'csvFiles/brutTranscriptionCT.csv')
+WriteCSV(csvTabLT,firstLine,'csvFiles/brutTranscriptionLT.csv')
+

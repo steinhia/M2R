@@ -1,0 +1,21 @@
+Recalltest.py : crée le fichier brut.csv
+-> id jour	ordre conditions	ordre histoires	condition	histoire	type	reponse attendue	reponse phonetique	reponse donnée	evaluation	orthographe	transcription	score	scoreBinaire	mot le plus proche	transcription	score
+-> le fichier utilise les recall_test.csv pour créer un une liste de lignes
+-> les lignes sont complétées avec les transcriptions déjà existantes dans brut.csv
+-> on génère un nouveau csv avec cette liste de lignes
+
+AnalyseBrut :
+analyse les erreurs cumulées en condition/histoire -> pas utilisé car stats dans R
+crée le dictionnaire pour analyser les confusions en identification
+
+recall_test.csv -> rappels groupés
+recall_s1.csv -> rappels à court terme séparés par histoire
+
+
+Pour analyser les scores de mémoire :
+
+1/ crée les fichiers csv nécessaires, au même format
+2/ lance Recalltest.py pour créer brut.csv
+3/ complète les transcriptions phonétiques dans brut.csv
+4/ relance Recalltest.py pour compléter les calculs de distance avec les transcriptions
+

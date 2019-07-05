@@ -189,11 +189,24 @@ pas d'effet de contexte pour des contextes fréquents -> contexte différent (te
 ####################################################
 Organisation des connaissances sémantiques : des modèles classiques aux modèles abstractifs ############################
 mémoire sémantique : connaissances sur les objets, mots, personnes -> org, format ?
+TODO nous mémoire sémantique ou épisodque, court terme etc...
 
 approche abstractive classique : connaissances issues des expériences sensorimotrices, recodées et stockées de manière permanente, abstraite et amodale
 + mém sémantique distincte de la mémoire épisodique et séparée des systèmes modaux perceptifs et moteurs; identif = accès aux représentaitons symboliques
-
-
+Tulving : conceptionMLT=
+sém (décontextualisé, commune à tous individus d'une culture)+
+épisodique (trace autobiogr,contextualisées des évts)
+déficit catégorie-spécifique/modalité spécifique -> org par propriétés du système sém
+théorie sensori-fonctionnelle : mém sém = 2 sous ensemble de ptés pour définir les items naturels (surtout attS)  et objets (attS et F) : 
+attributs sensoriels (couleur,odeur etc) 
+ou fonctionnels(usage, contexte d'utilisation etc)
+-> dégradation info sém : dégradation type pté -> catégorie spécifique
+SFT étendue : toutes modalités sensorielles contribuent avec pondérations variables à à la représentation de diverses catégories -> dégradation touche slmt certaines catég
+auj : représ d'un concept distribuée dans des sous-systèmes interconnectés d'attributs sémantiques modalité-spécifique, dans des régions cérébrales distinctes
+-> objet a pté visuelle etc -> représentation distribuée des concepts
+-> ou autre hyp, pas interconnectés mais conn à un hub : unité conceptuelle
+ex activation aud -> activation hub -> activation ailleurs
+cadre classique car même si l'organisation reflète les modalités sensori-motrice, attributs ne sont vus que comme des redescriptions amodales et abstraites des activités sensorimotrices -> TODO pourquoi!!!
 
 
 
@@ -202,3 +215,32 @@ approche abstractive classique : connaissances issues des expériences sensorimo
 connaissances représentées de manière distribuée dans les systèmes modaux perceptifs et moteurs
 -> modèles non abstractifs d'Hintzman et Damasio : rejettent l'idée d'une mémoire sémantique permanente, évocation des connaissances sur un item émerge momentanément de la réactivation des traces sensorimotrices des épisodes l'ayant mis en jeu.
 -> identification n'est plus l'accès à des connaissances stockées dans un système sémantique, mais émergent de la recréation d'expériences antérieures.
+Barsalou : dans système conceptuel ptés ne sont que des enregistrements des états dans lesquels se trouvent les systèmes sensori-moteurs lors du traitement effectif de ces propriétés
+-> évoquer une propriété=recréer (simuler pr lui) l'état sensori-moteur de son traitement
+-> lors de l'évocation d'une pté d'un objet dans une tâche conceptuelle, aires sensorimotrices dédiées au traitement de cette propriété devraient être activées
+ex neuro tâche conceptuelle vérif pté, aires modales qui traitent ptés activées
++ aucune aire amodale activée -> pas épiphénomène
+-> pas de distinction entre connaissances conceptuelles et activités sensori-motrices
+-> pas de distinction entre PA et mémoire
+
+Damasio (1989) :
+- aucune connaissance stockée, 
+- conn=résultat de la recréation des patterns d'activation dans les aires primaires sensorielles ou motrices
+- évocation des connaissances sur un concept sans faire appel à la notions de MemSem
+- ex : voit piano activation neurones V1 -> aire assoc vis, idem audit,motrices etc
+zone de convergence non locale qui encode simultanéité des 3 évts visu,aud, moteur
+ultérieurement, vue guitare -> pattern visuel -> activation zone cvg locale visuelle, puis cvg non locale, connexions retour -> recréation des patterns d'activation présents lors des rencontres avec une guitare -> vue évoque son etc
+
+Hintzman (1986) :
+conception unitaire de la mémoire, qui rend compte connaiss sém et rappel spécifique
+pas mémoire sém permanente, mémoire entièrement épisodique (enreg traces brutes)
+- évocation du sens par recréation momentanée d'épisodes antérieurs
+- conception multi-traces : mém = ensemble des traces des épisodes vécus / 1 individu
+- ex sens item à partir vue : trace plus ou moins activée selon similarité avec l'indice -> traces réactivées entrent en résonance pour y un écho = synthèse des traces activées, reflète la contribution des traces les plus fortes, essentiellement constitué des traits partagés par la plupart de ces traces: sens=composantes de l'écho
++ mécanisme de réinjection -> réactivation de traces supplémentaires, modalité suppl
+--> variabilité inter-individuelle du sens d'un concept
+
+comparaison : différents sur beaucoup d'aspects:
+- modularité du système mnésique, format de codage, caractère contextualisé ou non, 
+abstractif : modulaire (distinction système sensorimoteur, MS,ME),amodal, sens décontextualisé, sens invariable et permanent
+xA : non modulaire (ME!), modal, situé dans le temps et l'espace, sens évoqué varie selon le contexte et l'expérience.
