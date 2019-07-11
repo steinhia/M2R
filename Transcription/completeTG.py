@@ -13,25 +13,25 @@ for idNum in range(25,26):#16):
     path='AudioList/id'+str(idNum).zfill(2)+'/'
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
         print(filename)
-        wavName=filename[:-8]+'wav'
-        f=readTG(filename)
+        wavName=filename.replace("TextGrid","wav")
+        f=readTG(filename) # dans CSV.py
         if f!=0:
             # get tier transcription
-            tr=f.get_tier_by_name('transcription')
-            # crée tier commentaires
-            co2=tgt.core.IntervalTier(tr.start_time,tr.end_time, name='commentaires')
-            for iv in tr:
+            tr=f.get_tier_by_name('transcription') # un objet de type IntervalTier
+            # crée tier commentairesa : instanciation
+            comm=tgt.core.IntervalTier(tr.start_time,tr.end_time, name='commentaires')
+            for iv in tr: # parcoure les intervalles du tier transcription
                 # on crée les annotations
                 ann=tgt.core.Annotation(iv.start_time,iv.end_time,'commentaire')
-                co2.add_annotation(ann)
+                comm.add_annotation(ann) # appelle la fonction associée à comm
             # on crée le nouveau textgrid
             txtGrid=tgt.core.TextGrid()
             txtGrid.add_tier(tr)
-            txtGrid.add_tier(co2)
+            txtGrid.add_tier(comm)
             # on l'enlève si il existe déjà
             os.remove(filename)
             try:
-                tgt.io.write_to_file(txtGrid, filename)
+                tgt.io.write_to_file(txtGrid, filename) # pas objet, fonction 'normale'
             except:
                 print "écriture impossible ",filename
 
