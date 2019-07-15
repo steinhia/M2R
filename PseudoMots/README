@@ -1,0 +1,14 @@
+extractgermanLexicon 
+- extrait le dictionnaire de la langue allemande (germanlexicon.txt)
+- extrait :
+    - les mots de 3 syllabes (WordsList)
+    - tous les mots (AllWordsList)
+    - en les simplifiant (o/O, a,A etc)
+- calcule :
+    - le schéma d'un mot (CV etc)
+    - les fréquence des syllabes
+    - les probabilités positionnelles des phonèmes et des biphones 
+    - la liste des triphones possibles à la position i dans le mot
+- calcule aussi :
+    - la médiane des nbs de syllabes d'un mot (3)
+    - les 3 schémas les + fréquents
