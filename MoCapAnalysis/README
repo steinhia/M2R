@@ -1,0 +1,23 @@
+fichier MocapCircles
+
+étapes :
+
+- on extrait les fréquences d'échantillonnage des fichiers, on range ça dans un dico pour pas avoir à réouvrir le csv à chaque fois -> sr.pkl
+
+- on parse les fichiers : on parti du csv et on en extrait les marqueurs intéressants (rigid body ou marqueur non labellisé, mais pas marqueur du rigid body, et on enlève les marqueurs trop courts)
+- on renvoie un dictionnaire : la clé c'est le nom du marqueur, la valeur c'est la trajectoire du marqueur -> _all.pkl pour chaque fichier csv
+- on parse le dos (pas encore utilisé) -> _back.pkl
+
+- on détecte les marqueurs cycliques que pour les fichiers de pédalage
+    1/on garde que ceux suffisamment cycliques (seuils)
+    2/on garde ceux environ aussi longs que le plus long marqueur circulaire
+    3/parmi ceux-là, on garde le plus circulaire
+    
+- on enlève le début et la fin où le participant ne pédale pas -> on remplace par des 0 pour garder la synchronisation
+on renvoie un marqueur bike (liste) -> _bike.pkl
+
+- on analyse les données : on extrait la moyenne et la variance de la fréquence de pédalage, éventuellement analyse de la position,vitesse,accélération, enveloppe spectrale etc -> code écrit mais pas de feature retourné
+- j'ai extrait seulement la moyenne et la variance, mais beaucoup plus d'analyses possibles (vitesse,accélération, enveloppe spectrale) -> à quoi correspondent les trains d'onde ??
+- on écrit brutMocap.csv
+
+- on affecte les baseline aux recall correspondants et on calcule le pourcentage de variation entre la baseline et le recall -> brutMocapBaseline.csv
