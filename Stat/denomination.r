@@ -1,6 +1,10 @@
 ###################################################### tableau de donnees #######################################
 # score ~ jour + (re(random = ~1 | id)) -> pour les 3
 
+# mu entre 0 et 1 : jour + (re(random = ~1 | id)) 
+# nu O : ~jour + (re(random = ~1 | id)) 
+# tau 1 : ~jour + (re(random = ~1 | id)) 
+
 ### importer tableau 
 
 setwd("~/Documents/Alex/Stat/")
@@ -10,17 +14,22 @@ tab <- read.table("../RecallTest/brut.csv",sep=",",header=TRUE)
 
 ### type variable
 
-tab$jour <- as.factor(as.character(tab$jour))
+
 tab$id <- as.factor(tab$id)
 tab$histoire <- as.factor(as.character(tab$histoire))
 
-tab$condition[tab$condition=="0"] <- "mains libres"
-tab$condition[tab$condition=="1"] <- "mains contraintes"
-tab$condition[tab$condition=="2"] <- "pédalage pieds"
-tab$condition[tab$condition=="3"] <- "pédalage mains"
-tab$condition <- factor(tab$condition,levels = c("mains libres", "pédalage pieds", "pédalage mains","mains contraintes"))
+tab$condition[tab$condition=="0"] <- "MAINS_LIBRES"
+tab$condition[tab$condition=="1"] <- "MAINS_CONTRAINTES"
+tab$condition[tab$condition=="2"] <- "PEDALAGE_PIEDS"
+tab$condition[tab$condition=="3"] <- "PEDALAGE_MAINS"
+tab$condition <- factor(tab$condition,levels = c("MAINS_LIBRES", "PEDALAGE_PIEDS", "PEDALAGE_MAINS","MAINS_CONTRAINTES"))
 tab$condition <- as.factor(tab$condition)
 tab$nb0=as.factor(as.numeric((tab$score=='0')))
+
+tab$jour[tab$jour=="1"]<-"J1"
+tab$jour[tab$jour=="2"]<-"J2"
+tab$jour[tab$jour=="3"]<-"J3"
+tab$jour <- as.factor(as.character(tab$jour))
 #tab$score<- as.factor(tab$score)
 
 # score différent de 0
@@ -45,6 +54,11 @@ tab3=data.table(jour=a,condition=b,score=c,id=d,histoire=e,type=f)
 # nombre de 0
 a<- sum(tab$score=='0')
 # nombre de 1
+
+
+tab2$jour <- as.factor(as.character(tab2$jour))
+tab3$jour <- as.factor(as.character(tab3$jour))
+tab2$condition <- factor(tab2$condition,levels = c("mains libres", "pédalage pieds", "pédalage mains","mains contraintes"))
 
 
 ### packages utilises
@@ -79,9 +93,9 @@ library(data.table)
     geom_bar(position=position_dodge(), stat="identity" ,colour="black") +
      geom_errorbar(aes(ymin=tgc$score-tgc$se, ymax=tgc$score+tgc$se),
      width=.2,         # Width of the error bars
-     position=position_dodge(.9)) +
-    ggtitle(paste("Scores en dénomination"))
-  p <- p + ylab("Score")+ labs(fill='condition')
+     position=position_dodge(.9)) 
+   # ggtitle(paste("Scores en dénomination"))
+  p <- p + ylab("DENOM")+ labs(fill='CONDITION')+xlab("JOUR")+ylim(0,1)
   p<- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
                 plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
                 legend.title=element_text(size=18), legend.text = element_text(size=16))
@@ -118,7 +132,8 @@ library(data.table)
 tgc <- summarySE(tab2, measurevar="score", groupvars=c("jour","condition"))
 p<-ggplot(data=tgc, aes(x=jour, y=score, fill=condition)) +
   # #p<-p+geom_histogram()
-   geom_bar(position=position_dodge(), stat="identity") +
+   geom_bar(position=position_dodge(), stat="identity",colour="black") +
+  scale_fill_brewer() + theme_bw() +
    geom_errorbar(aes(ymin=tgc$score-tgc$se, ymax=tgc$score+tgc$se),
                  width=.2,                    # Width of the error bars
                  position=position_dodge(.9)) +
@@ -229,6 +244,13 @@ mod_choisi_nu_tau <- stepGAIC(mod_choisi_nu, scope=list(lower=~1,upper=~jour*con
 mod_choisi_nu_tau_mu <- stepGAIC(mod_choisi_nu_tau, scope=list(lower=~1,upper=~jour*condition + re(random=~1|id)),what=c("mu"))
 # on enlève la condition pour les 3
 
+# mu entre 0 et 1 jour + (re(random = ~1 | id)) 1260.0
+# nu O ~jour + (re(random = ~1 | id)) 1246.5
+# tau 1 ~jour + (re(random = ~1 | id)) 1233.9
+# critère AIC information (information criteria)
+# peut regarder # d'AIC mais pas de référence
+# (re(random = ~1 | id)) : rajoute effet aléatoire du participant
+
 
 
 
@@ -242,11 +264,11 @@ Rsq(mod_choisi)
 #nu.formula = ~jour + (re(random = ~1 | id)), tau.formula = ~jour +  
 #  (re(random = ~1 | id)), family = BEINF, data = tab,      trace = FALSE) 
 # slmt 40% variation de la variable réponse expliquée par le modèle
-
+# tau 1 nu 0
 ### comparaisons 
 #j2/#j3
-tab$jour <- relevel(tab$jour, ref="2")
-#tab$condition <- relevel(tab$condition, ref="3")
+tab$jour <- relevel(tab$jour, ref="J2")
+tab$condition <- relevel(tab$condition, ref="MAINS_LIBRES")
 mod_choisi <- gamlss(score~jour+ re(random=~1|id) ,nu.formula = ~jour+ re(random=~1|id), tau.formula = ~jour+ re(random=~1|id),family=BEINF,data=tab)
 summary(mod_choisi)
 

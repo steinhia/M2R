@@ -23,22 +23,22 @@ for i in l:
 l1=['hm','im','oh','zur','beim','dass','vom','am','hab','nee','crew','na','nem','ne','nen','puh','uff','"m"','"V"','keit','te','Tipps','stûck','New','York','ups','"L"','"S"','cool','"Tik"','"ja','"sie"',"ncoh","huch",'"Su"','"K"']
 for i in l1:
     dico[i]=1
-l2=['okay','ok','Filmteam','Alien','geschafft','Lasgich','happy','ärmel','düne','dschungel','Deko','Gleitschirm','bestaunt','Löchter','einën','Bubbel','Ufo','Fenchel','spîral','Dikte','Fahrwerk','bräuchte','Matretsch','platziert','proppen','Spîtzen',"Ärmchen","freundet","Skateboard","koration"]
+l2=['okay','ok','Filmteam','Alien','geschafft','Lasgich','happy','ärmel','düne','dschungel','Deko','Gleitschirm','bestaunt','Löchter','einën','Bubbel','Ufo','Fenchel','spîral','Dikte','Fahrwerk','bräuchte','Matretsch','platziert','proppen','Spîtzen',"Ärmchen","freundet","Skateboard","koration","Hubbel","Mierlich","Stückchen"]
 for i in l2:
     dico[i]=2
-l3=['Holzfäller','Grillparty','Soltete','Soldikte','Tireinat','Ligete','Sonistik','Tereinat','Keimate','Sodecktele','Keimase','SOnestik','Melare','Zulerge','Lasgelich','Welare','Sonestik','Somistik','Meidikte','Kalmate','Melerge','Lersgelich','behilfslich','ähliches','Mergawe','Mandete','Tereimat','Sudete','Zudete','Sodete','Beinchen','Zelerge','Tereineit','Wecktolin','Lasgerich','Melawe','Zugunste','Megenda','Migete','Sunistik','Tiejenat','Melagisch','Matreschke','Preneite','förmigen','sympatisch','U-Boot-Schiff','Zergine','Somete','Kalmari','Sonete','Meitendich',"anbilten","Suline","Mielbete","Wecktellin","Solistik","Mattendisch","Sultete","gelandend","Resisseur","Mielage","Velozit","Melbete","Madikt","Madikten","Darsteller","Mattendrich","Mälare","Mattendix","Milbete","Zerlare","Lichteinfluss","Litende"]
+l3=['Holzfäller','Grillparty','Soltete','Soldikte','Tireinat','Ligete','Sonistik','Tereinat','Keimate','Sodecktele','Keimase','SOnestik','Melare','Zulerge','Lasgelich','Welare','Sonestik','Somistik','Meidikte','Kalmate','Melerge','Lersgelich','behilfslich','ähliches','Mergawe','Mandete','Tereimat','Sudete','Zudete','Sodete','Beinchen','Zelerge','Tereineit','Wecktolin','Lasgerich','Melawe','Zugunste','Megenda','Migete','Sunistik','Tiejenat','Melagisch','Matreschke','Preneite','förmigen','sympatisch','U-Boot-Schiff','Zergine','Somete','Kalmari','Sonete','Meitendich',"anbilten","Suline","Mielbete","Wecktellin","Solistik","Mattendisch","Sultete","gelandend","Resisseur","Mielage","Velozit","Melbete","Madikt","Madikten","Darsteller","Mattendrich","Mälare","Mattendix","Milbete","Zerlare","Lichteinfluss","Litende","Gleitfliegen","Somestik","Igete","Solnistik","darûber"]
 for i in l3:
     dico[i]=3
-l4=['dreickiges','blattförmigen','kontruieren','Gelaskela','halbrundförmig','Ausstülpungen','Astförmige','dreiekigen','dreeickigen',"dekorativ","lichtempfindlich","lichtempfindllich","Aufblasfunktion","wegzuscheuchen","Weckteli","Malerge","rauszufinden","dreiecksförmig","Fahruntersatz","rumzureisen","ungesehen","bogenförmig","Unterstûtzung","Darstellerin","Bohrmaschine","Tereinaten","gewundenen","spîralförmig","geordneten","lichtempflindlich"]
+l4=['dreickiges','blattförmigen','kontruieren','Gelaskela','halbrundförmig','Ausstülpungen','Astförmige','dreiekigen','dreeickigen',"dekorativ","lichtempfindlich","lichtempfindllich","Aufblasfunktion","wegzuscheuchen","Weckteli","Malerge","rauszufinden","dreiecksförmig","Fahruntersatz","rumzureisen","ungesehen","bogenförmig","Unterstûtzung","Darstellerin","Bohrmaschine","Tereinaten","gewundenen","spîralförmig","geordneten","lichtempflindlich","dreickigen","erinnnere"]
 for i in l4:
     dico[i]=4
-l5=["beziehungsweise","Schneckenhausförmig","Außeerirdischen","Außererirdische","Außereridische","quadratförmiges","schneckenhausförmig","Vorwärtskommweise","Kameraleuten","tropfenförmiges","schraubenförmig","weiterzuhelfen","Außeriridische","Außeridischen"]
+l5=["beziehungsweise","Schneckenhausförmig","Außeerirdischen","Außererirdische","Außereridische","quadratförmiges","schneckenhausförmig","Vorwärtskommweise","Kameraleuten","tropfenförmiges","schraubenförmig","weiterzuhelfen","Außeriridische","Außeridischen","Waldschutzpolizei","Außeriridschen"]
 for i in l5:
     dico[i]=5
 l6=["zusammengebappte","hineinzugelangen","regentropfenförmig","Fortbewegungsmitel","entgegenzuwirken"]
 for i in l6:
     dico[i]=6
-l7=["Karamelkarawane","aerodynamische","Au◊erirdischengruppe","Außerridischengruppe","Sprungfortbewegungsmittel","aerodymamische"]
+l7=["Karamelkarawane","aerodynamische","Au◊erirdischengruppe","Außerridischengruppe","Sprungfortbewegungsmittel","aerodymamische","wassertropfenförmigen"]
 for i in l7:
     dico[i]=7
 
@@ -180,8 +180,8 @@ dicoHes={}
 for idNum in range(26):
     path='Resultats/id'+str(idNum).zfill(2)+'/'
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
-        # num2CS dans Python Utils (StoryCOnd), calcule condition/story ac filename
-        [cond,story]=num2CS(filename)
+        # name2CS dans Python Utils (StoryCOnd), calcule condition/story ac filename
+        [cond,story]=name2CS(filename)
         # filename2key dans StoryCond, dans PythonUtils/
         cle=filename2key(filename) # cle dans les dicosHesit , pour avoir un nom court
         # on fait ces analyses seulement pour les rappels séparés

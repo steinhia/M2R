@@ -56,7 +56,9 @@ graphes en lignes
 
 
 à voir avec S:
-ident : quelle correction ?
+ident : quelle correction ? -> un modèle par jour
+si enlève intéraction (>0.05) : j1-j2|c1 = j1-j1|c2 et c2-c3|j1 c2-c3|j2
+
 dénomination : comment regarder si on est loin ?
 meanDeb Done
 varDeb : on garde presque intéraction mais effet disparait
@@ -64,7 +66,8 @@ meanMocap baseline : DONE si garde le plus complexe si différence significative
 varMocap baseline : on garde presque intéraction mais effet disparait ??
 meanMocap : effet de la condition
 varMocap : erreur dans effets aléatoires
-nbSyll : à refaire, 2 effets aléatories, lequel
+nbSyll : à refaire, 2 effets aléatories, lequel : patmat
+ # p-value de l'intéraction (chisq : test modèles emboites..) comp multiples(z=,p=)
 propHesit : vérifier garde fit1j + 2 à la limite : fait comment ?
 lien debit/fréq pédalage
 rappel libre : lequel nu/tau/mu

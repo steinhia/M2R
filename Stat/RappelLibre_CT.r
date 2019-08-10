@@ -1,19 +1,26 @@
 ###################################################### tableau de donnees #######################################
+# nu   score~(re(random = ~1 | id)) 
+# tau  score~jour + (re(random = ~1 | id)) 
+# mu   score ~ jour 
 
 ### importer tableau 
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
-tab <- read.table("../Transcription/brutTranscriptionCT.csv",sep=",",header=TRUE)
+tab <- read.table("../Transcription/csvFiles/brutTranscriptionCT.csv",sep=",",header=TRUE)
 ### type variable
 
+
+tab$jour[tab$jour=="1"]<-"J1"
+tab$jour[tab$jour=="2"]<-"J2"
+tab$jour[tab$jour=="3"]<-"J3"
 tab$jour <- as.factor(as.character(tab$jour))
 tab$id <- as.factor(as.character(tab$id))
 tab$histoire <- as.factor(as.character(tab$histoire))
-tab$condition[tab$condition=="0"] <- "mains libres"
-tab$condition[tab$condition=="1"] <- "mains contraintes"
-tab$condition[tab$condition=="2"] <- "pédalage pieds"
-tab$condition[tab$condition=="3"] <- "pédalage mains"
-tab$condition <- factor(tab$condition,levels = c("mains libres", "pédalage pieds", "pédalage mains","mains contraintes"))
+tab$condition[tab$condition=="0"] <- "MAINS_LIBRES"
+tab$condition[tab$condition=="1"] <- "MAINS_CONTRAINTES"
+tab$condition[tab$condition=="2"] <- "PEDALAGE_PIEDS"
+tab$condition[tab$condition=="3"] <- "PEDALAGE_MAINS"
+tab$condition <- factor(tab$condition,levels = c("MAINS_LIBRES", "PEDALAGE_PIEDS", "PEDALAGE_MAINS","MAINS_CONTRAINTES"))
 tab$condition <- as.factor(tab$condition)
 
 ### 
@@ -35,9 +42,9 @@ p<-ggplot(data=tgc, aes(x=jour, y=score, fill=condition)) +
   geom_bar(position=position_dodge(), stat="identity",colour="black") +
   geom_errorbar(aes(ymin=tgc$score-tgc$se, ymax=tgc$score+tgc$se),
                 width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
-  ggtitle("score moyen en rappel libre à court terme")
-p <- p + ylab("score")+ labs(fill='condition') 
+                position=position_dodge(.9)) 
+#  ggtitle("score moyen en rappel libre à court terme")
+p <- p + ylab("RAPPEL LIBRE CT")+ labs(fill='CONDITION') +xlab("JOUR")+ylim(0,1)
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
               legend.title=element_text(size=18), legend.text = element_text(size=16))
@@ -96,20 +103,20 @@ mod <- gamlss(score~jour*condition+ re(random=~1|id) ,nu.formula = ~jour*conditi
 mod_choisi_nu <- stepGAIC(mod, scope=list(lower=~1,upper=~jour*condition + re(random=~1|id)),what=c("nu"))
 mod_choisi_nu_tau <- stepGAIC(mod_choisi_nu, scope=list(lower=~1,upper=~jour*condition + re(random=~1|id)),what=c("tau"))
 mod_choisi_nu_tau_mu <- stepGAIC(mod_choisi_nu_tau, scope=list(lower=~1,upper=~jour*condition + re(random=~1|id)),what=c("mu"))
-# nu   score~(re(random = ~1 | id)) 
-# tau  score~jour + (re(random = ~1 | id)) 
-# mu   score ~ jour 
+# nu   score~(re(random = ~1 | id)) 774.84
+# tau  score~jour + (re(random = ~1 | id))  774.84
+# mu   score ~ jour 752.98
 
 ### validation modele
 
-mod_choisi <- gamlss(score~jour+condition+ re(random=~1|id) ,nu.formula = ~jour+ re(random=~1|id), tau.formula = ~jour+condition+ re(random=~1|id),family=BEINF,data=tab)
+mod_choisi <- gamlss(score~jour ,nu.formula = re(random = ~1 | id) , tau.formula = jour + re(random = ~1 | id) ,family=BEINF,data=tab)
 plot(mod_choisi)
 Rsq(mod_choisi)
 
 
 ### comparaisons 
 
-tab$jour <- relevel(tab$jour, ref="1")
-tab$condition <- relevel(tab$condition, ref="3")
-mod_choisi <- gamlss(score~jour+condition+ re(random=~1|id) ,nu.formula = ~jour+ re(random=~1|id), tau.formula = ~jour+condition+ re(random=~1|id),family=BEINF,data=tab)
+tab$jour <- relevel(tab$jour, ref="J1")
+tab$condition <- relevel(tab$condition, ref="MAINS_LIBRES")
+mod_choisi <- gamlss(score~jour ,nu.formula = ~jour+ re(random=~1|id), tau.formula = ~jour+ re(random=~1|id),family=BEINF,data=tab)
 summary(mod_choisi)

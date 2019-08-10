@@ -54,6 +54,8 @@ for i in brutRecall[1:]:
     if key not in dico.keys():
         dico[key]=i[:6]+['']*4
     dK=dico[key]
+    print(dK)
+    print(i)
     if len(dK)==10:
         dK+=[0,0,0,0] # nombre de 0 et de 1 pour la dénomination
     dK[10]+=1 if i[9]=='False' else 0

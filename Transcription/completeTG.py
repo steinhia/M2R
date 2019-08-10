@@ -9,7 +9,7 @@ exec(open(path+'CSV.py').read())
 
 # on ne fusionne les intervalles manuellement que pour transcription, ce fichier calque commentaires dessus
 
-for idNum in range(25,26):#16):
+for idNum in range(24,26):#16):
     path='AudioList/id'+str(idNum).zfill(2)+'/'
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
         print(filename)

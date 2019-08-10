@@ -8,11 +8,11 @@ function vadout=apply_vad(p1,p2)
 % ---vad parameters (to tune)---
 % speech noise threshold
 if ~exist('p1','var')
-  p1=0.05;
+  p1=0.005;
 end
 % speech region smoothing
 if ~exist('p2','var')
-  p2=50;
+  p2=30;
 end
 
 % set path
@@ -41,11 +41,14 @@ load('models/model.mat')
 % ---visualize---
 visualize=false;
 
-for idNum=1:15
-    path=sprintf('AudioList/id%d/',idNum);
+for idNum=24:24
+    path=sprintf('AudioList/id%02d/',idNum);
     filenames=dir(strcat(path,'*.wav'));
+    path
     for k = 1 : length(filenames)
      name=filenames(k).name;
+     %name='id07-c2134-s2431-j1-n06.wav'
+     
      nameMat=strcat(name(1:end-3),'mat');
      % read in audio
      [sam,fs_orig]=audioread(fullfile(path,name));
@@ -80,10 +83,5 @@ for idNum=1:15
      outprob=double(output(:,1));
      vadout=medfilt1(outprob.^2,p2)>p1;
      save(strcat(path,'Mat/',nameMat),'vadout')
-    %
-    % if visualize
-    %  imagesc(mvn(gt));axis xy;hold on;
-    %  plot(10*vadout,'m','LineWidth',3); zoom xon; hold off
-    % end
     end
 end

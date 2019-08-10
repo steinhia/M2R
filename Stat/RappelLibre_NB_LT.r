@@ -4,18 +4,18 @@
 ### importer tableau 
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
-tab <- read.table("../Transcription/brutTranscriptionLT.csv",sep=",",header=TRUE)
+tab <- read.table("../Transcription/csvFiles/brutTranscriptionLT.csv",sep=",",header=TRUE)
 ### type variable
 
 tab$jour <- as.factor(as.character(tab$jour))
 tab$id <- as.factor(as.character(tab$id))
 tab$histoire <- as.factor(as.character(tab$histoire))
 tab$score <- as.character(tab$score)
-tab$condition[tab$condition=="0"] <- "mains libres"
-tab$condition[tab$condition=="1"] <- "mains contraintes"
-tab$condition[tab$condition=="2"] <- "pédalage pieds"
-tab$condition[tab$condition=="3"] <- "pédalage mains"
-tab$condition <- factor(tab$condition,levels = c("mains libres", "pédalage pieds", "pédalage mains","mains contraintes"))
+tab$condition[tab$condition=="0"] <- "MAINS_LIBRES"
+tab$condition[tab$condition=="1"] <- "MAINS_CONTRAINTES"
+tab$condition[tab$condition=="2"] <- "PEDALAGE_PEDS"
+tab$condition[tab$condition=="3"] <- "PEDALAGE_MAINS"
+tab$condition <- factor(tab$condition,levels = c("MAINS_LIBRES", "PEDALAGE_PEDS", "PEDALAGE_MAINS","MAINS_CONTRAINTES"))
 tab$condition <- as.factor(tab$condition)
 tab$nb0<-as.numeric((tab$score)=='0')
 #tab$score_cumulé <- as.factor(as.character(tab$score_cumulé))
@@ -45,8 +45,8 @@ p<-ggplot(data=tgc, aes(x=jour, y=nbRepet, fill=condition)) +
   geom_bar(position=position_dodge(), stat="identity",colour="black") +
   geom_errorbar(aes(ymin=tgc$nbRepet-tgc$se, ymax=tgc$nbRepet+tgc$se),
                 width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
-  ggtitle("Nombre de répétitions des pseudo-mots \n  en rappel libre à long terme")
+                position=position_dodge(.9)) 
+ # ggtitle("Nombre de répétitions des pseudo-mots \n  en rappel libre à long terme")
 p <- p + ylab("Score")+ labs(fill='condition') 
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),

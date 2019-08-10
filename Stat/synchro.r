@@ -1,27 +1,102 @@
 ###################################################### tableau de donnees #######################################
-
-
 ### importer tableau 
 
+library(data.table)
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
 tab <- read.table("brutResume.csv",sep=",",header=TRUE)
-tab2 <- read.table("../MoCapAnalysis/brutMoCap.csv",sep=",",header=TRUE)
-tab3 <- read.table("../Transcription/brutSyll.csv",sep=",",header=TRUE)
-### type variable
 
+tab$jour[tab$jour=="1"]<-"J1"
+tab$jour[tab$jour=="2"]<-"J2"
+tab$jour[tab$jour=="3"]<-"J3"
 tab$jour <- as.factor(as.character(tab$jour))
 tab$id <- as.factor(as.character(tab$id))
 tab$histoire <- as.factor(as.character(tab$histoire))
+
+
+############## jours ensemble ###################
+
+ a<- tab$jour[which(tab$condition=="2")] 
+ b<- tab$condition[which(tab$condition=="2")] 
+ c<- tab$id[which(tab$condition=="2")] 
+ d<- tab$freq.moy.pédalage[which(tab$condition=="2")] 
+ e<- tab$debit.moyen[which(tab$condition=="2")] 
+ f<- tab$variance.pédalage[which(tab$condition=="2")] 
+ g<- tab$variance.debit[which(tab$condition=="2")] 
+ tab3=data.table(jour=a,condition=b,freq.moy.pedalage=d,id=c,debit.moyen=e,variance.pédalage=f,variance.debit=g)
+ tab3$condition<-as.factor(tab3$condition)
+
+ a<- tab$jour[which(tab$condition=="3")] 
+ b<- tab$condition[which(tab$condition=="3")] 
+ c<- tab$id[which(tab$condition=="3")] 
+ d<- tab$freq.moy.pédalage[which(tab$condition=="3")] 
+ e<- tab$debit.moyen[which(tab$condition=="3")] 
+ f<- tab$variance.pédalage[which(tab$condition=="3")] 
+ g<- tab$variance.debit[which(tab$condition=="3")] 
+ tab4=data.table(jour=a,condition=b,freq.moy.pedalage=d,id=c,debit.moyen=e,variance.pédalage=f,variance.debit=g)
+ tab4$condition<-as.factor(tab3$condition)
+
+ 
+ cor.test(tab3$debit.moyen,tab3$freq.moy.pedalage,method='spearman') # pieds
+ cor.test(tab4$debit.moyen,tab4$freq.moy.pedalage,method='spearman') # mains
+ 
+ cor.test(tab3$variance.debit,tab3$variance.pédalage,method='spearman') # pieds
+ cor.test(tab4$variance.debit,tab4$variance.pédalage,method='spearman') # mains
+ 
+ 
+################# on sépare par jour #################################
+ 
+ c<- tab$id[which(tab$condition=="2"& tab$jour=="J1")] 
+ d<- tab$freq.moy.pédalage[which(tab$condition=="2"& tab$jour=="J1")] 
+ e<- tab$debit.moyen[which(tab$condition=="2"& tab$jour=="J1")] 
+ tab5=data.table(jour=a,condition=b,freq.moy.pedalage=d,id=c,debit.moyen=e)
+ cor.test(tab5$debit.moyen,tab5$freq.moy.pedalage,method='spearman') # pieds
+
+ c<- tab$id[which(tab$condition=="2"& tab$jour=="J2")] 
+ d<- tab$freq.moy.pédalage[which(tab$condition=="2"& tab$jour=="J2")] 
+ e<- tab$debit.moyen[which(tab$condition=="2"& tab$jour=="J2")] 
+ tab6=data.table(jour=a,condition=b,freq.moy.pedalage=d,id=c,debit.moyen=e)
+ cor.test(tab6$debit.moyen,tab6$freq.moy.pedalage,method='spearman') # pieds
+ 
+ 
+ c<- tab$id[which(tab$condition=="3"& tab$jour=="J1")] 
+ d<- tab$freq.moy.pédalage[which(tab$condition=="3"& tab$jour=="J1")] 
+ e<- tab$debit.moyen[which(tab$condition=="3"& tab$jour=="J1")] 
+ tab7=data.table(jour=a,condition=b,freq.moy.pedalage=d,id=c,debit.moyen=e)
+ cor.test(tab7$debit.moyen,tab7$freq.moy.pedalage,method='spearman') # pieds
+ 
+ c<- tab$id[which(tab$condition=="3"& tab$jour=="J2")] 
+ d<- tab$freq.moy.pédalage[which(tab$condition=="3"& tab$jour=="J2")] 
+ e<- tab$debit.moyen[which(tab$condition=="3"& tab$jour=="J2")] 
+ tab8=data.table(jour=a,condition=b,freq.moy.pedalage=d,id=c,debit.moyen=e)
+ cor.test(tab8$debit.moyen,tab8$freq.moy.pedalage,method='spearman') # pieds
+ 
+ 
+############################################################ 
+ 
+ 
+# b<- tab$freq.moy.pédalage[which(tab$jour!='J3' & (tab$condition=="2" | tab$condition=="3"))] 
+# c<- tab$debit.moyen[which(tab$jour!='J3' & (tab$condition=="2" | tab$condition=="3"))] 
+# d<- tab$condition[which(tab$jour!='J3' & (tab$condition=="2" | tab$condition=="3"))] 
+# e<- tab$id[which(tab$jour!='J3' & (tab$condition=="2" | tab$condition=="3"))] 
+# tab2=data.table(jour=a,condition=d,freq.moy.pedalage=b,id=e,debit.moyen=c)
+# tab2$condition[tab2$condition=="2"] <- "pédalage pieds"
+# tab2$condition[tab2$condition=="3"] <- "pédalage mains"
+# tab2$condition <- factor(tab$condition,levels = c("pédalage pieds", "pédalage mains"))
+
+
 tab$condition[tab$condition=="0"] <- "mains libres"
 tab$condition[tab$condition=="1"] <- "mains contraintes"
 tab$condition[tab$condition=="2"] <- "pédalage pieds"
 tab$condition[tab$condition=="3"] <- "pédalage mains"
-tab$condition <- as.factor(tab$condition)
+tab$condition <- factor(tab$condition,levels = c("pédalage pieds", "pédalage mains","mains libres","mains contraintes"))
 tab$nb <- tab$nbCycles.parole.mocap
 #tab$nb <- as.factor(tab$nb)
 tab$varNMocap<- tab$variance.pédalage/tab$freq.moy.pédalage
 tab$var<-tab$variance.debit/tab$debit.moyen
+
+
+
 
 
 ### packages utilises
@@ -40,17 +115,49 @@ lm_eqn <- function(df,v1,v2){
 }
 
 
-b <- ggplot(tab, aes(x = tab$var, y=tab$varNMocap))
-b<- b + geom_point() # rajouter y dans le ggplot de base
-b<- b+geom_smooth(method = "lm")
-b <-b + geom_text(x = 2, y = 4, label = lm_eqn(tab,tab$var,tab$varNMocap), parse = TRUE)
+b <- ggplot(tab, aes(x = tab$debit.moyen, y=tab$mean_ped_rl, colour=tab$condition, shape=tab$condition))
+b<- b + geom_point(size=4) # rajouter y dans le ggplot de base
+#b<- b+geom_smooth(method = "lm")
+#b <-b + geom_text(x = 2, y = 4, label = lm_eqn(tab,tab$debit.moyen,tab$freq.moy.pédalage), parse = TRUE)
+b <- b + ylab("fréquence moyenne de pédalage")+ xlab("débit moyen") 
+b<- b+facet_grid(.~jour)
 b
 
-b <- ggplot(tab, aes(x = tab$mean, y=tab$varNMocap))
-b<- b + geom_point() # rajouter y dans le ggplot de base
-b<- b+geom_smooth(method = "lm")
-b <-b + geom_text(x = 2, y = 4, label = lm_eqn(tab,tab$var,tab$varNMocap), parse = TRUE)
+
+cor.test(tab$debit.moyen,tab$freq.moy.pédalage,method='spearman')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# yp nulle : coeff coerrelation=0 (pas correl) -> rejette pas
+# p-value : rejette pas l'hypothèse nulle
+# rho : valeur estimée du coefficient de corrélation
+
+b <- ggplot(tab, aes(x = tab$variance.debit, y=tab$variance.pédalage, colour=tab$condition, shape=tab$condition))
+b<- b + geom_point(size=4) # rajouter y dans le ggplot de base
+#b<- b+geom_smooth(method = "lm")
+#b <-b + geom_text(x = 2, y = 4, label = lm_eqn(tab,tab$debit.moyen,tab$freq.moy.pédalage), parse = TRUE)
+b <- b + ylab("variance de la fréquence de pédalage")+ xlab("variance du débit") 
+b<- b+facet_grid(.~jour)
 b
+cor.test(tab$variance.debit,tab$variance.pédalage,method='spearman')
+
+
+cor.test(tab2$var.f,tab2$varz,method='spearman')
 ###################################################### statistiques descriptives #######################################
 
 tgc <- summarySE(tab, measurevar="nb", groupvars=c("jour","condition"))
@@ -59,8 +166,8 @@ p<-ggplot(data=tgc, aes(x=jour, y=nb, fill=condition)) +
   geom_bar(position=position_dodge(), stat="identity",colour="black") +
   geom_errorbar(aes(ymin=tgc$nb-tgc$se, ymax=tgc$nb+tgc$se),
                 width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
-  ggtitle("Rapport entre le débit et la vitesse de pédalage")
+                position=position_dodge(.9)) 
+#  ggtitle("Rapport entre le débit et la vitesse de pédalage")
 p <- p + ylab("débit/pédalage")+ labs(fill='condition') 
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),

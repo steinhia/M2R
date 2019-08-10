@@ -12,3 +12,36 @@ extractgermanLexicon
 - calcule aussi :
     - la médiane des nbs de syllabes d'un mot (3)
     - les 3 schémas les + fréquents
+
+
+GermanGeneration
+algorithme de génération des pseudo-mots
+- on génère aléatoirement des syllabes selon les fréquences observées
+- on en sélectionne un certain nombre en maximisant les probas phonotactiques et en s'assurant que les mots sélectionnés soient loin les uns des autres (d>3)
+- on calcule la distance de chaque mot au mot le plus proche dans le dictionnaire
+    -> WordsList (3 syllabes) ou AllWordsList (tous les mots) à choisir à chaque fois
+- on trie par ordre décroissant de distance pour garder les mots les plus loin du dico
+- on garde ceux où 1<=d<=2
+- on en garde un certain nombre à définir
+
+à choisir :
+-nombre de mots à générer aléatoirement
+-nopbre de mots à garder après sélection phonotactique
+-distance minimale entre les mots sélecitonnés (phonotactique):
+    si elle est trop grande, les mots auront une pba phonotactique plus faible
+    si elle est trop petite, ils se ressembleront
+-distance au dico (1 2)
+-nombre de mots sélectionnés à la fin
+- à chaqe fois, sur quel dico s'appuyer
+
+dans répertoire Pseudo-Mots :
+GermanGeneration : algo utilisé en Allemagne, fichier mis au propre
+FrenchGeneration : fichier plus utilisé mais laissé au cas où
+Frequences Syllabes.csv : fréquences des syllabes en français
+german_lexicon.txt : dictionnaire allemand, lignes brutes
+germanWords.pkl : dico extrait du fichier .txt, directement exploitable
+histo.pkl : histogrammes des fréquences des phonèmes,biphones,triphones
+Mots3SchemasXithFreq : mots français de 3 syllabes avec leur fréquence
+nonwords_selection.csv : framaform de sélection des mots allemands
+Syllabes3Schemas.csv : syllabes correspondant à nos 3 schémas retenus
+

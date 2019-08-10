@@ -11,11 +11,11 @@ Cons=['b','k','d','f','g','h','j','l','m','n','p','r','s','t','v','N','z','Z','C
  # an=@,in=5,on=6,eu=9,j=Z,gn=N,ch=S
 
 
-# définit les classes naturelles de sons
+# définit les classes naturelles de sons : une classe = 1 string de la liste
 def createNaturalClasses():
 # on met le schwa dans ouvert,semi-ouvert,ferme,arrondi,etire,voyAnt,voyPost,nasal,oral
 # ok car prend en compte les classes contenant le schwa et pas la voyelle en question
-# on a donc dist(*,voy)=0.55
+# on a donc dist(*,voy)=0.55, scha=*
 # [voise,sourd,lieuAvant,Median,Posterieur,nasal,oral,occlusif,fricatif,liquide,ouvert,semi-ouvert,ferme,arrondi,etire,voyAnterieur,voyPosterieur]
     return ['bvdzZgRmnNjl','pftsSkxCh','pbmfv','tdnszlSZ','xCkgRNhj','mnN','ptkbdg','fsSvzZChxR','lj','a','oe@9','iyu','yuo9','iea@','iye@','uo','a9']
 NaturalClasses=createNaturalClasses()
@@ -33,15 +33,16 @@ def _edit_dist_init(len1, len2):
 
 # distance entre 2 phonèmes
 def phonemeDist(NaturalClasses,c1,c2):
-    n=0;n1=0;n2=0;
+    # n classes en commun, n1 classes que de c1, n2 classes que de c2
+    n=0;n1=0;n2=0; 
     c1=c1[0]
     c2=c2[0]
-    if c1==c2:
+    if c1==c2:  # mêmes phonèmes
         return 0
     for s in NaturalClasses:
         if c1 in s and c2 in s:
             n+=1
-        elif c1 in s:
+        elif c1 in s: # si pas en commun mais dans c1
             n1+=1
         elif c2 in s:
             n2+=1

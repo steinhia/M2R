@@ -1,6 +1,8 @@
 ###################################################### tableau de donnees #######################################
 # mean mocap : on garde la condition
 # pas de plot, seulement les valeurs
+# 0.04069 (condition|id)+(1|histoire)
+# garde condition 6.62e-06, chisq(1)= 20.3
 
 ### importer tableau 
 setwd("~/Documents/Alex/Stat/")
@@ -17,6 +19,8 @@ tab$condition[tab$condition=="3"] <- "mains"
 #tab$condition <- factor(tab$condition,levels = c("pédalage pieds", "pédalage mains"))
 tab$baseline[tab$histoire=="-1"] <- "baseline"
 tab$baseline[tab$histoire=="3" | tab$histoire=="2" | tab$histoire=="1" | tab$histoire=="0"] <- "recall"
+#sexe= c(1,	0,	1,	1,	0,	1,	1,	0,	1,	0,	1,	0,	1,	1,	1,	1, 1,	1,	1,	1)	
+
 
 # juste baseline
 b<- tab$condition[which(tab$baseline=="baseline")]
@@ -48,8 +52,8 @@ p<-ggplot(data=tgc, aes(x=condition, y=mean.f)) +
   geom_bar(position=position_dodge(), stat="identity") +
   geom_errorbar(aes(ymin=tgc$mean.f-tgc$se, ymax=tgc$mean.f+tgc$se),
                 width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
-  ggtitle("Moyenne de la fréquence de pédalage")
+                position=position_dodge(.9)) 
+ # ggtitle("Moyenne de la fréquence de pédalage")
 p <- p + ylab("fréquence moyenne")+ labs(fill='pédalage') 
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
@@ -59,18 +63,18 @@ p
 
 ###############" effet de l'histoire ##########
 
-# tgc <- summarySE(tab, measurevar="mean.f", groupvars=c("jour","histoire"))
-# p<-ggplot(data=tgc, aes(x=jour, y=mean.f, fill=histoire)) + 
-#   geom_bar(position=position_dodge(), stat="identity") +
-#   geom_errorbar(aes(ymin=tgc$mean.f-tgc$se, ymax=tgc$mean.f+tgc$se),
-#                 width=.2,                    # Width of the error bars
-#                 position=position_dodge(.9)) +
-#   ggtitle("Moyenne de la fréquence de pédalage")
-# p <- p + ylab("fréquence moyenne")+ labs(fill='pédalage') 
-# p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
-#                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
-#                legend.title=element_text(size=18), legend.text = element_text(size=16))
-# p
+tgc <- summarySE(tab, measurevar="mean.f", groupvars=c("histoire"))
+p<-ggplot(data=tgc, aes(x=histoire, y=mean.f)) +
+  geom_bar(position=position_dodge(), stat="identity") +
+  geom_errorbar(aes(ymin=tgc$mean.f-tgc$se, ymax=tgc$mean.f+tgc$se),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9)) +
+  ggtitle("Moyenne de la fréquence de pédalage")
+p <- p + ylab("fréquence moyenne")+ labs(fill='pédalage')
+p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+               legend.title=element_text(size=18), legend.text = element_text(size=16))
+p
 ### distribution
 
 hist(tab$mean.f)
@@ -84,32 +88,40 @@ hist(tab$mean.f)
 
 # un effet aleatoire intercept par sujet
 # pas varib indiv selon j et c
-fit0 <-  lme(mean.f~condition, random=~1|id,data=tab2, method="ML",na.action=na.exclude)
-plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus standardises")
+# fit0 <-  lme(mean.f~condition, random=~1|id,data=tab2, method="ML",na.action=na.exclude)
+# plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus standardises")
 # -> une seule valeur par sujet -> on saute
+fit0 <-  lmer(mean.f~condition+(1|id)+(1|histoire),data=tab,REML=FALSE,na.action=na.exclude)
+plot(fit0, id~resid(.,type="p")|jour, abline=0, xlim=c(-5,5), xlab="residus standardises")
+plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus standardises")
 
+# étape 0 : sél effets aléat : fit0bis
 
+fit0bis<- lmer(mean.f~condition+(1|id),data=tab,REML=FALSE,na.action=na.exclude)
+anova(fit0,fit0bis)
+# garde fit0 , le plus complet
 ## etape 1
 
 
 # un effet aleatoire intercept par sujet different par condition
-
-fit1c <- lme(mean.f~condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~condition-1)))),data=tab2, method="ML",na.action=na.exclude)
+fit1c <-  lmer(mean.f~condition+(condition|id),data=tab,REML=FALSE,na.action=na.exclude)
+#fit1c <- lme(mean.f~condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~condition-1)))),data=tab2, method="ML",na.action=na.exclude)
 
 anova(fit0,fit1c)
+# fin : garde fit1c
 # pas différence, on rajoute pas d'effet aléatoire
-
+# update : différence, on rajote un effet aléatoire de la condition
 
 
 ### matrice de variance covariance des erreurs
 
 # meme variance selon les modalites de condition
 
-boxplot(resid(fit0,type="p")~tab$condition, xlab="residus normalises")
+boxplot(resid(fit0,type="p")~tab2$condition, xlab="residus normalises")
 
-
-fit_varc <- lme(mean.f~condition, random=~1|id,weights=varIdent(form=~1|condition),data=tab2, method="ML",na.action=na.exclude)
-anova(fit0,fit_varc)
+# pas de variance résiduelle avec lmer
+# #fit_varc <- lme(mean.f~condition, random=~1|id,weights=varIdent(form=~1|condition),data=tab2, method="ML",na.action=na.exclude)
+# anova(fit0,fit_varc)
 # 0.92 : pas de variance différente selon la condition
 # -> par variabilité résiduelle # selon la condition
 
@@ -140,8 +152,8 @@ cor(mat)
 ### structure effets fixes
 
 # etape 1
-fit_c <- update(fit0,.~.-condition)
-anova(fit0,fit_c)
+fit_c <- update(fit1c,.~.-condition)
+anova(fit1c,fit_c)
 # différence : on garde la condition
 
 
@@ -156,13 +168,13 @@ anova(fit0,fit_c)
 
 
 ### validation du modele
+# H0 le modèle simplifié
 
-mod_choisi <- lme(mean.f~condition, random=~1|id,data=tab2, method="ML",na.action=na.exclude)
-
+mod_choisi <- lmer(mean.f~condition+(condition|id)+(1|histoire),data=tab,REML=FALSE,na.action=na.exclude)
 
 # calcul des r?sidus du model 1 avec interaction
 
-resmod_choisi.std<-resid(mod_choisi,type="normalized",level=1)
+resmod_choisi.std<-resid(mod_choisi,type="pearson",level=1)
 
 # plot residuals
 
@@ -171,6 +183,7 @@ lines(density(resmod_choisi.std)) # résidus suivent distrib Normale
 
 qqnorm(resmod_choisi.std,main = 'Normal QQplot of the standardized residuals \n of the log model')
 qqline(resmod_choisi.std) # confirmé car aligné
+shapiro.test(resmod_choisi.std) # peut pas dire issu loi normale
 
 plot(resmod_choisi.std~fitted(mod_choisi),xlab="Fitted values", ylab="Standardized residuals", main="Standardized residuals vs fitted values")
 abline(a=0,b=0)

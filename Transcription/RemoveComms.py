@@ -6,7 +6,7 @@ exec(open(path+'StoryCond.py').read())
 exec(open(path+'Dist.py').read())
 exec(open(path+'CSV.py').read())
 
-for idNum in range(23,24):
+for idNum in range(23,26):
     path='Resultats/id'+str(idNum).zfill(2)+'/'
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
         print(filename)

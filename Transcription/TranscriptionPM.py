@@ -31,7 +31,7 @@ def printWords(idNum,jour,cond,CT=True):
             liste=['id'+str(idNum).zfill(2),'j'+str(jour)]
             # si c'est à la fois le bon participant et le bon jour
             if all(i in filename for i in liste):
-                [c,_]=num2CS(filename)
+                [c,_]=name2CS(filename)
                 # si c'est la bonne condition et qu'on veut printer à court terme
                 if c==cond and CT:
                     print(filename,'\n',getWords(filename),'\n')
@@ -130,15 +130,14 @@ def calcScoreLong(filename,dico_max,dico_add,dico_moy, dico_nb):
 # en français tu pourras enlever les '_'
 # du coup pas besoin de transformer en tableau : string[i]
 #  l [['m','i','l','b','e','t','@'], ....
-print(PhoneticList)
 l=split_(PhoneticList) # liste dans PythonUtils
 csvTabCT=[]
 csvTabLT=[]
 [dico_max,dico_add,dico_moy, dico_nb]=[{},{},{},{}] # scores max, cumulés, moyens
-for idNum in range(1,23):
+for idNum in range(1,26):
     path='Resultats/id'+str(idNum).zfill(2)+'/' # zfill-> 01
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
-        [cond,story]=num2CS(filename)
+        [cond,story]=name2CS(filename)
         if cond!=-1: # court terme
             # calcule les scores de mémorisation
             [PM_max,PM_add,PM_moy,nb_add]=calcScoreShort(filename) # max, cumulé, moy, nb

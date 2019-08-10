@@ -1,20 +1,25 @@
 ###################################################### tableau de donnees #######################################
-
+# nu ~jour + (re(random = ~1 | id)) 
+# tau=1 ~jour * condition + re(random = ~1 | id) 
+# mu score ~ jour + (re(random = ~1 | id)) 
 
 ### importer tableau 
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
-tab <- read.table("../Transcription/brutTranscriptionLT.csv",sep=",",header=TRUE)
+tab <- read.table("../Transcription/csvFiles/brutTranscriptionLT.csv",sep=",",header=TRUE)
 ### type variable
 
+tab$jour[tab$jour=="1"]<-"J1"
+tab$jour[tab$jour=="2"]<-"J2"
+tab$jour[tab$jour=="3"]<-"J3"
 tab$jour <- as.factor(as.character(tab$jour))
 tab$id <- as.factor(as.character(tab$id))
 tab$histoire <- as.factor(as.character(tab$histoire))
-tab$condition[tab$condition=="0"] <- "mains libres"
-tab$condition[tab$condition=="1"] <- "mains contraintes"
-tab$condition[tab$condition=="2"] <- "pédalage pieds"
-tab$condition[tab$condition=="3"] <- "pédalage mains"
-tab$condition <- factor(tab$condition,levels = c("mains libres", "pédalage pieds", "pédalage mains","mains contraintes"))
+tab$condition[tab$condition=="0"] <- "MAINS_LIBRES"
+tab$condition[tab$condition=="1"] <- "MAINS_CONTRAINTES"
+tab$condition[tab$condition=="2"] <- "PEDALAGE_PIEDS"
+tab$condition[tab$condition=="3"] <- "PEDALAGE_MAINS"
+tab$condition <- factor(tab$condition,levels = c("MAINS_LIBRES", "PEDALAGE_PIEDS", "PEDALAGE_MAINS","MAINS_CONTRAINTES"))
 tab$condition <- as.factor(tab$condition)
 
 ### 
@@ -49,9 +54,9 @@ p<-ggplot(data=tgc, aes(x=jour, y=score, fill=condition)) +
   geom_bar(position=position_dodge(), stat="identity",colour="black") +
   geom_errorbar(aes(ymin=tgc$score-tgc$se, ymax=tgc$score+tgc$se),
                 width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
-  ggtitle("score moyen en rappel libre à long terme")
-p <- p + ylab("score")+ labs(fill='condition') 
+                position=position_dodge(.9)) 
+ # ggtitle("score moyen en rappel libre à long terme")
+p <- p + ylab("RAPPEL LIBRE LT")+ labs(fill='CONDITION') +xlab("JOUR")+ylim(0,1)
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
               legend.title=element_text(size=18), legend.text = element_text(size=16))
@@ -60,18 +65,18 @@ p
 
 ############## effet de l'histoire ##############""
 
-# tgc <- summarySE(tab, measurevar="score", groupvars=c("jour","histoire"))
-# p<-ggplot(data=tgc, aes(x=jour, y=score, fill=histoire)) + 
-#   geom_bar(position=position_dodge(), stat="identity") +
-#   geom_errorbar(aes(ymin=tgc$score-tgc$se, ymax=tgc$score+tgc$se),
-#                 width=.2,                    # Width of the error bars
-#                 position=position_dodge(.9)) +
-#   ggtitle("scores en dénomination par histoire")
-# p <- p + ylab("score")+ labs(fill='histoire') 
-# p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
-#                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
-#                legend.title=element_text(size=18), legend.text = element_text(size=16))
-# p
+tgc <- summarySE(tab, measurevar="score", groupvars=c("jour","histoire"))
+p<-ggplot(data=tgc, aes(x=jour, y=score, fill=histoire)) +
+  geom_bar(position=position_dodge(), stat="identity") +
+  geom_errorbar(aes(ymin=tgc$score-tgc$se, ymax=tgc$score+tgc$se),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9)) +
+  ggtitle("scores en dénomination par histoire")
+p <- p + ylab("score")+ labs(fill='histoire')
+p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+               legend.title=element_text(size=18), legend.text = element_text(size=16))
+p
 
 #########################################################
 
@@ -101,8 +106,8 @@ prop.table(table(tab$score3,tab$jour),2)
 
 
 ### ecriture modele
-
-mod <- gamlss(score~jour*condition+ re(random=~1|id) ,nu.formula = ~jour*condition+ re(random=~1|id), tau.formula = ~jour*condition+ re(random=~1|id),family=BEINF,data=tab)
+control<-gamlss.control(n.cyc=50)
+mod <- gamlss(score~jour*condition+ re(random=~1|id) ,nu.formula = ~jour*condition+ re(random=~1|id), tau.formula = ~jour*condition+ re(random=~1|id),family=BEINF,data=tab,control=control)
 
 
 ### selection modele
@@ -111,23 +116,33 @@ mod_choisi_nu <- stepGAIC(mod, scope=list(lower=~1,upper=~jour*condition + re(ra
 mod_choisi_nu_tau <- stepGAIC(mod_choisi_nu, scope=list(lower=~1,upper=~jour*condition + re(random=~1|id)),what=c("tau"))
 mod_choisi_nu_tau_mu <- stepGAIC(mod_choisi_nu_tau, scope=list(lower=~1,upper=~jour*condition + re(random=~1|id)),what=c("mu"))
 # a priori pas d'effet de la condition, mais comment sait si proche ??? TODO
-# nu ~jour + (re(random = ~1 | id)) 
-# tau ~jour * condition + re(random = ~1 | id) 
-# mu score ~ jour + (re(random = ~1 | id)) 
+# nu ~jour + (re(random = ~1 | id)) 454.32
+# tau=1 ~jour * condition + re(random = ~1 | id) ~jour * condition + re(random = ~1 | id) 454.32
+# mu score ~ jour + (re(random = ~1 | id)) 449.19
 # pb de convergence
+
+#Après la sélection descendante effectuée à l'aide du critère d'information AIC, on obtient le modèle suivant
+# formula=mu=entre 0 et 1 :  jour + (re(random = ~1 | id))
+# nu=0=~jour + (re(random = ~1 | id)),
+# tau=1= ~jour * condition + re(random = ~1 | id)
+
+# mu score ~ jour + (re(random = ~1 | id)) 
 
 
 
 ### validation modele
-
-mod_choisi <- gamlss(score~jour+condition+ re(random=~1|id) ,nu.formula = ~jour+ re(random=~1|id), tau.formula = ~jour+condition+ re(random=~1|id),family=BEINF,data=tab)
+mod_choisi <- gamlss(score~jour+ re(random=~1|id) ,nu.formula = ~jour+ re(random=~1|id), tau.formula = ~jour*condition+ re(random=~1|id),family=BEINF,data=tab,control=control)
 plot(mod_choisi)
-Rsq(mod_choisi)
+Rsq(mod_choisi) # rsquare : pourcentage variation expliqué par le modèle
 
 
 ### comparaisons 
-
-tab$jour <- relevel(tab$jour, ref="1")
-tab$condition <- relevel(tab$condition, ref="3")
-mod_choisi <- gamlss(score~jour+condition+ re(random=~1|id) ,nu.formula = ~jour+ re(random=~1|id), tau.formula = ~jour+condition+ re(random=~1|id),family=BEINF,data=tab)
+# fai pas toutes les comparaisons"
+# jour3 = change juste le jour, même condition de réf
+# doit faire la correction nous-mêmes
+# pas de compatibilité gamless multcomp
+# pour faire une comparaison, choisit ref etc
+tab$jour <- relevel(tab$jour, ref="J3")
+tab$condition <- relevel(tab$condition, ref="MAINS_LIBRES")
+mod_choisi <- gamlss(score~jour+ re(random=~1|id) ,nu.formula = ~jour+ re(random=~1|id), tau.formula = ~jour*condition+ re(random=~1|id),family=BEINF,data=tab,control=control)
 summary(mod_choisi)

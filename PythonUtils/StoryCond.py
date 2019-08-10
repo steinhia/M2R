@@ -29,13 +29,14 @@ ListOfURL=['fyJR1Nd5bdYf.png',
 # dans ce cas, on la remplace par l'index de l'image dans le tableau
 # ça donne des numéros d'image -> + pratique à lire
 def replaceName(ligne):
-    for i,case in enumerate(ligne): # récupère l'indice et la ligne
+    for i,case in enumerate(ligne): # récupère l'indice et le string dans la ligne
         for j,name in enumerate(ListOfURL): # index et nom de l'image
             if name in case: # si portion nom incluse dans nom de l'image
                 ligne[i]='img'+str(j) # on remplace par imgx
     return ligne
 
 
+#attention seulement python2, en python 3 division entière pas comme ça
 def num2s(imgNum):
     return imgNum/3 # numéro de l'histoire à partir du numéro de l'image
 
@@ -84,7 +85,7 @@ def name2s(word):
 
 #f(3)='personnage' : numéro du PM (de 0 à 11) -> type du pseudo-mot
 def num2type(i):
-    if i%3==0:
+    if i%3==0: # modulo = %
         return 'personnage'
     elif i%3==1:
         return 'maison'
@@ -129,6 +130,7 @@ def story2condition(filename,s):
     c=cOrder[sOrder.index(str(s))] # si story=histoire1 temporel -> condition 1 tmp
     return int(c)
 
+# ex s 1234, c 3412 2 = 2e -> prend le 2e dans c, cad 4
 def condition2story(filename,c):
     name=ntpath.basename(filename)
     cOrder=Order(name[6:10])
@@ -169,6 +171,8 @@ def filename2key(filename):
     return cle
 
 # retrouve le nom de fichier à partir de la clé
+# parcourt les fichiers, génère la clé, regarde si c'est la clé attendue
+# TODO changer path pour Helene
 def key2filename(key):
     idNum=key[:2] # retrouve le numéro du participant avec la clé -> bon dossier
     path='/home/steinhia/Documents/Alex/Transcription/AudioList/id'+str(idNum).zfill(2)+'/'

@@ -96,7 +96,7 @@ for idNum in range(2,22):
     path='AudioList/id'+str(idNum).zfill(2)+'/Syll/'
     for filename in glob.glob(os.path.join(path, '*')):
         print(filename)
-        [cond,story]=num2CS(filename)
+        [cond,story]=name2CS(filename)
         # pour l'instant on peut analyser le débit que par condition, quand cond!=-1
         cle=str(idNum).zfill(2)+str(jourF(filename))+str(cond)
         f=readTG(filename)

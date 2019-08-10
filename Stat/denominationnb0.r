@@ -34,7 +34,7 @@ p<-ggplot(data=tgc, aes(x=jour, y=nb0, fill=condition)) +
   geom_bar(position=position_dodge(), stat="identity") +
   geom_errorbar(aes(ymin=tgc$nb0-tgc$se, ymax=tgc$nb0+tgc$se),
                 width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
+                position=position_dodge(.9)) 
   ggtitle("nb0s en dénomination")
 p <- p + ylab("nb0")+ labs(fill='condition') 
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),

@@ -1,11 +1,11 @@
 ###################################################### tableau de donnees #######################################
-
+# nbPauses
 # peut être effet de var ipu et var deb, pas d'effet de la moyenne
 # pas d'effet SDTD ou meanIPU ?
 # durée des pauses -> histogramme par condition
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
-tab <- read.table("../Transcription/brutSyll.csv",sep=",",header=TRUE)
+tab <- read.table("../Transcription/csvFiles/brutSyll.csv",sep=",",header=TRUE)
 
 ### type variable
 
@@ -43,13 +43,13 @@ b <-b + geom_text(x = 2, y = 4, label = lm_eqn(tab,tab$meanDeb,tab$SpeechRate), 
 b
 ###################################################### statistiques descriptives #######################################
 
-tgc <- summarySE(tab, measurevar="meanIPU", groupvars=c("jour","condition"))
-p<-ggplot(data=tgc, aes(x=jour, y=meanIPU, fill=condition)) + 
+tgc <- summarySE(tab, measurevar="ArticulationRate", groupvars=c("jour","condition"))
+p<-ggplot(data=tgc, aes(x=jour, y=ArticulationRate, fill=condition)) + 
   geom_bar(position=position_dodge(), stat="identity") +
-  geom_errorbar(aes(ymin=tgc$meanIPU-tgc$se, ymax=tgc$meanIPU+tgc$se),
+  geom_errorbar(aes(ymin=tgc$ArticulationRate-tgc$se, ymax=tgc$ArticulationRate+tgc$se),
                 width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
-  ggtitle("mean IPU")
+                position=position_dodge(.9)) 
+#  ggtitle("mean IPU")
 p <- p + ylab("mean ipu")+ labs(fill='condition') 
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),

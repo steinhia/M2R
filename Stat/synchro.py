@@ -185,19 +185,16 @@ Hes=detectHesitations(dicoHes)
 print(Hes)
 for key,value in Hes.items():
     if key in dicoResume.keys():
-        dicoResume[key][2]=value # syllabes et IPU
+        dicoResume[key][2]=value # positions des hésitations
 
 
-
-#print(dicoResume.keys())
-#print(dicoResume)
-#for cle,valeur in dicoResume.items():
-#    print(cle,len(valeur[0]),len(valeur[1]))
 
 # pas sur le début mais sur la syllabe suivant le début de l'ipu
 # on crée le csv : rapport entre les nbs de cycles
 phaseTab=[]
 for key,value in dicoResume.items():
+    # value[0] = données Mocap, value[0][0] = pics de position
+    # si on a les données de position et d'audio
     if value[0][0]!=[] and value[1][0]!=[]:
         cond=" pieds" if key[3]=='2' else " mains"
         print("id"+key[:2]+" jour "+key[2]+" condition "+key[3] +cond)
@@ -218,8 +215,8 @@ for key,value in dicoResume.items():
         #print("len",val)
         if HP!=[]:
             phase=calcStrob(HP,picP) # phase de la mocap à chaque syllabe
-            #phase=calcStrob(IPUdeb,picA) # phase de la mocap à chaque syllabe
-            #plot1D(phase)
+            phase=calcStrob(IPUdeb,picA) # phase de la mocap à chaque syllabe
+            plot1D(phase)
             #plotData(IPU,syllables,picP,picV,picA)
             #phase=calcStrob(IPUdeb,picA) # phase de la mocap à chaque syllabe
             #phase1=calcStrob(IPUdeb,picV) # phase de la mocap à chaque syllabe

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*
+coding: utf-8 -*
 import os, glob
 import tgt
 import stackprinter
@@ -17,7 +17,7 @@ exec(open(path+'CSV.py').read())
 for idNum in range(2):
     path='Resultats/id'+str(idNum)+'/'
     for filename in glob.glob(os.path.join(path, '*.TextGrid')):
-        [cond,story]=num2CS(filename)
+        [cond,story]=name2CS(filename)
         if cond!=-1:
             nbCSV=0
             nbSyll=0

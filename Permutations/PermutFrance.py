@@ -11,6 +11,8 @@ def SavePkl(filename,data):
 
 #ordre choisi : s c
 
+# en fait, liste pourrait constituée de a,b,c,d, donc 1,2,3,4 sont parfaitement interchangeables
+# on pourrait effectuer n'importe quelle eprmutation, ça respecterait encore la condition voulue car les 4 rôles sont symétriques
 ordre= [
 [[4, 3], [2, 4], [1, 2], [3, 1]],
 [[2, 2], [1, 4], [3, 3], [4, 1]],
@@ -98,37 +100,37 @@ dicoS=createDicoS(ordre) # dico ordre des histoires
 evalBest=evaluation(dicoS,dicoC,dico,True) # évalue les 3 conditions 
 
 # on change l'ordre des participants pour être plus équilibré en milieu de session
-#perm24=list(itertools.permutations([i for i in range(24)]))
 perm24=[i for i in range(24)]
 perm24Best=list(perm24)
 evalBest=1000
 
 
-#for i in range(500000000):
-#    random.shuffle(perm24)
-#    ordreTmp=[ordre[i] for i in perm24]
-#    # contrebalancement au bout de 12
-#    dico12=createOrdreCond(ordreTmp,12) # dico d'assignation ordres-conditions
-#    dicoC12=createDicoC(ordreTmp,12) # dico ordre des conditions
-#    dicoS12=createDicoS(ordreTmp,12) # dico ordre des histoires
-#    eval12=evaluation(dicoS12,dicoC12,dico12,False,3) # évalue les 3 conditions 
-#    # contrebalancement au bout de 16
-#    dico16=createOrdreCond(ordreTmp,16) # dico d'assignation ordres-conditions
-#    dicoC16=createDicoC(ordreTmp,16) # dico ordre des conditions
-#    dicoS16=createDicoS(ordreTmp,16) # dico ordre des histoires
-#    eval16=evaluation(dicoS16,dicoC16,dico16,False,4) # évalue les 3 conditions 
-#    # contrebalancement au bout de 20
-#    dico20=createOrdreCond(ordreTmp,20) # dico d'assignation ordres-conditions
-#    dicoC20=createDicoC(ordreTmp,20) # dico ordre des conditions
-#    dicoS20=createDicoS(ordreTmp,20) # dico ordre des histoires
-#    eval20=evaluation(dicoS20,dicoC20,dico20,False,5) # évalue les 3 conditions 
-#    evalTmp=eval20+eval16+eval12
-#    if evalTmp<evalBest:
-#        evalBest=evalTmp
-#        perm24Best=list(perm24)
-#print("best",evalBest)
-#print(perm24Best)
+for i in range(50):
+    random.shuffle(perm24)
+    ordreTmp=[ordre[i] for i in perm24] # mélange les lignes
+    # contrebalancement au bout de 12
+    dico12=createOrdreCond(ordreTmp,12) # dico d'assignation ordres-conditions
+    dicoC12=createDicoC(ordreTmp,12) # dico ordre des conditions
+    dicoS12=createDicoS(ordreTmp,12) # dico ordre des histoires
+    eval12=evaluation(dicoS12,dicoC12,dico12,False,3) # évalue les 3 conditions 
+    # contrebalancement au bout de 16
+    dico16=createOrdreCond(ordreTmp,16) # dico d'assignation ordres-conditions
+    dicoC16=createDicoC(ordreTmp,16) # dico ordre des conditions
+    dicoS16=createDicoS(ordreTmp,16) # dico ordre des histoires
+    eval16=evaluation(dicoS16,dicoC16,dico16,False,4) # évalue les 3 conditions 
+    # contrebalancement au bout de 20
+    dico20=createOrdreCond(ordreTmp,20) # dico d'assignation ordres-conditions
+    dicoC20=createDicoC(ordreTmp,20) # dico ordre des conditions
+    dicoS20=createDicoS(ordreTmp,20) # dico ordre des histoires
+    eval20=evaluation(dicoS20,dicoC20,dico20,False,5) # évalue les 3 conditions 
+    evalTmp=eval20+eval16+eval12
+    if evalTmp<evalBest:
+        evalBest=evalTmp
+        perm24Best=list(perm24)
+print("best",evalBest)
+print(perm24Best)
 
+# liste de longueur 24 : ordre des 24 lignes
 # ordre où tout est équilibré au bout de 12 participants
 Perm12=[3, 13, 6, 17, 1, 8, 5, 18, 10, 4, 23, 14, 0, 15, 12, 9, 16, 7, 21, 22, 20, 19, 11, 2]
 # équilibré à 16
@@ -140,17 +142,23 @@ Perm1620=[16, 13, 14, 9, 11, 2, 0, 15, 8, 1, 20, 22, 4, 6, 5, 23, 18, 3, 17, 10,
 # équilibré à 16 et 20, quasi équilibré à 12
 PermSum=[17, 18, 10, 4, 22, 11, 16, 0, 9, 15, 2, 20, 14, 3, 23, 8, 12, 19, 21, 7, 6, 5, 13, 1]
 
-
+# applique la permutation du dessus, peut changer permSum par autre 
 # ordre équilibré à 16, 20 et 24 et presque à 12
 ordre=[ordre[i] for i in PermSum]
 
 # si on veut étendre à plus de participants, il suffit de garder la même liste en appliquant une permutation de [1,2,3,4] -> ...
-perm1=[1,0,3,2]
+# ça marche avec n'importe quelle permutation, j'en ai choisi 3
+# indice 0 devient 1, indice 1 devient 0, indice 2 devient 3 etc
+# on applique la transformation en faisant perm1[i] : 0 devient perm1[0] etc
+perm1=[1,0,3,2] # on a cette liste à la place de [0,1,2,3] -> permutation
 perm2=[3,2,1,0]
 perm3=[2,3,0,1]
 
-# listes suivantes
-ordre1=[[ [perm1[i-1]+1,perm1[j-1]+1] for i,j in part] for part in ordre]
+# listes suivantes, similaires à ordre mais avec une nouvelle permutation de [1,2,3,4]
+# perm[i-1] car liste entre 0 et 3, rajoute 1 pour revenir entre 1 et 4
+# ex [ [1,2], [3,1], [4,3], [2,4] ]
+# [i,j]=[1,2] -> perm1[1-1]+1,perm1[2-1]+1 = 1+1, 0+1 = 2,1 = nouvel ordre après permut
+ordre1=[[ [perm1[i-1]+1,perm1[j-1]+1] for i,j in part] for part in ordre] # couple ij
 ordre2=[[ [perm2[i-1]+1,perm2[j-1]+1] for i,j in part] for part in ordre]
 ordre3=[[ [perm3[i-1]+1,perm3[j-1]+1] for i,j in part] for part in ordre]
 

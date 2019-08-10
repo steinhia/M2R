@@ -28,7 +28,7 @@ def add2Annotations(ann,T1,T3):
     tierComm.add_annotation(ann[1]) # idem
     
 
-for idNum in range(25,26):
+for idNum in range(24,25):
     path='AudioList/id'+str(idNum).zfill(2)+'/'
     MatPath=path+'Mat/'
     for filename in glob.glob(os.path.join(path, '*.wav')):

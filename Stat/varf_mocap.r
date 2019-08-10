@@ -1,6 +1,6 @@
 ###################################################### tableau de donnees #######################################
 #TODO : j'analyse lequel : avec ou sans outliers ?
-# pas d'effet de la condition
+# pas d'effet de la condition : L-value : 0.7934648 p= 0.3731
 # enlève outlier mais ça change pas le nombre
 ### importer tableau 
 setwd("~/Documents/Alex/Stat/")
@@ -22,6 +22,12 @@ tab$varNorm<- tab$var.f/tab$mean.f
 
 xMax=mean(tab$var.f)+2*sqrt(var(tab$var.f))
 xMin=mean(tab$var.f)-2*sqrt(var(tab$var.f))
+
+b<- tab$condition[which(tab$baseline=="baseline")]
+c<- tab$var.f[which(tab$baseline=="baseline")]
+d<- tab$id[which(tab$baseline=="baseline")]
+tab3=data.table(condition=b,var.f=c,id=d)
+
 # juste baseline
 b<- tab$condition[which(tab$baseline=="baseline" & tab$var.f<xMax)]
 c<- tab$var.f[which(tab$baseline=="baseline" & tab$var.f<xMax)]
@@ -33,6 +39,7 @@ tab2=data.table(condition=b,var.f=c,id=d)
 library(multcomp)
 library(nlme)
 library(ggplot2)
+library(data.table)
 
 
 
@@ -81,9 +88,9 @@ p<-ggplot(data=tgc, aes(x=condition, y=var.f)) +
   geom_bar(position=position_dodge(), stat="identity",colour="black") +
   geom_errorbar(aes(ymin=tgc$var.f-tgc$se, ymax=tgc$var.f+tgc$se),
                 width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
-  ggtitle("Variabilité de la fréquence de pédalage")
-p <- p + ylab("variance")+ labs(fill='pédalage')
+                position=position_dodge(.9)) 
+#  ggtitle("Variabilité de la fréquence de pédalage")
+p <- p + ylab("VAR_MOCAP_BL")+ labs(fill='pédalage')
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
               legend.title=element_text(size=18), legend.text = element_text(size=16))
@@ -124,6 +131,17 @@ hist(tab$var.f)
 
 fit0 <-  lme(var.f~condition, random=~1|id,data=tab2, method="ML",na.action=na.exclude)
 
+fit0 <-  lmer(var.f~condition+(1|id)+(1|histoire),data=tab,REML=FALSE,na.action=na.exclude)
+plot(fit0, id~resid(.,type="p")|jour, abline=0, xlim=c(-5,5), xlab="residus standardises")
+plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus standardises")
+
+# étape 0 : sél effets aléat : fit0bis
+
+fit0bis<- lmer(var.f~condition+(1|id),data=tab,REML=FALSE,na.action=na.exclude)
+anova(fit0,fit0bis)
+
+
+
 # résidus standardisés
 ## plot des différents sujets, est-ce que les variabilités inter-individuelles changent selon la condition ?
 plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus standardises")
@@ -135,21 +153,22 @@ plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus
 # un effet aleatoire intercept par sujet different par condition
 
 # effet aléatoire différent selon la condition ?
+#fit1c <-  lmer(var.f~condition+(1|id)+(1|histoire)+(1|condition),data=tab,REML=FALSE,na.action=na.exclude)
 fit1c <- lme(var.f~condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~condition-1)))),data=tab2, method="ML",na.action=na.exclude)
-
+# par de variacne résiduelle par individu
 anova(fit0,fit1c) 
-# pas d'info suppl
+# garde fit1c
 
 
 ### matrice de variance covariance des erreurs
 
 # meme variance selon les modalites de condition
 
-boxplot(resid(fit1j,type="p")~tab2$condition, xlab="residus normalises")
-boxplot(resid(fit1j,type="p")~tab2$jour, xlab="residus normalises")
+#boxplot(resid(fit0,type="p")~tab2$condition, xlab="residus normalises")
 
-fit_varc <- lme(var.f~condition, random=list(id=pdBlocked(list(pdIdent(~1)))),weights=varIdent(form=~1|condition),data=tab2, method="ML",na.action=na.exclude)
-anova(fit0,fit_varc) # ERREUR
+
+#fit_varc <- lme(var.f~condition, random=~1|id,weights=varIdent(form=~1|condition),data=tab2, method="ML",na.action=na.exclude)
+#anova(fit0,fit_varc) # garde fit0
 
 
 # correlation entre jour
@@ -185,7 +204,7 @@ anova(fit0,fit_cj_c) # peut pas enlever la condition
 
 ### validation du modele
 # poser questions comment réécrire le modèle
-mod_choisi <- lme(var.f~condition, random=list(id=pdBlocked(list(pdIdent(~1),pdIdent(~jour-1)))),data=tab2, method="ML",na.action=na.exclude)
+mod_choisi <- lme(var.f~condition, random=~1|id,data=tab2, method="ML",na.action=na.exclude)
 
 
 # calcul des r?sidus du model 1 avec interaction
@@ -206,6 +225,6 @@ abline(a=0,b=0)
 
 
 ### comparaisons multiples
-
+# écrit z-value, p-value)
 comp_mult <- summary(glht(mod_choisi,linfct=mcp(condition="Tukey")))
 

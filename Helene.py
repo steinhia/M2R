@@ -99,4 +99,23 @@ for cle,valeur in dico.items():
 
 wd="naana"
 l=["kzjof","ef","kezjfio"]
-l2=[edit_dist(wd,i) for i in l]
+#l2=[edit_dist(wd,i) for i in l]
+
+######### pointeur ########
+
+
+l=[1,2,3,4]
+l2=l # assignation de l'adresse : pointeur
+print(l,l2)
+l2[0]=3
+print(l,l2)
+l2=[2,3,1,4]
+print(l,l2)
+
+l=[[1,2],[2,3],[3,4]]
+a=l[0] # pas un entier, une liste/un pointeur
+print(l,a)
+a[0]=2
+print(l,a)
+
+# dico = pointeur

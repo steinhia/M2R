@@ -1,6 +1,14 @@
 ###################################################### tableau de donnees #######################################
 # Attention : diviser les deux moyennes c'est pas la même chose que faire le quotient pour chaque et en calculer la moyenne
 # DONE : pas effet jour, mais de la condition
+# pas d'interaction L=0.004992785  p=0.9437
+# effet condition  6.558069  0.0104
+# aps effet jour 0.6004413  0.4384
+
+# effet aléatoire différent selon la condition L 17.8433 , p <.0001
+
+
+
 ### importer tableau 
 setwd("~/Documents/Alex/Stat/")
 source("summarySE.r")
@@ -8,13 +16,16 @@ tab <- read.table("../MoCapAnalysis/brutMoCapBaseline.csv",sep=",",header=TRUE)
 
 ### type variable
 
-tab$jour <- as.factor(as.character(tab$jour))
 tab$id <- as.factor(as.character(tab$id))
 tab$histoire <- as.factor(as.character(tab$histoire))
-tab$condition[tab$condition=="2"] <- "pieds"
-tab$condition[tab$condition=="3"] <- "mains"
+tab$condition[tab$condition=="2"] <- "PEDALAGE_PIEDS"
+tab$condition[tab$condition=="3"] <- "PEDALAGE_MAINS"
 #tab$condition <- factor(tab$condition,levels = c("pédalage mains", "pédalage pieds"))
 tab$condition <- as.factor(as.character(tab$condition))
+tab$jour[tab$jour=="1"]<-"J1"
+tab$jour[tab$jour=="2"]<-"J2"
+tab$jour[tab$jour=="3"]<-"J3"
+tab$jour <- as.factor(as.character(tab$jour))
 
 
 
@@ -36,15 +47,15 @@ tab2=data.table(id=a,jour=b,condition=c,meanf.rb=d)
 
 
 
-tgc <- summarySE(tab, measurevar="meanf.rb", groupvars=c("jour","condition"))
+tgc <- summarySE(tab2, measurevar="meanf.rb", groupvars=c("jour","condition"))
 p<-ggplot(data=tgc, aes(x=jour, y=meanf.rb, fill=condition)) + 
   scale_fill_brewer() + theme_bw() +
   geom_bar(position=position_dodge(), stat="identity",colour="black") +
   geom_errorbar(aes(ymin=tgc$meanf.rb-tgc$se, ymax=tgc$meanf.rb+tgc$se),
                 width=.2,                    # Width of the error bars
-                position=position_dodge(.9)) +
-  ggtitle("Moyenne de la fréquence de pédalage \n recall/baseline")
-p <- p + ylab("fréquence moyenne")+ labs(fill='pédalage') 
+                position=position_dodge(.9)) 
+#  ggtitle("fréquence moyenne de pédalage")
+p <- p + ylab("MEAN PED RL (%)")+ labs(fill='CONDITION')+xlab('JOUR') 
 p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
                legend.title=element_text(size=18), legend.text = element_text(size=16))
@@ -52,18 +63,18 @@ p
 
 ###############" effet de l'histoire ##########
 
-# tgc <- summarySE(tab, measurevar="meanf.rb", groupvars=c("jour","histoire"))
-# p<-ggplot(data=tgc, aes(x=jour, y=meanf.rb, fill=histoire)) + 
-#   geom_bar(position=position_dodge(), stat="identity") +
-#   geom_errorbar(aes(ymin=tgc$meanf.rb-tgc$se, ymax=tgc$meanf.rb+tgc$se),
-#                 width=.2,                    # Width of the error bars
-#                 position=position_dodge(.9)) +
-#   ggtitle("Moyenne de la fréquence de pédalage")
-# p <- p + ylab("fréquence moyenne")+ labs(fill='pédalage') 
-# p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
-#                plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
-#                legend.title=element_text(size=18), legend.text = element_text(size=16))
-# p
+tgc <- summarySE(tab, measurevar="meanf.rb", groupvars=c("jour","histoire"))
+p<-ggplot(data=tgc, aes(x=jour, y=meanf.rb, fill=histoire)) +
+  geom_bar(position=position_dodge(), stat="identity") +
+  geom_errorbar(aes(ymin=tgc$meanf.rb-tgc$se, ymax=tgc$meanf.rb+tgc$se),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9)) +
+  ggtitle("Moyenne de la fréquence de pédalage")
+p <- p + ylab("fréquence moyenne")+ labs(fill='pédalage')
+p <- p + theme(axis.text=element_text(size=16), axis.title=element_text(size=18),
+               plot.title = element_text(family = "Helvetica", face = "bold", size = (20)),
+               legend.title=element_text(size=18), legend.text = element_text(size=16))
+p
 ### distribution
 
 hist(tab$meanf.rb)
@@ -77,10 +88,18 @@ hist(tab$meanf.rb)
 
 # un effet aleatoire intercept par sujet
 
-fit0 <-  lme(meanf.rb~jour*condition, random=~1|id,data=tab, method="ML",na.action=na.exclude)
-plot(fit0, id~resid(.,type="p")|jour, abline=0, xlim=c(-5,5), xlab="residus standardises")
-plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus standardises")
+ fit0 <-  lme(meanf.rb~jour*condition, random=~1|id,data=tab, method="ML",na.action=na.exclude)
+ plot(fit0, id~resid(.,type="p")|jour, abline=0, xlim=c(-5,5), xlab="residus standardises")
+ plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus standardises")
 
+#fit0 <-  lmer(meanf.rb~jour*condition+(1|id)+(1|histoire),data=tab,REML=FALSE,na.action=na.exclude)
+# plot(fit0, id~resid(.,type="p")|jour, abline=0, xlim=c(-5,5), xlab="residus standardises")
+# plot(fit0, id~resid(.,type="p")|condition, abline=0, xlim=c(-5,5), xlab="residus standardises")
+
+# étape 0 : sél effets aléat : fit0bis
+
+fit0bis<- lmer(meanf.rb~jour*condition+(1|id),data=tab,REML=FALSE,na.action=na.exclude)
+anova(fit0,fit0bis)
 
 ## etape 1
 
@@ -132,7 +151,7 @@ anova(fit1c,fit_cj)
 
 # etape 2
 
-fit_cj_c <- update(fit_cj,.~.-condition) # la y a diff : on garde fit_cj_c
+fit_cj_c <- update(fit_cj,.~.-condition) # la y a diff : on garde la condition
 fit_cj_j <- update(fit_cj,.~.-jour) # pas de diff : on vire le jour
 
 anova(fit_cj,fit_cj_c)
@@ -143,7 +162,7 @@ anova(fit_cj,fit_cj_j)
 
 ### validation du modele
 
-mod_choisi <-fit_cj_c # lme(meanf.rb~1, random=~1|id,weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
+mod_choisi <-fit_cj_j # lme(meanf.rb~1, random=~1|id,weights=varIdent(form=~1|jour),data=tab, method="ML",na.action=na.exclude)
 
 
 # calcul des r?sidus du model 1 avec interaction
